@@ -35,9 +35,9 @@ a{color:var(--cyan);text-decoration:none}
 a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 .app{position:relative;z-index:1}
 
-/* nav */
-.nav{position:sticky;top:0;z-index:100;background:rgba(8,12,20,0.82);backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);border-bottom:1px solid rgba(255,255,255,0.05)}
-.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:56px}
+/* ====== NAV ====== */
+.nav{position:sticky;top:0;z-index:100;background:rgba(8,12,20,0.82);backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);border-bottom:1px solid rgba(255,255,255,0.04)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:56px}
 .nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:18px;font-weight:700;color:var(--title);letter-spacing:0.5px;background:none;border:none}
 .nav-logo .icon{font-size:22px;animation:float 3s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
@@ -51,166 +51,174 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 .nav-tabs{display:flex;gap:3px;margin-left:6px}
 .nav-tabs button{padding:6px 15px;border-radius:16px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;font-size:13px;transition:all 0.25s;font-weight:500}
 .nav-tabs button:hover{color:var(--title)}
-.nav-tabs button.on{background:var(--blue);border-color:var(--blue);color:#fff}
-.nav-tabs button[aria-current="page"]{background:var(--blue);border-color:var(--blue);color:#fff}
-
-/* mobile hamburger */
+.nav-tabs button.on,.nav-tabs button[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
 .ham-btn{display:none;background:none;border:none;color:var(--title);font-size:22px;cursor:pointer;padding:4px}
-@media(max-width:760px){
-  .ham-btn{display:block}
-  .nav-tabs{display:none;position:absolute;top:56px;left:0;width:100%;background:rgba(8,12,20,0.95);backdrop-filter:blur(20px);flex-direction:column;padding:12px;gap:4px;border-bottom:1px solid var(--border)}
-  .nav-tabs.open{display:flex}
-  .nav-right a span{display:none}
-}
 
-.main{max-width:960px;margin:0 auto;padding:0 24px 80px}
+/* ====== LAYOUT ====== */
+.page-wrap{max-width:1200px;margin:0 auto;padding:40px 28px 60px;display:grid;grid-template-columns:1fr 320px;gap:36px;align-items:start}
+@media(max-width:900px){.page-wrap{grid-template-columns:1fr;gap:28px;padding:24px 20px 60px}}
+.main-col{min-width:0}
+.side-col{position:sticky;top:80px}
 
-/* skeleton */
-.skeleton{display:grid;gap:16px}
-.skel-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px 26px;animation:pulse 1.8s ease-in-out infinite}
-.skel-card .s-line{height:14px;background:var(--border);border-radius:6px;margin-bottom:10px}
-.skel-card .s-line:nth-child(1){width:30%}
-.skel-card .s-line:nth-child(2){width:80%}
-.skel-card .s-line:nth-child(3){width:55%}
-@keyframes pulse{0%,100%{opacity:0.4}50%{opacity:0.8}}
-
-/* hero */
-.hero{text-align:center;padding:52px 0 12px}
+/* ====== HERO ====== */
+.hero{text-align:center;padding:0 0 8px;grid-column:1/-1}
 .site-name{font-size:40px;font-weight:800;color:var(--title);background:linear-gradient(135deg,var(--cyan)0%,var(--purple)50%,var(--pink)100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px}
 .site-desc{font-size:14px;color:var(--muted);margin-top:8px;letter-spacing:3px;font-weight:300}
 
-/* quote */
-.quote-wrap{max-width:700px;margin:0 auto 40px}
-.quote-card{background:linear-gradient(135deg,rgba(155,114,242,0.05)0%,rgba(34,201,208,0.03)100%);border:1px solid var(--border);border-radius:20px;padding:32px 34px 28px;position:relative;overflow:hidden}
-.quote-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),transparent);opacity:0.4}
-.quote-card .qm{font-size:36px;opacity:0.08;position:absolute;top:10px;left:16px;line-height:1}
-.quote-card p{font-size:14px;color:#9ba9c6;line-height:2.3;text-align:center;position:relative;z-index:1;letter-spacing:0.8px}
-.quote-card .q-act{position:absolute;bottom:10px;right:18px;display:flex;gap:8px;z-index:2}
+/* ====== QUOTE ====== */
+.quote-card{background:linear-gradient(135deg,rgba(155,114,242,0.06)0%,rgba(34,201,208,0.04)100%);border:1px solid var(--border);border-radius:20px;padding:26px 28px 22px;position:relative;overflow:hidden;margin-bottom:0}
+.quote-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),transparent);opacity:0.5}
+.quote-card .qm{font-size:32px;opacity:0.06;position:absolute;top:8px;left:14px;line-height:1}
+.quote-card p{font-size:13px;color:#9ba9c6;line-height:2.2;text-align:center;position:relative;z-index:1;letter-spacing:0.6px}
+.quote-card .q-act{display:flex;gap:6px;justify-content:center;margin-top:14px;position:relative;z-index:2}
 .quote-card .q-act button{background:none;border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:12px;cursor:pointer;font-size:11px;transition:all 0.2s}
 .quote-card .q-act button:hover{border-color:var(--cyan);color:var(--cyan)}
 .quote-card .q-act button.done{border-color:var(--green);color:var(--green)}
 
-/* tools */
-.tools-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px}
-@media(max-width:760px){.tools-row{grid-template-columns:1fr}}
-.tool-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px 20px;transition:all 0.35s;position:relative;overflow:hidden}
-.tool-card:hover{border-color:rgba(255,255,255,0.12);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,0.2)}
-.tool-card .t-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:8px}
-.tool-card .t-main{font-size:15px;color:var(--title);font-weight:600;line-height:1.5}
-.tool-card .t-sub{font-size:12px;color:var(--muted);margin-top:4px}
-.tool-card .t-action{display:inline-block;margin-top:10px;padding:5px 14px;border-radius:14px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:11px;transition:all 0.2s}
-.tool-card .t-action:hover{border-color:var(--cyan);color:var(--cyan)}
-.tool-card.date-card .t-main{font-size:28px;font-weight:700;color:var(--cyan)}
-.tool-card.riddle-card .t-input{width:100%;margin-top:10px;padding:8px 14px;border-radius:var(--rs);border:1px solid var(--border);background:var(--bg);color:var(--title);font-size:14px;outline:none;transition:border-color 0.2s}
-.tool-card.riddle-card .t-input:focus{border-color:var(--cyan)}
-.tool-card.riddle-card .t-feedback{font-size:12px;margin-top:6px;min-height:18px}
-.tool-card.riddle-card .t-feedback.correct{color:var(--green)}
-.tool-card.riddle-card .t-feedback.wrong{color:var(--red)}
+/* ====== SIDEBAR CARDS ====== */
+.side-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:14px;transition:border-color 0.3s}
+.side-card:hover{border-color:rgba(255,255,255,0.08)}
+.side-card .sc-title{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:10px;font-weight:600}
+.side-card.date-card .sc-main{font-size:18px;font-weight:700;color:var(--cyan);margin-bottom:2px}
+.side-card.date-card .sc-sub{font-size:12px;color:var(--muted)}
+.side-card .sc-main{font-size:14px;color:var(--title);font-weight:600;line-height:1.5}
+.side-card .sc-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.side-card .sc-btn{display:inline-block;margin-top:8px;padding:4px 12px;border-radius:12px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:11px;transition:all 0.2s}
+.side-card .sc-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.side-card .sc-input{width:100%;margin-top:8px;padding:7px 12px;border-radius:var(--rs);border:1px solid var(--border);background:var(--bg);color:var(--title);font-size:13px;outline:none}
+.side-card .sc-input:focus{border-color:var(--cyan)}
+.side-card .sc-fb{font-size:11px;margin-top:4px;min-height:16px}
+.side-card .sc-fb.ok{color:var(--green)}
+.side-card .sc-fb.no{color:var(--red)}
 
-/* stats */
-.stats-row{display:flex;gap:16px;justify-content:center;margin-bottom:32px}
-.stat-item{text-align:center;padding:16px 28px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);transition:all 0.3s;cursor:default}
-.stat-item:hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:0 8px 25px rgba(155,114,242,0.06)}
-.stat-num{font-size:30px;font-weight:700;color:var(--cyan)}
-.stat-label{font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:1px}
+/* stats in sidebar */
+.side-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.side-stats .ss{text-align:center;padding:10px 8px;background:var(--bg);border-radius:var(--rs);border:1px solid transparent;transition:all 0.2s}
+.side-stats .ss:hover{border-color:var(--border)}
+.side-stats .ss .n{font-size:20px;font-weight:700;color:var(--cyan)}
+.side-stats .ss .l{font-size:10px;color:var(--muted)}
+
+/* side nav links */
+.side-links{display:flex;flex-direction:column;gap:2px}
+.side-links a{display:flex;align-items:center;gap:6px;padding:7px 10px;border-radius:var(--rs);font-size:12px;color:var(--muted);transition:all 0.2s}
+.side-links a:hover{background:var(--bg);color:var(--title)}
+
+/* side rate */
+.side-rate{text-align:center;padding:8px;font-size:13px;color:var(--muted)}
+.side-rate .rv{color:var(--gold);font-weight:600;font-size:16px}
+
+/* ====== MAIN CONTENT ====== */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.section-title{font-size:16px;font-weight:700;color:var(--title);letter-spacing:1px}
 
 /* sub tags */
-.sub-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;justify-content:center;role:group;aria-label:子分类筛选}
-.sub-btn{padding:7px 18px;border-radius:18px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:12px;transition:all 0.25s;font-weight:500}
+.sub-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.sub-btn{padding:5px 14px;border-radius:14px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:11px;transition:all 0.25s;font-weight:500}
 .sub-btn:hover{border-color:var(--cyan);color:var(--cyan)}
 .sub-btn.on,.sub-btn[aria-pressed="true"]{background:rgba(34,201,208,0.1);border-color:var(--cyan);color:var(--cyan)}
 
 /* search */
-.search-wrap{margin-bottom:24px}
-.search-wrap input{width:100%;max-width:520px;margin:0 auto;display:block;padding:12px 20px;border-radius:24px;border:1px solid var(--border);background:var(--card);color:var(--title);font-size:14px;outline:none;transition:all 0.3s}
-.search-wrap input:focus{border-color:var(--purple);box-shadow:0 0 24px rgba(155,114,242,0.06)}
+.search-wrap{margin-bottom:18px}
+.search-wrap input{width:100%;padding:11px 18px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--title);font-size:14px;outline:none;transition:all 0.3s}
+.search-wrap input:focus{border-color:var(--purple);box-shadow:0 0 20px rgba(155,114,242,0.05)}
 .search-wrap input::placeholder{color:var(--muted)}
 
-/* post cards */
-.post-grid{display:grid;gap:14px}
-.post-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px 26px;cursor:pointer;transition:all 0.35s cubic-bezier(0.25,0.1,0.25,1);position:relative;overflow:hidden}
+/* post grid - 2 columns on desktop */
+.post-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:900px){.post-grid{grid-template-columns:1fr}}
+.post-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;cursor:pointer;transition:all 0.35s cubic-bezier(0.25,0.1,0.25,1);position:relative;overflow:hidden}
 .post-card::after{content:"";position:absolute;bottom:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),transparent);transform:scaleX(0);transition:transform 0.4s;opacity:0.3}
 .post-card:hover,.post-card:focus-within{background:var(--card-hover);border-color:rgba(255,255,255,0.08);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,0.35)}
 .post-card:hover::after,.post-card:focus-within::after{transform:scaleX(1)}
-.post-card .p-meta{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:12px;flex-wrap:wrap}
-.post-card .p-tag{padding:3px 10px;border-radius:10px;font-size:11px;letter-spacing:0.5px;font-weight:500}
+.post-card .p-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:11px;flex-wrap:wrap}
+.post-card .p-tag{padding:2px 10px;border-radius:10px;font-size:10px;letter-spacing:0.5px;font-weight:500}
 .post-card .p-date{color:var(--muted)}
-.post-card .p-read{color:var(--muted);font-size:11px}
-.post-card h3{font-size:17px;color:var(--title);margin-bottom:6px;line-height:1.4;font-weight:600}
-.post-card .p-excerpt{font-size:13px;color:var(--muted);line-height:1.6}
+.post-card .p-read{color:var(--muted);font-size:11px;margin-left:auto}
+.post-card h3{font-size:16px;color:var(--title);margin-bottom:6px;line-height:1.4;font-weight:600}
+.post-card .p-excerpt{font-size:13px;color:var(--muted);line-height:1.5}
 
-/* pagination */
-.pager{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:28px}
+/* ====== PAGINATION ====== */
+.pager{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:24px}
 .pager button{padding:8px 16px;border-radius:16px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:13px;transition:all 0.2s}
 .pager button:hover:not(:disabled){border-color:var(--cyan);color:var(--cyan)}
 .pager button:disabled{opacity:0.3;cursor:default}
 .pager button.pg-on{background:var(--cyan);border-color:var(--cyan);color:#000;font-weight:600}
 .pager .pg-info{font-size:12px;color:var(--muted);padding:0 8px}
 
-/* article */
+/* ====== ARTICLE VIEW ====== */
+.article-full{grid-column:1/-1}
 .article{animation:fadeIn 0.45s ease-out}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .article .back-btn{display:inline-flex;align-items:center;gap:4px;color:var(--muted);cursor:pointer;font-size:13px;margin-bottom:12px;padding:6px 16px;border-radius:16px;border:1px solid transparent;transition:all 0.2s}
 .article .back-btn:hover{color:var(--cyan);border-color:var(--border);background:var(--card)}
-.article .toc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:28px}
-.article .toc .toc-title{font-size:12px;font-weight:700;color:var(--title);margin-bottom:10px;letter-spacing:2px;text-transform:uppercase}
+.article .toc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;margin-bottom:24px}
+.article .toc .toc-title{font-size:11px;font-weight:700;color:var(--title);margin-bottom:8px;letter-spacing:2px;text-transform:uppercase}
 .article .toc a{display:block;color:var(--muted);font-size:13px;padding:5px 0 5px 6px;transition:all 0.2s;border-left:2px solid transparent;border-radius:0 4px 4px 0}
 .article .toc a:hover{color:var(--cyan);border-left-color:var(--cyan);padding-left:14px;background:rgba(34,201,208,0.03)}
 .article .toc a.toc-h3{padding-left:22px;font-size:12px}
-.article h1{font-size:30px;color:var(--title);line-height:1.3;margin-bottom:12px;font-weight:700}
-.article .art-meta{font-size:13px;color:var(--muted);margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.article h1{font-size:30px;color:var(--title);line-height:1.3;margin-bottom:12px;font-weight:700;letter-spacing:0.5px}
+.article .art-meta{font-size:13px;color:var(--muted);margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .article .art-meta .art-source{color:var(--cyan)}
-.article .content{font-size:16px;line-height:2}
+.article .content{font-size:16px;line-height:2;max-width:780px}
 .article .content h2{font-size:22px;color:var(--title);margin:36px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border);font-weight:600}
 .article .content h3{font-size:18px;color:var(--cyan);margin:28px 0 8px;font-weight:600}
 .article .content p{margin-bottom:14px}
-.article .content ul,.article .content ol{margin:0 0 14px 24px}
-.article .content li{margin-bottom:6px}
+.article .content ul,.article .content ol{margin:0 0 14px 24px}.article .content li{margin-bottom:6px}
 .article .content blockquote{border-left:3px solid var(--purple);padding:12px 20px;margin:18px 0;background:rgba(155,114,242,0.04);border-radius:0 8px 8px 0;color:var(--muted)}
 .article .content code{background:var(--card);padding:2px 8px;border-radius:4px;color:var(--cyan);font-size:0.9em}
 .article .content pre{background:#0a0d14;padding:16px 20px;border-radius:var(--rs);overflow-x:auto;margin-bottom:14px;border:1px solid var(--border)}
 .article .content pre code{background:none;padding:0;color:var(--text)}
 .article .content table{width:100%;border-collapse:collapse;margin:14px 0}
-.article .content td,.article .content th{border:1px solid var(--border);padding:10px 14px;text-align:left}
+.article .content td,.article .content th{border:1px solid var(--border);padding:10px 14px}
 .article .content th{background:var(--card);color:var(--title);font-weight:600;font-size:13px}
 .article .content a{color:var(--cyan)}
 .article .content strong{color:var(--title)}
 .article .content img{max-width:100%;border-radius:var(--rs)}
-.article .share-row{display:flex;gap:8px;margin-top:40px;padding-top:20px;border-top:1px solid var(--border)}
+.article .share-row{display:flex;gap:8px;margin-top:36px;padding-top:18px;border-top:1px solid var(--border)}
 .article .share-row button{padding:6px 16px;border-radius:14px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:12px;transition:all 0.2s}
 .article .share-row button:hover{border-color:var(--cyan);color:var(--cyan)}
 
-/* error */
-.error-box{text-align:center;padding:60px 20px}
-.error-box button{padding:10px 24px;border-radius:18px;border:1px solid var(--cyan);background:transparent;color:var(--cyan);cursor:pointer;font-size:14px;margin-top:16px;transition:all 0.2s}
-.error-box button:hover{background:rgba(34,201,208,0.08)}
+/* ====== SKELETON ====== */
+.skeleton{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:900px){.skeleton{grid-template-columns:1fr}}
+.skel-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;animation:pulse 1.8s ease-in-out infinite}
+.skel-card .s-line{height:14px;background:var(--border);border-radius:6px;margin-bottom:10px}
+.skel-card .s-line:nth-child(1){width:30%}
+.skel-card .s-line:nth-child(2){width:80%}
+.skel-card .s-line:nth-child(3){width:55%}
+@keyframes pulse{0%,100%{opacity:0.4}50%{opacity:0.8}}
 
-/* TODO overlay */
+/* ====== MISC ====== */
+.error-box{text-align:center;padding:60px 20px}
+.error-box button{padding:10px 24px;border-radius:18px;border:1px solid var(--cyan);background:transparent;color:var(--cyan);cursor:pointer;font-size:14px;margin:8px;transition:all 0.2s}
+.error-box button:hover{background:rgba(34,201,208,0.08)}
+.msg{text-align:center;padding:40px 20px;color:var(--muted)}
+.footer{text-align:center;padding:32px 28px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);max-width:1200px;margin:0 auto;letter-spacing:1px;position:relative;z-index:1}
+.footer .days{color:var(--cyan);font-weight:600}
+
+/* ====== TODO OVERLAY ====== */
 .todo-overlay{position:fixed;inset:0;background:rgba(8,12,20,0.92);z-index:400;display:none;align-items:center;justify-content:center}
 .todo-overlay.on{display:flex}
 .todo-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);width:500px;max-width:90vw;max-height:80vh;overflow-y:auto;padding:28px}
-.todo-panel h2{color:var(--title);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.todo-panel h2{color:var(--title);margin-bottom:16px}
 .todo-panel .td-input-row{display:flex;gap:8px;margin-bottom:16px}
 .todo-panel .td-input-row input{flex:1;padding:10px 14px;border-radius:var(--rs);border:1px solid var(--border);background:var(--bg);color:var(--title);font-size:14px;outline:none}
-.todo-panel .td-input-row input:focus{border-color:var(--cyan)}
-.todo-panel .td-input-row button{padding:10px 20px;border-radius:var(--rs);border:none;background:var(--cyan);color:#000;cursor:pointer;font-weight:600;font-size:13px;transition:all 0.2s}
-.todo-panel .td-input-row button:hover{opacity:0.85}
+.todo-panel .td-input-row button{padding:10px 20px;border-radius:var(--rs);border:none;background:var(--cyan);color:#000;cursor:pointer;font-weight:600;font-size:13px}
 .todo-panel .td-list{list-style:none}
 .todo-panel .td-list li{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
 .todo-panel .td-list li.done .td-text{text-decoration:line-through;color:var(--muted)}
-.todo-panel .td-list .td-toggle{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);cursor:pointer;flex-shrink:0;transition:all 0.2s}
+.todo-panel .td-list .td-toggle{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);cursor:pointer;flex-shrink:0}
 .todo-panel .td-list li.done .td-toggle{background:var(--green);border-color:var(--green)}
 .todo-panel .td-list .td-text{flex:1}
 .todo-panel .td-list .td-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:2px 6px}
 .todo-panel .td-list .td-del:hover{color:var(--red)}
-.todo-panel .td-close{display:block;width:100%;margin-top:16px;padding:8px;border-radius:var(--rs);border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:13px;transition:all 0.2s}
-.todo-panel .td-close:hover{color:var(--red);border-color:var(--red)}
 .todo-panel .td-pw-row{display:flex;gap:8px;margin-bottom:16px}
 .todo-panel .td-pw-row input{flex:1;padding:10px 14px;border-radius:var(--rs);border:1px solid var(--border);background:var(--bg);color:var(--title);font-size:14px;outline:none}
 .todo-panel .td-pw-row button{padding:10px 20px;border-radius:var(--rs);border:none;background:var(--purple);color:#fff;cursor:pointer;font-weight:600;font-size:13px}
-.todo-empty{text-align:center;padding:30px;color:var(--muted);font-size:13px}
+.todo-panel .td-close{display:block;width:100%;margin-top:16px;padding:8px;border-radius:var(--rs);border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:13px}
+.todo-panel .td-close:hover{color:var(--red);border-color:var(--red)}
 
-/* float buttons */
+/* ====== FLOATING BUTTONS ====== */
 #toTop{position:fixed;bottom:32px;right:28px;z-index:150;width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);transition:all 0.35s;pointer-events:none;backdrop-filter:blur(8px)}
 #toTop.show{opacity:1;transform:translateY(0);pointer-events:auto}
 #toTop:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 6px 24px rgba(34,201,208,0.12)}
@@ -218,34 +226,31 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 .breath-btn:hover{border-color:var(--purple);color:var(--purple);box-shadow:0 6px 24px rgba(155,114,242,0.12)}
 .todo-nav-btn{padding:6px 12px!important;font-size:12px!important}
 
-/* breath */
+/* ====== BREATH ====== */
 .breath-overlay{position:fixed;inset:0;background:rgba(8,12,20,0.88);z-index:300;display:none;align-items:center;justify-content:center}
 .breath-overlay.on{display:flex}
 .breath-circle{width:170px;height:170px;border-radius:50%;border:3px solid var(--purple);margin:0 auto 24px;display:flex;align-items:center;justify-content:center;transition:all 4s ease-in-out;color:var(--title);font-size:18px;letter-spacing:2px}
 .breath-circle.inhale{transform:scale(1.5);border-color:var(--cyan);box-shadow:0 0 60px rgba(34,201,208,0.18)}
 .breath-circle.hold{border-color:var(--gold)}
 .breath-circle.exhale{transform:scale(0.8);border-color:var(--purple)}
-.breath-close{color:var(--muted);cursor:pointer;font-size:13px;border:1px solid var(--border);padding:6px 22px;border-radius:16px;background:none;transition:all 0.2s}
+.breath-close{color:var(--muted);cursor:pointer;font-size:13px;border:1px solid var(--border);padding:6px 22px;border-radius:16px;background:none}
 .breath-close:hover{color:var(--red);border-color:var(--red)}
-.msg{text-align:center;padding:60px 20px;color:var(--muted)}
-.footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);max-width:960px;margin:0 auto;letter-spacing:1px;position:relative;z-index:1}
-.footer .days{color:var(--cyan);font-weight:600}
+
+/* ====== MOBILE ====== */
+@media(max-width:760px){
+  .ham-btn{display:block}
+  .nav-right .nav-tabs{display:none;position:absolute;top:56px;left:0;width:100%;background:rgba(8,12,20,0.96);backdrop-filter:blur(20px);flex-direction:column;padding:12px;gap:2px;border-bottom:1px solid var(--border)}
+  .nav-right .nav-tabs.open{display:flex}
+  .nav-right a span{display:none}
+  .site-name{font-size:28px}
+  .post-card h3{font-size:15px}
+  .article h1{font-size:23px}
+  .breath-btn{right:76px;bottom:84px}
+}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-@media(max-width:700px){
-  .site-name{font-size:28px}
-  .quote-card p{font-size:13px;line-height:2}
-  .post-card h3{font-size:15px}
-  .article h1{font-size:23px}
-  .stats-row{gap:10px}
-  .stat-item{padding:12px 18px}
-  .stat-num{font-size:24px}
-  .breath-btn{right:76px;bottom:84px}
-}
-
-/* sr-only */
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
 </head>
 <body>
@@ -266,44 +271,37 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
         <button role="tab" aria-selected="false" data-tab="fitness" onclick="switchTab('fitness')">每日健身</button>
         <button role="tab" aria-selected="false" data-tab="ai-news" onclick="switchTab('ai-news')">AI新闻</button>
       </div>
-      <a class="spotify" href="https://open.spotify.com" target="_blank" rel="noopener" aria-label="Spotify" title="Spotify">
+      <a class="spotify" href="https://open.spotify.com" target="_blank" rel="noopener" aria-label="Spotify">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-        <span>Spotify</span>
       </a>
-      <a class="bilibili" href="https://www.bilibili.com" target="_blank" rel="noopener" aria-label="Bilibili" title="Bilibili">
+      <a class="bilibili" href="https://www.bilibili.com" target="_blank" rel="noopener" aria-label="Bilibili">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 01-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 01.16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/></svg>
-        <span>Bilibili</span>
       </a>
-      <a class="todo-nav-btn" href="javascript:openTodo()" aria-label="待办清单" title="待办清单">📋 待办</a>
+      <a class="todo-nav-btn" href="javascript:openTodo()" aria-label="待办清单">📋 待办</a>
     </div>
   </div>
 </nav>
 
-<main class="main" id="main" role="main"></main>
+<div class="page-wrap" id="pageWrap"><!-- JS fills --></div>
 <footer class="footer" id="footer" role="contentinfo"></footer>
 
 </div>
 
-<!-- TODO overlay -->
-<div class="todo-overlay" id="todoOverlay">
-  <div class="todo-panel" id="todoPanel"></div>
+<!-- TODO -->
+<div class="todo-overlay" id="todoOverlay"><div class="todo-panel" id="todoPanel"></div></div>
+
+<button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑</button>
+<button class="breath-btn" id="breathBtn" aria-label="呼吸放松">🧘</button>
+<div class="breath-overlay" id="breathOverlay" role="dialog" aria-label="呼吸放松">
+  <div style="text-align:center"><div class="breath-circle" id="breathCircle">准备</div><button class="breath-close" onclick="stopBreath()">关闭</button></div>
 </div>
 
-<button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部" title="回到顶部">↑</button>
-<button class="breath-btn" id="breathBtn" aria-label="呼吸放松" title="呼吸放松">🧘</button>
-<div class="breath-overlay" id="breathOverlay" role="dialog" aria-label="呼吸放松练习">
-  <div style="text-align:center">
-    <div class="breath-circle" id="breathCircle">准备</div>
-    <button class="breath-close" onclick="stopBreath()">关闭</button>
-  </div>
-</div>
-
-<!-- 星空 -->
+<!-- Stars -->
 <script>
 (function(){
-  const c=document.getElementById('particles'),ctx=c.getContext('2d');
-  let stars=[],w,h;function R(){w=c.width=window.innerWidth;h=c.height=window.innerHeight}R();window.onresize=R;
-  for(let i=0;i<80;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+0.4,o:Math.random(),s:Math.random()*0.004+0.0015});
+  const c=document.getElementById('particles'),ctx=c.getContext('2d');let stars=[],w,h;
+  function R(){w=c.width=window.innerWidth;h=c.height=window.innerHeight}R();window.onresize=R;
+  for(let i=0;i<100;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+0.4,o:Math.random(),s:Math.random()*0.004+0.0015});
   (function D(){ctx.clearRect(0,0,w,h);stars.forEach(s=>{s.o+=s.s;if(s.o>1||s.o<0)s.s*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(155,180,220,${s.o*0.55})`;ctx.fill()});requestAnimationFrame(D)})()
 })();
 </script>
@@ -321,35 +319,17 @@ const SUBS={
 };
 const SUB_NAMES={};Object.values(SUBS).forEach(a=>a.forEach(s=>SUB_NAMES[s.key]=s.name));
 const QUOTE=`你来了，愿你在人海茫茫中，仍能像一朵小小的白云，自由地飘过蓝天，不惊扰任何人，却把自己的洁白与柔软留给这世界。愿你的心永远清澈如山间清泉，无论世事如何喧嚣，都能映照出星光与月色。愿你遇见的每一次风雨，都能化作滋养生命的甘露；愿你走过的每一条路，都开满安静而温柔的花。愿你带着孩子般的纯真与对美好的相信，一路平安，一路向光。`;
-
-// ====== 歇后语/字谜 ======
 const XIEHOUYU=[['外甥打灯笼','照旧（舅）'],['孔夫子搬家','尽是输（书）'],['小葱拌豆腐','一清二白'],['哑巴吃黄连','有苦说不出'],['竹篮打水','一场空'],['泥菩萨过江','自身难保'],['飞蛾扑火','自取灭亡'],['狗咬吕洞宾','不识好人心'],['姜太公钓鱼','愿者上钩'],['画蛇添足','多此一举'],['掩耳盗铃','自欺欺人'],['对牛弹琴','白费劲'],['海底捞针','无处寻'],['铁公鸡','一毛不拔'],['千里送鹅毛','礼轻情意重'],['兔子尾巴','长不了'],['热锅上的蚂蚁','团团转'],['茶壶里煮饺子','有口倒不出'],['擀面杖吹火','一窍不通'],['猪八戒照镜子','里外不是人'],['瞎子点灯','白费蜡'],['肉包子打狗','有去无回'],['隔着门缝看人','把人看扁了'],['和尚打伞','无法无天'],['猴子捞月','一场空'],['鸡蛋里挑骨头','找茬'],['老虎屁股','摸不得'],['秋后的蚂蚱','蹦跶不了几天'],['司马昭之心','路人皆知'],['周瑜打黄盖','一个愿打一个愿挨'],['刘备借荆州','有借无还'],['王婆卖瓜','自卖自夸'],['黄鼠狼给鸡拜年','没安好心'],['打破砂锅','问到底'],['芝麻开花','节节高'],['八仙过海','各显神通']];
 const ZIMI=[['一口吃掉牛尾巴','告'],['皇帝的新衣','袭'],['一千零一夜','歼'],['秀才进门','闭'],['半青半紫','素'],['争先恐后','急'],['半导体','付'],['吹灯','黑'],['独眼龙','省'],['二月平','朋'],['格外大方','回'],['黄昏','晒'],['九十九','白'],['文武双全','斌'],['一大二小','奈'],['十八子','李'],['三人行','众'],['三日','晶'],['十五天','胖'],['六十天','朋'],['一加一','王'],['一百减一','白'],['七人头上长了草','花'],['一箭穿心','必'],['一人一张口','合'],['山上还有山','出'],['十张口','古'],['一斗米','料'],['一只黑狗不叫不吼','默'],['差一点六斤','兵'],['需要一半留下一半','雷'],['推开又来','摊'],['多一半','夕'],['四方来合作','器'],['守门员','闪'],['没有人','门'],['刀出鞘','力'],['打断念头','心'],['手提包','抱']];
 let todayXHY=null,todayZM=null;
-function pickXHY(){todayXHY={q:(XIEHOUYU[Math.floor(Math.random()*XIEHOUYU.length)])[0],a:(XIEHOUYU[Math.floor(Math.random()*XIEHOUYU.length)])[1],show:false}}
+function pickXHY(){const x=XIEHOUYU[Math.floor(Math.random()*XIEHOUYU.length)];todayXHY={q:x[0],a:x[1],show:false}}
 function pickZM(){const z=ZIMI[Math.floor(Math.random()*ZIMI.length)];todayZM={q:z[0],a:z[1]};riddleAnswer=z[1]}
 
 // ====== LOAD ======
-async function fetchRate(){
-  const now=Date.now();
-  if(rubRate&&(now-rateCacheTime)<3600000)return; // 1h cache
-  try{const r=await fetch('https://open.er-api.com/v6/latest/CNY');rubRate=(await r.json()).rates?.RUB||null;rateCacheTime=now}catch(e){}
-}
+async function fetchRate(){const now=Date.now();if(rubRate&&(now-rateCacheTime)<3600000)return;try{const r=await fetch('https://open.er-api.com/v6/latest/CNY');rubRate=(await r.json()).rates?.RUB||null;rateCacheTime=now}catch(e){}}
 function catName(c){const m={'cross-border':'跨境电商','fitness':'每日健身','ai-news':'AI新闻'};return m[c]||c}
 function readTime(t){return Math.max(1,Math.ceil((t||'').length/8))+' 分钟阅读'}
-
-async function loadData(retry=true){
-  try{
-    const r=await fetch('posts/posts.json?v='+Date.now());
-    if(!r.ok)throw Error('HTTP '+r.status);
-    posts=await r.json();posts.sort((a,b)=>b.date.localeCompare(a.date));
-    return true;
-  }catch(e){
-    console.error(e);
-    if(retry){await new Promise(r=>setTimeout(r,2000));return loadData(false)}
-    return false;
-  }
-}
+async function loadData(retry=true){try{const r=await fetch('posts/posts.json?v='+Date.now());if(!r.ok)throw Error('HTTP '+r.status);posts=await r.json();posts.sort((a,b)=>b.date.localeCompare(a.date));return true}catch(e){console.error(e);if(retry){await new Promise(r=>setTimeout(r,2000));return loadData(false)}return false}}
 
 // ====== RENDER ======
 function render(){
@@ -360,62 +340,51 @@ function render(){
 
   const totalPages=Math.max(1,Math.ceil(filtered.length/PER_PAGE));
   if(currentPage>totalPages)currentPage=totalPages;
-  const start=(currentPage-1)*PER_PAGE;
-  const pageItems=filtered.slice(start,start+PER_PAGE);
+  const start=(currentPage-1)*PER_PAGE,pageItems=filtered.slice(start,start+PER_PAGE);
 
   const isHome=currentTab==='all'&&currentSub==='all'&&!currentSearch;
   const days=Math.ceil((Date.now()-SITE_START)/86400000);
-  const main=document.getElementById('main');
   if(!todayXHY)pickXHY();if(!todayZM)pickZM();
-  const now=new Date();
-  const weekDays=['日','一','二','三','四','五','六'];
+  const now=new Date(),weekDays=['日','一','二','三','四','五','六'];
   const dateStr=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 星期${weekDays[now.getDay()]}`;
+  const counts={};for(let t of['cross-border','fitness','ai-news'])counts[t]=posts.filter(p=>p.cat===t).length;
 
+  const wrap=document.getElementById('pageWrap');
   let html='';
 
-  // Hero
-  html+=`<section class="hero" aria-label="网站标题"><h1 class="site-name">猫明之主小站</h1><p class="site-desc">跨境电商 & 健身 & AI · 安静学习，温柔生长</p></section>`;
+  // Hero (full width)
+  html+=`<section class="hero" aria-label="网站标题" style="grid-column:1/-1"><h1 class="site-name">猫明之主小站</h1><p class="site-desc">跨境电商 & 健身 & AI · 安静学习，温柔生长</p></section>`;
 
-  // Quote (首页)
+  // MAIN COLUMN
+  html+=`<div class="main-col">`;
+
+  // Quote (home only)
   if(isHome){
-    html+=`<div class="quote-wrap"><div class="quote-card"><span class="qm" aria-hidden="true">"</span><p>${QUOTE}</p><div class="q-act"><button onclick="copyQuote()" aria-label="复制引言">📋 复制</button><button onclick="pickXHY();pickZM();render()" aria-label="换一换歇后语和字谜">🎲 换一换</button></div></div></div>`;
+    html+=`<div class="quote-card"><span class="qm" aria-hidden="true">"</span><p>${QUOTE}</p><div class="q-act"><button onclick="copyQuote()" aria-label="复制引言">📋 复制</button><button onclick="pickXHY();pickZM();render()" aria-label="换一换">🎲 换一换</button></div></div>`;
+    html+=`<div style="margin-bottom:20px"></div>`;
   }
 
-  // Tools
-  html+=`<div class="tools-row" aria-label="小工具">`;
-  html+=`<div class="tool-card date-card"><div class="t-label">今日</div><div class="t-main">${dateStr}</div><div class="t-sub">小站已运行 <span style="color:var(--cyan)">${days}</span> 天</div></div>`;
-  html+=`<div class="tool-card"><div class="t-label">歇后语</div><div class="t-main">${todayXHY.q}</div><div class="t-sub">${todayXHY.show?todayXHY.a:'🤔 猜猜后面是什么？'}</div><button class="t-action" onclick="revealXHY()" aria-label="${todayXHY.show?'换一个歇后语':'查看歇后语答案'}">${todayXHY.show?'换一个':'看答案'}</button></div>`;
-  html+=`<div class="tool-card riddle-card"><div class="t-label">猜字谜</div><div class="t-main">${todayZM.q}</div><input class="t-input" id="riddleInput" placeholder="输入你的答案..." onkeydown="if(event.key==='Enter')checkRiddle()" aria-label="字谜答案输入"><div class="t-feedback" id="riddleFeedback" aria-live="polite"></div></div>`;
-  html+=`</div>`;
-
-  // Stats
-  const counts={};for(let t of['cross-border','fitness','ai-news'])counts[t]=posts.filter(p=>p.cat===t).length;
-  html+=`<div class="stats-row" aria-label="文章统计"><div class="stat-item"><div class="stat-num">${posts.length}</div><div class="stat-label">全部文章</div></div><div class="stat-item"><div class="stat-num">${counts['cross-border']}</div><div class="stat-label">跨境电商</div></div><div class="stat-item"><div class="stat-num">${counts['fitness']}</div><div class="stat-label">每日健身</div></div><div class="stat-item"><div class="stat-num">${counts['ai-news']}</div><div class="stat-label">AI新闻</div></div></div>`;
-
-  // Sub tags
+  // Sub filters
   if(currentTab!=='all'){
     const subs=SUBS[currentTab]||[];
-    html+=`<div class="sub-row" role="group" aria-label="子分类筛选">`;
+    html+=`<div class="sub-row" role="group" aria-label="子分类">`;
     subs.forEach(s=>html+=`<button class="sub-btn${currentSub===s.key?' on':''}" onclick="switchSub('${s.key}')" aria-pressed="${currentSub===s.key}">${s.name}</button>`);
     html+=`</div>`;
   }
 
-  // Rate info
-  html+=`<p style="text-align:center;margin-bottom:18px;font-size:12px;color:var(--muted)">💱 1 CNY ≈ <span style="color:var(--gold);font-weight:600">${rubRate?rubRate.toFixed(2):'--'}</span> RUB</p>`;
-
   // Search
-  html+=`<div class="search-wrap"><input id="searchInput" placeholder="🔍 搜索文章..." value="${currentSearch.replace(/"/g,'&quot;')}" oninput="onSearch(this.value)" aria-label="搜索文章"></div>`;
+  html+=`<div class="search-wrap"><input id="searchInput" placeholder="🔍 搜索文章..." value="${currentSearch.replace(/"/g,'&quot;')}" oninput="onSearch(this.value)" aria-label="搜索"></div>`;
 
-  // Article list
+  // Posts
   html+=`<div id="articleList">`;
   if(!pageItems.length){
-    html+=`<div class="msg">✨ 暂无文章，等待内容更新</div>`;
+    html+=`<div class="msg">✨ 暂无文章，等待更新</div>`;
   }else{
     html+=`<div class="post-grid">`;
     pageItems.forEach(p=>{
       const colors={'cross-border':'var(--cyan)','fitness':'var(--green)','ai-news':'var(--purple)'};
-      const color=colors[p.cat]||'var(--cyan)';
-      html+=`<article class="post-card" tabindex="0" role="button" aria-label="阅读：${p.title}" onclick="showArticle('${p.slug}','${p.cat}')" onkeydown="if(event.key==='Enter')showArticle('${p.slug}','${p.cat}')"><div class="p-meta"><span class="p-tag" style="background:${color}22;color:${color}">${SUB_NAMES[p.sub]||catName(p.cat)}</span><span class="p-date">${p.date}</span><span class="p-read">${readTime(p.title)}</span></div><h3>${p.title}</h3><p class="p-excerpt">${p.excerpt||''}</p></article>`;
+      const c=colors[p.cat]||'var(--cyan)';
+      html+=`<article class="post-card" tabindex="0" role="button" aria-label="阅读：${p.title}" onclick="showArticle('${p.slug}','${p.cat}')" onkeydown="if(event.key==='Enter')showArticle('${p.slug}','${p.cat}')"><div class="p-meta"><span class="p-tag" style="background:${c}22;color:${c}">${SUB_NAMES[p.sub]||catName(p.cat)}</span><span class="p-date">${p.date}</span><span class="p-read">${readTime(p.title)}</span></div><h3>${p.title}</h3><p class="p-excerpt">${p.excerpt||''}</p></article>`;
     });
     html+=`</div>`;
   }
@@ -423,31 +392,74 @@ function render(){
 
   // Pagination
   if(totalPages>1){
-    html+=`<nav class="pager" aria-label="分页导航">`;
-    html+=`<button onclick="goPage(${currentPage-1})" ${currentPage<=1?'disabled':''} aria-label="上一页">←</button>`;
-    html+=`<span class="pg-info">${currentPage} / ${totalPages}</span>`;
-    for(let i=Math.max(1,currentPage-2);i<=Math.min(totalPages,currentPage+2);i++){
-      html+=`<button onclick="goPage(${i})" class="${i===currentPage?'pg-on':''}" aria-label="第${i}页" aria-current="${i===currentPage?'page':'false'}">${i}</button>`;
-    }
-    html+=`<button onclick="goPage(${currentPage+1})" ${currentPage>=totalPages?'disabled':''} aria-label="下一页">→</button>`;
-    html+=`</nav>`;
+    html+=`<nav class="pager" aria-label="分页"><button onclick="goPage(${currentPage-1})" ${currentPage<=1?'disabled':''}>←</button><span class="pg-info">${currentPage} / ${totalPages}</span>`;
+    for(let i=Math.max(1,currentPage-2);i<=Math.min(totalPages,currentPage+2);i++)html+=`<button onclick="goPage(${i})" class="${i===currentPage?'pg-on':''}" aria-current="${i===currentPage?'page':'false'}">${i}</button>`;
+    html+=`<button onclick="goPage(${currentPage+1})" ${currentPage>=totalPages?'disabled':''}>→</button></nav>`;
   }
+  html+=`</div>`; // end main-col
 
-  main.innerHTML=html;
-  main.style.animation='fadeIn 0.4s ease-out';
+  // SIDEBAR
+  html+=`<aside class="side-col" aria-label="侧边栏">`;
+
+  // Date card
+  html+=`<div class="side-card date-card"><div class="sc-title">📅 今日</div><div class="sc-main">${dateStr}</div><div class="sc-sub">已运行 <span style="color:var(--cyan)">${days}</span> 天</div></div>`;
+
+  // Stats
+  html+=`<div class="side-card"><div class="sc-title">📊 文章统计</div><div class="side-stats"><div class="ss"><div class="n">${posts.length}</div><div class="l">全部</div></div><div class="ss"><div class="n">${counts['cross-border']}</div><div class="l">跨境</div></div><div class="ss"><div class="n">${counts['fitness']}</div><div class="l">健身</div></div><div class="ss"><div class="n">${counts['ai-news']}</div><div class="l">AI</div></div></div></div>`;
+
+  // Rate
+  html+=`<div class="side-card"><div class="side-rate">💱 1 CNY ≈ <span class="rv">${rubRate?rubRate.toFixed(2):'--'}</span> RUB</div></div>`;
+
+  // Xiehouyu
+  html+=`<div class="side-card"><div class="sc-title">🀄 歇后语</div><div class="sc-main" style="font-size:13px">${todayXHY.q}</div><div class="sc-sub">${todayXHY.show?todayXHY.a:'🤔 后半句是？'}</div><button class="sc-btn" onclick="revealXHY()">${todayXHY.show?'换一个':'看答案'}</button></div>`;
+
+  // Riddle
+  html+=`<div class="side-card"><div class="sc-title">🧩 猜字谜</div><div class="sc-main" style="font-size:14px;letter-spacing:1px">${todayZM.q}</div><input class="sc-input" id="riddleInput" placeholder="输入答案..." onkeydown="if(event.key==='Enter')checkRiddle()" aria-label="字谜答案"><div class="sc-fb" id="riddleFeedback" aria-live="polite"></div></div>`;
+
+  // Quick links
+  html+=`<div class="side-card"><div class="sc-title">🔗 快捷入口</div><div class="side-links"><a href="javascript:switchTab('cross-border')">🚀 跨境电商</a><a href="javascript:switchTab('fitness')">💪 每日健身</a><a href="javascript:switchTab('ai-news')">🤖 AI新闻</a><a href="javascript:openTodo()">📋 待办清单</a><a href="javascript:startBreath()">🧘 呼吸放松</a></div></div>`;
+
+  html+=`</aside>`; // end side-col
+
+  wrap.innerHTML=html;
+  wrap.style.animation='fadeIn 0.4s ease-out';
+
   document.getElementById('footer').innerHTML=`© 2026 猫明之主小站 · 已安静运行 <span class="days">${days}</span> 天 · <a href="javascript:startBreath()" style="color:var(--muted);text-decoration:none">🧘 呼吸放松</a>`;
 
-  // Update tab aria
+  // Update nav tabs
   document.querySelectorAll('.nav-tabs button').forEach(b=>{
     b.setAttribute('aria-selected',b.dataset.tab===currentTab);
     b.classList.toggle('on',b.dataset.tab===currentTab);
   });
 }
 
+// ====== ARTICLE VIEW ======
+async function showArticle(slug,cat){
+  const wrap=document.getElementById('pageWrap');
+  wrap.innerHTML=`<div class="article-full"><div class="skeleton" style="grid-template-columns:1fr">${Array(4).fill('<div class="skel-card"><div class="s-line"></div><div class="s-line"></div><div class="s-line"></div></div>').join('')}</div></div>`;
+  window.scrollTo(0,0);
+  try{
+    const r=await fetch('posts/'+slug+'.md');if(!r.ok)throw Error('404');
+    const md=await r.text(),post=posts.find(p=>p.slug===slug);
+    const colors={'cross-border':'var(--cyan)','fitness':'var(--green)','ai-news':'var(--purple)'};
+    const c=colors[cat]||'var(--cyan)';
+    const toc=buildTOC(md);
+    const shareURL=encodeURIComponent(`https://20020426.top/#post/${slug}/${cat}`);
+    const shareTitle=encodeURIComponent(post?.title||'');
+    wrap.innerHTML=`<div class="article-full"><article class="article" aria-label="文章详情"><button class="back-btn" onclick="switchTab('${cat}')">← 返回${catName(cat)}</button><h1>${post?.title||''}</h1><div class="art-meta"><span style="color:${c}">${SUB_NAMES[post?.sub]||catName(cat)}</span><span aria-hidden="true">·</span><span>${post?.date||''}</span><span aria-hidden="true">·</span><span>${readTime(md)}</span>${post?.source_name?`<span aria-hidden="true">·</span><span class="art-source">📰 ${post.source_name}</span>`:''}</div>${toc}<div class="content">${marked.parse(md)}</div><div class="share-row"><span style="font-size:12px;color:var(--muted);line-height:2">分享：</span><button onclick="navigator.clipboard.writeText('https://20020426.top/#post/${slug}/${cat}');this.textContent='✓ 已复制';setTimeout(()=>this.textContent='📋 复制链接',1500)">📋 复制链接</button><a href="https://twitter.com/intent/tweet?url=${shareURL}&text=${shareTitle}" target="_blank" rel="noopener" style="padding:6px 16px;border-radius:14px;border:1px solid var(--border);font-size:12px;color:var(--muted)">𝕏 分享</a></div></article></div>`;
+    document.querySelectorAll('.content h2,.content h3').forEach(h=>{if(!h.id)h.id=h.textContent.replace(/[^\w一-鿿]/g,'-').toLowerCase()});
+  }catch(e){
+    wrap.innerHTML=`<div class="article-full"><div class="error-box"><p>文章加载失败</p><button onclick="switchTab('${cat}')">← 返回</button><button onclick="showArticle('${slug}','${cat}')">🔄 重试</button></div></div>`;
+  }
+}
+
+function buildTOC(md){const hs=[...md.matchAll(/^(#{2,3})\s+(.+)$/gm)];if(hs.length<2)return'';let h='<nav class="toc" aria-label="文章目录"><div class="toc-title">📑 目录</div>';hs.forEach(m=>{const lv=m[1].length,t=m[2],id=t.replace(/[^\w一-鿿]/g,'-').toLowerCase();h+=`<a class="${lv===3?'toc-h3':''}" href="javascript:document.getElementById('${id}').scrollIntoView({behavior:'smooth'})">${lv===2?'●':'◦'} ${t}</a>`});h+='</nav>';return h}
+marked.use({renderer:{heading(t){const id=t.text.replace(/[^\w一-鿿]/g,'-').toLowerCase();return`<h${t.depth} id="${id}">${t.text}</h${t.depth}>`}}});
+
 // ====== ACTIONS ======
 function copyQuote(){navigator.clipboard.writeText(QUOTE).then(()=>{const b=document.querySelector('.q-act button');b.textContent='✓ 已复制';b.classList.add('done');setTimeout(()=>{b.textContent='📋 复制';b.classList.remove('done')},2000)}).catch(()=>{})}
 function revealXHY(){if(todayXHY.show){pickXHY();render()}else{todayXHY.show=true;render()}}
-function checkRiddle(){const i=document.getElementById('riddleInput'),f=document.getElementById('riddleFeedback');if(!i||!f)return;const v=i.value.trim();if(!v)return;if(v===riddleAnswer){f.textContent='✅ 答对了！';f.className='t-feedback correct';setTimeout(()=>{pickZM();render()},1500)}else{f.textContent='❌ 不对哦，再试试';f.className='t-feedback wrong'}}
+function checkRiddle(){const i=document.getElementById('riddleInput'),f=document.getElementById('riddleFeedback');if(!i||!f)return;const v=i.value.trim();if(!v)return;if(v===riddleAnswer){f.textContent='✅ 答对了！';f.className='sc-fb ok';setTimeout(()=>{pickZM();render()},1500)}else{f.textContent='❌ 不对，再试试';f.className='sc-fb no'}}
 function switchTab(t){currentTab=t;currentSub='all';currentSearch='';currentPage=1;render();window.scrollTo(0,0);closeMenu()}
 function switchSub(s){currentSub=s;currentPage=1;render()}
 function onSearch(v){currentSearch=v.trim();currentPage=1;render()}
@@ -456,57 +468,19 @@ function goHome(){switchTab('all')}
 function toggleMenu(){const m=document.getElementById('navMenu');m.classList.toggle('open');document.getElementById('hamBtn').setAttribute('aria-expanded',m.classList.contains('open'))}
 function closeMenu(){document.getElementById('navMenu').classList.remove('open');document.getElementById('hamBtn').setAttribute('aria-expanded','false')}
 
-// ====== ARTICLE ======
-async function showArticle(slug,cat){
-  const main=document.getElementById('main');
-  main.innerHTML=`<div class="skeleton">${Array(5).fill('<div class="skel-card"><div class="s-line"></div><div class="s-line"></div><div class="s-line"></div></div>').join('')}</div>`;
-  window.scrollTo(0,0);
-  try{
-    const r=await fetch('posts/'+slug+'.md');if(!r.ok)throw Error('404');
-    const md=await r.text(),post=posts.find(p=>p.slug===slug);
-    const colors={'cross-border':'var(--cyan)','fitness':'var(--green)','ai-news':'var(--purple)'};
-    const color=colors[cat]||'var(--cyan)';
-    const toc=buildTOC(md);
-    const shareURL=encodeURIComponent(`https://20020426.top/#post/${slug}/${cat}`);
-    const shareTitle=encodeURIComponent(post?.title||'');
-    main.innerHTML=`<article class="article" aria-label="文章详情"><button class="back-btn" onclick="switchTab('${cat}')">← 返回${catName(cat)}</button><h1>${post?.title||''}</h1><div class="art-meta"><span style="color:${color}">${SUB_NAMES[post?.sub]||catName(cat)}</span><span aria-hidden="true">·</span><span>${post?.date||''}</span><span aria-hidden="true">·</span><span>${readTime(md)}</span>${post?.source_name?`<span aria-hidden="true">·</span><span class="art-source">📰 ${post.source_name}</span>`:''}</div>${toc}<div class="content">${marked.parse(md)}</div><div class="share-row"><span style="font-size:12px;color:var(--muted);line-height:2">分享：</span><button onclick="navigator.clipboard.writeText('https://20020426.top/#post/${slug}/${cat}');this.textContent='✓ 已复制';setTimeout(()=>this.textContent='📋 复制链接',1500)">📋 复制链接</button><a href="https://twitter.com/intent/tweet?url=${shareURL}&text=${shareTitle}" target="_blank" rel="noopener" style="padding:6px 16px;border-radius:14px;border:1px solid var(--border);font-size:12px;color:var(--muted)">𝕏 分享</a></div></article>`;
-
-    document.querySelectorAll('.content h2,.content h3').forEach(h=>{if(!h.id)h.id=h.textContent.replace(/[^\w一-鿿]/g,'-').toLowerCase()});
-  }catch(e){
-    main.innerHTML=`<div class="error-box"><p>文章加载失败</p><button onclick="switchTab('${cat}')">← 返回${catName(cat)}</button><button onclick="showArticle('${slug}','${cat}')">🔄 重试</button></div>`;
-  }
-}
-
-function buildTOC(md){const hs=[...md.matchAll(/^(#{2,3})\s+(.+)$/gm)];if(hs.length<2)return'';let h='<nav class="toc" aria-label="文章目录"><div class="toc-title">📑 目录</div>';hs.forEach(m=>{const lv=m[1].length,t=m[2],id=t.replace(/[^\w一-鿿]/g,'-').toLowerCase();h+=`<a class="${lv===3?'toc-h3':''}" href="javascript:document.getElementById('${id}').scrollIntoView({behavior:'smooth'})">${lv===2?'●':'◦'} ${t}</a>`});h+='</nav>';return h}
-marked.use({renderer:{heading(t){const id=t.text.replace(/[^\w一-鿿]/g,'-').toLowerCase();return`<h${t.depth} id="${id}">${t.text}</h${t.depth}>`}}});
-
 // ====== TODO ======
 const TODO_PW='catming';
-function openTodo(){
-  document.getElementById('todoOverlay').classList.add('on');renderTodo()
-}
+function openTodo(){document.getElementById('todoOverlay').classList.add('on');renderTodo()}
 function closeTodo(){document.getElementById('todoOverlay').classList.remove('on')}
 function renderTodo(){
   const panel=document.getElementById('todoPanel');
-  if(!todoUnlocked){
-    panel.innerHTML=`<h2>🔐 待办清单</h2><div class="td-pw-row"><input type="password" id="tdPw" placeholder="输入密码..." onkeydown="if(event.key==='Enter')checkPw()" aria-label="密码输入"><button onclick="checkPw()">解锁</button></div><button class="td-close" onclick="closeTodo()">关闭</button>`;
-    setTimeout(()=>{const i=document.getElementById('tdPw');if(i)i.focus()},100);
-    return;
-  }
+  if(!todoUnlocked){panel.innerHTML=`<h2>🔐 待办清单</h2><div class="td-pw-row"><input type="password" id="tdPw" placeholder="输入密码..." onkeydown="if(event.key==='Enter')checkPw()"><button onclick="checkPw()">解锁</button></div><button class="td-close" onclick="closeTodo()">关闭</button>`;setTimeout(()=>{const i=document.getElementById('tdPw');if(i)i.focus()},100);return}
   const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');
-  let h=`<h2>📋 待办清单</h2><div class="td-input-row"><input type="text" id="tdInput" placeholder="添加新任务..." onkeydown="if(event.key==='Enter')addTodo()" aria-label="新任务"><button onclick="addTodo()">添加</button></div>`;
-  if(!tasks.length){h+='<div class="todo-empty">清单是空的，添加第一个任务吧 ✨</div>'}
-  else{
-    h+='<ul class="td-list">';
-    tasks.forEach((t,i)=>{h+=`<li class="${t.done?'done':''}"><span class="td-toggle" onclick="toggleTodo(${i})" role="checkbox" aria-checked="${t.done}" tabindex="0" aria-label="${t.done?'取消完成':'标记完成'}"></span><span class="td-text">${t.text.replace(/</g,'&lt;')}</span><button class="td-del" onclick="delTodo(${i})" aria-label="删除任务">✕</button></li>`});
-    h+='</ul>';
-    const done=tasks.filter(t=>t.done).length;
-    h+=`<p style="font-size:11px;color:var(--muted);margin-top:8px">${tasks.length} 个任务，${done} 个已完成</p>`;
-  }
-  h+='<button class="td-close" onclick="closeTodo()">关闭</button>';
-  panel.innerHTML=h;
-  setTimeout(()=>{const i=document.getElementById('tdInput');if(i)i.focus()},100);
-}
+  let h=`<h2>📋 待办清单</h2><div class="td-input-row"><input type="text" id="tdInput" placeholder="添加新任务..." onkeydown="if(event.key==='Enter')addTodo()"><button onclick="addTodo()">添加</button></div>`;
+  if(!tasks.length){h+='<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px">清单是空的 ✨</div>'}else{
+    h+='<ul class="td-list">';tasks.forEach((t,i)=>{h+=`<li class="${t.done?'done':''}"><span class="td-toggle" onclick="toggleTodo(${i})" role="checkbox" aria-checked="${t.done}" tabindex="0"></span><span class="td-text">${t.text.replace(/</g,'&lt;')}</span><button class="td-del" onclick="delTodo(${i})" aria-label="删除">✕</button></li>`});h+='</ul>';
+    const done=tasks.filter(t=>t.done).length;h+=`<p style="font-size:11px;color:var(--muted);margin-top:8px">${tasks.length} 任务，${done} 已完成</p>`}
+  h+='<button class="td-close" onclick="closeTodo()">关闭</button>';panel.innerHTML=h;setTimeout(()=>{const i=document.getElementById('tdInput');if(i)i.focus()},100)}
 function checkPw(){if(document.getElementById('tdPw').value===TODO_PW){todoUnlocked=true;renderTodo()}else{alert('密码错误')}}
 function addTodo(){const i=document.getElementById('tdInput');if(!i)return;const v=i.value.trim();if(!v)return;const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');tasks.unshift({text:v,done:false});localStorage.setItem('todo_catming',JSON.stringify(tasks));i.value='';renderTodo()}
 function toggleTodo(idx){const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');if(tasks[idx]){tasks[idx].done=!tasks[idx].done;localStorage.setItem('todo_catming',JSON.stringify(tasks));renderTodo()}}
@@ -515,10 +489,8 @@ document.getElementById('todoOverlay').onclick=function(e){if(e.target===this)cl
 
 // ====== SCROLL ======
 window.addEventListener('scroll',()=>{
-  const h=document.documentElement.scrollHeight-window.innerHeight;
-  const pct=h>0?Math.min(100,Math.round(window.scrollY/h*100)):0;
-  const bar=document.getElementById('progress-bar');
-  bar.style.width=pct+'%';bar.setAttribute('aria-valuenow',pct);
+  const h=document.documentElement.scrollHeight-window.innerHeight,pct=h>0?Math.min(100,Math.round(window.scrollY/h*100)):0;
+  const bar=document.getElementById('progress-bar');bar.style.width=pct+'%';bar.setAttribute('aria-valuenow',pct);
   document.getElementById('toTop').classList.toggle('show',window.scrollY>400);
 });
 
@@ -532,17 +504,12 @@ document.getElementById('breathBtn').onclick=startBreath;
 // ====== INIT ======
 (async function(){
   pickXHY();pickZM();
-  const main=document.getElementById('main');
-  main.innerHTML=`<div class="skeleton">${Array(6).fill('<div class="skel-card"><div class="s-line"></div><div class="s-line"></div><div class="s-line"></div></div>').join('')}</div>`;
+  document.getElementById('pageWrap').innerHTML=`<div class="main-col"><div class="skeleton">${Array(6).fill('<div class="skel-card"><div class="s-line"></div><div class="s-line"></div><div class="s-line"></div></div>').join('')}</div></div><aside class="side-col"><div class="side-card"><div class="sc-title">加载中...</div></div></aside>`;
 
   const[ok,_]=await Promise.all([loadData(),fetchRate()]);
-  if(!ok){
-    main.innerHTML=`<div class="error-box"><p>⚠️ 文章加载失败，请检查网络</p><button onclick="location.reload()">🔄 重新加载</button></div>`;
-    return;
-  }
+  if(!ok){document.getElementById('pageWrap').innerHTML=`<div class="article-full"><div class="error-box"><p>⚠️ 文章加载失败</p><button onclick="location.reload()">🔄 重新加载</button></div></div>`;return}
   render();
 })();
 </script>
-
 </body>
 </html>
