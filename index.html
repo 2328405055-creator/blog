@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的博客</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", Georgia, serif;
+  background: #fdfdfd;
+  color: #333;
+  line-height: 1.8;
+  min-height: 100vh;
+}
+/* 顶部导航 */
+.nav {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav .logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+}
+.nav .links a {
+  color: #888;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 15px;
+  transition: color 0.2s;
+}
+.nav .links a:hover { color: #333; }
+/* 主体 */
+.main {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+/* 首页文章列表 */
+.post-card {
+  display: block;
+  padding: 28px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s;
+}
+.post-card:hover { background: #fafafa; margin: 0 -20px; padding-left: 20px; padding-right: 20px; border-radius: 4px; }
+.post-card .date {
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 6px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+.post-card .title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #222;
+}
+.post-card .excerpt {
+  font-size: 15px;
+  color: #777;
+  line-height: 1.6;
+}
+/* 文章详情页 */
+.article { display: none; }
+.article .back {
+  display: inline-block;
+  color: #888;
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+.article .back:hover { color: #333; }
+.article .post-title {
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+.article .post-date {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 36px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+.article .content {
+  font-size: 17px;
+  line-height: 1.9;
+}
+.article .content h1 { font-size: 28px; margin: 28px 0 16px; }
+.article .content h2 { font-size: 22px; margin: 28px 0 12px; }
+.article .content h3 { font-size: 18px; margin: 24px 0 10px; }
+.article .content p { margin-bottom: 16px; }
+.article .content ul, .article .content ol { margin: 0 0 16px 24px; }
+.article .content li { margin-bottom: 6px; }
+.article .content blockquote {
+  border-left: 3px solid #667eea;
+  padding: 8px 18px;
+  margin: 20px 0;
+  color: #555;
+  background: #f8f9ff;
+  border-radius: 0 4px 4px 0;
+}
+.article .content code {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+.article .content pre {
+  background: #2d2d2d;
+  color: #f8f8f2;
+  padding: 16px 20px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+.article .content pre code { background: none; padding: 0; color: inherit; }
+.article .content img { max-width: 100%; border-radius: 6px; }
+.article .content a { color: #667eea; }
+/* 关于页 */
+.about { display: none; }
+.about h2 { font-size: 24px; margin-bottom: 16px; }
+.about p { margin-bottom: 14px; color: #555; }
+/* 页脚 */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: #ccc;
+  font-size: 13px;
+  max-width: 700px;
+  margin: 0 auto;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+/* 响应式 */
+@media (max-width: 600px) {
+  .article .post-title { font-size: 24px; }
+  .post-card .title { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="logo" href="#">📖 我的博客</a>
+  <div class="links">
+    <a href="#home">首页</a>
+    <a href="#about">关于</a>
+  </div>
+</nav>
+
+<div class="main">
+  <!-- 首页文章列表 -->
+  <div id="home"></div>
+  <!-- 文章详情 -->
+  <div class="article" id="article"></div>
+  <!-- 关于 -->
+  <div class="about" id="about"></div>
+</div>
+
+<footer class="footer">&copy; 2026 我的博客 · 手工搭建</footer>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const homeEl = $("#home");
+const articleEl = $("#article");
+const aboutEl = $("#about");
+
+let posts = [];
+
+function show(el) {
+  homeEl.style.display = "none";
+  articleEl.style.display = "none";
+  aboutEl.style.display = "none";
+  el.style.display = "";
+}
+
+async function loadPosts() {
+  try {
+    const res = await fetch("posts/posts.json");
+    posts = await res.json();
+  } catch (e) {
+    console.error("加载文章列表失败:", e);
+    posts = [];
+  }
+}
+
+function renderHome() {
+  show(homeEl);
+  if (posts.length === 0) {
+    homeEl.innerHTML = '<p style="color:#aaa;text-align:center;padding:60px 0;">还没有文章 ~</p>';
+    return;
+  }
+  homeEl.innerHTML = posts.map((p, i) => `
+    <div class="post-card" onclick="openPost('${p.slug}')">
+      <div class="date">${p.date}</div>
+      <div class="title">${p.title}</div>
+      <div class="excerpt">${p.excerpt}</div>
+    </div>
+  `).join("");
+}
+
+async function openPost(slug) {
+  show(articleEl);
+  articleEl.innerHTML = '<p style="color:#aaa;">加载中...</p>';
+  try {
+    const res = await fetch("posts/" + slug + ".md");
+    const md = await res.text();
+    const post = posts.find(p => p.slug === slug);
+    articleEl.innerHTML = `
+      <span class="back" onclick="goHome()">← 返回</span>
+      <div class="post-title">${post ? post.title : ""}</div>
+      <div class="post-date">${post ? post.date : ""}</div>
+      <div class="content">${marked.parse(md)}</div>
+    `;
+    window.scrollTo(0, 0);
+  } catch (e) {
+    articleEl.innerHTML = '<p style="color:#aaa;">文章加载失败 ~</p>';
+  }
+}
+
+function goHome() {
+  renderHome();
+  window.scrollTo(0, 0);
+}
+
+async function router() {
+  const hash = location.hash || "#home";
+  if (hash === "#home" || hash === "") {
+    renderHome();
+  } else if (hash === "#about") {
+    show(aboutEl);
+  } else if (hash.startsWith("#post/")) {
+    const slug = hash.slice(6);
+    if (posts.some(p => p.slug === slug)) {
+      await openPost(slug);
+    } else {
+      renderHome();
+    }
+  } else {
+    renderHome();
+  }
+}
+
+window.onhashchange = router;
+
+(async () => {
+  await loadPosts();
+  router();
+})();
+</script>
+
+</body>
+</html>
