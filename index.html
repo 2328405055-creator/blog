@@ -3,264 +3,463 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>我的博客</title>
+<title>跨境航标 · 跨境电商实战指南</title>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0a0e17;
+  --card: #111827;
+  --card-hover: #1a2235;
+  --border: #1e293b;
+  --text: #c8d2e0;
+  --title: #e8edf5;
+  --muted: #6b7d99;
+  --blue: #3b82f6;
+  --blue-light: #60a5fa;
+  --cyan: #06b6d4;
+  --gold: #f59e0b;
+  --green: #10b981;
+  --red: #ef4444;
+  --radius: 10px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
 body {
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", Georgia, serif;
-  background: #fdfdfd;
-  color: #333;
-  line-height: 1.8;
-  min-height: 100vh;
+  font-family: "PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height:1.7;
+  min-height:100vh;
 }
+a { color:var(--blue-light); text-decoration:none; }
+
 /* 顶部导航 */
-.nav {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 24px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.topbar {
+  background: rgba(10,14,23,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top:0; z-index:100;
 }
-.nav .logo {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-  text-decoration: none;
+.topbar-inner {
+  max-width:1100px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 20px; height:58px;
 }
-.nav .links a {
-  color: #888;
-  text-decoration: none;
-  margin-left: 20px;
-  font-size: 15px;
-  transition: color 0.2s;
+.logo {
+  font-size:18px; font-weight:700; color:var(--title);
+  display:flex; align-items:center; gap:8px;
 }
-.nav .links a:hover { color: #333; }
-/* 主体 */
-.main {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 0 20px 60px;
+.logo span { color:var(--cyan); }
+.topbar nav a {
+  color:var(--muted); margin-left:24px; font-size:14px;
+  transition:color 0.2s;
 }
-/* 首页文章列表 */
+.topbar nav a:hover, .topbar nav a.active { color:var(--blue-light); }
+
+/* 主容器 */
+.main { max-width:1100px; margin:0 auto; padding:0 20px 60px; }
+
+/* Hero */
+.hero {
+  text-align:center; padding:60px 0 36px;
+}
+.hero h1 {
+  font-size:36px; font-weight:800; color:var(--title);
+  background: linear-gradient(135deg, #60a5fa, #06b6d4);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero p { color:var(--muted); font-size:16px; margin-top:10px; }
+
+/* 分类导航 */
+.cat-nav {
+  display:flex; flex-wrap:wrap; gap:10px; margin-bottom:36px;
+  justify-content:center;
+}
+.cat-btn {
+  padding:8px 20px; border-radius:20px; border:1px solid var(--border);
+  background:var(--card); color:var(--muted); cursor:pointer;
+  font-size:14px; transition:all 0.2s;
+}
+.cat-btn:hover { border-color:var(--blue); color:var(--blue-light); }
+.cat-btn.active {
+  background:var(--blue); border-color:var(--blue); color:#fff;
+}
+.cat-btn .count { font-size:11px; opacity:0.7; margin-left:4px; }
+
+/* 文章列表 */
+.post-list { display:grid; gap:18px; }
 .post-card {
-  display: block;
-  padding: 28px 0;
-  border-bottom: 1px solid #eee;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-  transition: background 0.2s;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:24px; cursor:pointer;
+  transition:all 0.25s;
 }
-.post-card:hover { background: #fafafa; margin: 0 -20px; padding-left: 20px; padding-right: 20px; border-radius: 4px; }
-.post-card .date {
-  font-size: 13px;
-  color: #aaa;
-  margin-bottom: 6px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+.post-card:hover {
+  background:var(--card-hover); border-color:var(--blue);
+  transform:translateY(-2px); box-shadow:0 8px 30px rgba(59,130,246,0.08);
 }
-.post-card .title {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: #222;
+.post-card .meta {
+  display:flex; align-items:center; gap:12px; margin-bottom:8px;
+  font-size:13px;
 }
-.post-card .excerpt {
-  font-size: 15px;
-  color: #777;
-  line-height: 1.6;
+.post-card .cat-tag {
+  padding:2px 10px; border-radius:10px; font-size:12px;
+  background:rgba(59,130,246,0.15); color:var(--blue-light);
 }
-/* 文章详情页 */
-.article { display: none; }
-.article .back {
-  display: inline-block;
-  color: #888;
-  text-decoration: none;
-  font-size: 14px;
-  margin-bottom: 30px;
-  cursor: pointer;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+.post-card .date { color:var(--muted); }
+.post-card h2 { font-size:20px; color:var(--title); margin-bottom:8px; }
+.post-card .excerpt { font-size:14px; color:var(--muted); line-height:1.6; }
+
+/* 文章详情 */
+.article { display:none; }
+.article .back-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  color:var(--muted); cursor:pointer; font-size:14px;
+  margin-bottom:24px; transition:color 0.2s;
 }
-.article .back:hover { color: #333; }
-.article .post-title {
-  font-size: 30px;
-  font-weight: bold;
-  line-height: 1.4;
-  margin-bottom: 10px;
-}
-.article .post-date {
-  font-size: 14px;
-  color: #aaa;
-  margin-bottom: 36px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-}
+.article .back-btn:hover { color:var(--blue-light); }
+.article .post-header { margin-bottom:32px; padding-bottom:20px; border-bottom:1px solid var(--border); }
+.article .post-header h1 { font-size:30px; color:var(--title); line-height:1.3; }
+.article .post-header .meta { margin-top:10px; font-size:14px; color:var(--muted); }
 .article .content {
-  font-size: 17px;
-  line-height: 1.9;
+  font-size:16px; line-height:1.9; color:var(--text);
 }
-.article .content h1 { font-size: 28px; margin: 28px 0 16px; }
-.article .content h2 { font-size: 22px; margin: 28px 0 12px; }
-.article .content h3 { font-size: 18px; margin: 24px 0 10px; }
-.article .content p { margin-bottom: 16px; }
-.article .content ul, .article .content ol { margin: 0 0 16px 24px; }
-.article .content li { margin-bottom: 6px; }
+.article .content h1 { font-size:26px; color:var(--title); margin:28px 0 14px; }
+.article .content h2 { font-size:21px; color:var(--title); margin:26px 0 12px; }
+.article .content h3 { font-size:17px; color:var(--blue-light); margin:22px 0 10px; }
+.article .content p { margin-bottom:14px; }
+.article .content ul, .article .content ol { margin:0 0 14px 22px; }
+.article .content li { margin-bottom:5px; }
 .article .content blockquote {
-  border-left: 3px solid #667eea;
-  padding: 8px 18px;
-  margin: 20px 0;
-  color: #555;
-  background: #f8f9ff;
-  border-radius: 0 4px 4px 0;
+  border-left:3px solid var(--blue);
+  padding:10px 18px; margin:18px 0;
+  background:rgba(59,130,246,0.06);
+  border-radius:0 6px 6px 0;
+  color:var(--muted);
 }
 .article .content code {
-  background: #f4f4f4;
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-size: 0.9em;
+  background:var(--card); padding:2px 7px; border-radius:4px;
+  font-size:0.9em; color:var(--cyan);
 }
 .article .content pre {
-  background: #2d2d2d;
-  color: #f8f8f2;
-  padding: 16px 20px;
-  border-radius: 6px;
-  overflow-x: auto;
-  margin-bottom: 16px;
+  background:#0d1117; padding:16px 20px; border-radius:8px;
+  overflow-x:auto; margin-bottom:14px; border:1px solid var(--border);
 }
-.article .content pre code { background: none; padding: 0; color: inherit; }
-.article .content img { max-width: 100%; border-radius: 6px; }
-.article .content a { color: #667eea; }
+.article .content pre code { background:none; padding:0; color:var(--text); }
+.article .content img { max-width:100%; border-radius:8px; }
+.article .content strong { color:var(--title); }
+.article .content table { width:100%; border-collapse:collapse; margin:14px 0; }
+.article .content th, .article .content td {
+  border:1px solid var(--border); padding:10px 14px; text-align:left;
+}
+.article .content th { background:var(--card); color:var(--title); }
+.article .content a { color:var(--blue-light); text-decoration:underline; }
+
 /* 关于页 */
-.about { display: none; }
-.about h2 { font-size: 24px; margin-bottom: 16px; }
-.about p { margin-bottom: 14px; color: #555; }
+.about { display:none; }
+.about h2 { font-size:24px; color:var(--title); margin-bottom:14px; }
+.about p { margin-bottom:12px; color:var(--muted); line-height:1.8; }
+
+/* 搜索 */
+.search-box {
+  margin-bottom:28px; position:relative;
+}
+.search-box input {
+  width:100%; padding:12px 18px; border-radius:24px;
+  border:1px solid var(--border); background:var(--card);
+  color:var(--title); font-size:15px; outline:none;
+  transition:border-color 0.2s;
+}
+.search-box input:focus { border-color:var(--blue); }
+.search-box input::placeholder { color:var(--muted); }
+
 /* 页脚 */
 .footer {
-  text-align: center;
-  padding: 40px 20px;
-  color: #ccc;
-  font-size: 13px;
-  max-width: 700px;
-  margin: 0 auto;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  text-align:center; padding:40px 20px;
+  color:var(--muted); font-size:13px;
+  border-top:1px solid var(--border);
+  max-width:1100px; margin:0 auto;
 }
+
 /* 响应式 */
-@media (max-width: 600px) {
-  .article .post-title { font-size: 24px; }
-  .post-card .title { font-size: 18px; }
+@media (max-width:700px) {
+  .hero h1 { font-size:26px; }
+  .post-card h2 { font-size:17px; }
+  .article .post-header h1 { font-size:22px; }
+  .topbar nav a { margin-left:14px; font-size:13px; }
+  .cat-btn { padding:6px 14px; font-size:13px; }
 }
+
+/* 空状态 */
+.empty-state { text-align:center; padding:60px 20px; color:var(--muted); }
+.empty-state svg { width:60px; height:60px; opacity:0.3; margin-bottom:16px; }
+
+/* 滚动条 */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+::-webkit-scrollbar-thumb:hover { background:var(--muted); }
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <a class="logo" href="#">📖 我的博客</a>
-  <div class="links">
-    <a href="#home">首页</a>
-    <a href="#about">关于</a>
+<!-- 顶部导航 -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="logo" href="#home">🌊 跨境<span>航标</span></a>
+    <nav>
+      <a href="#home" class="active" data-nav="home">首页</a>
+      <a href="#about" data-nav="about">关于</a>
+    </nav>
   </div>
-</nav>
+</header>
 
+<!-- 主内容 -->
 <div class="main">
+  <!-- Hero -->
+  <div class="hero">
+    <h1>跨境电商实战指南</h1>
+    <p>每日选品 · 运营技巧 · 平台政策 · 物流供应链 · 营销推广</p>
+  </div>
+
+  <!-- 分类导航 -->
+  <div class="cat-nav" id="catNav"></div>
+
+  <!-- 搜索 -->
+  <div class="search-box" id="searchBox">
+    <input type="text" id="searchInput" placeholder="🔍  搜索文章...">
+  </div>
+
   <!-- 首页文章列表 -->
-  <div id="home"></div>
+  <div id="home">
+    <div class="post-list" id="postList"></div>
+  </div>
+
   <!-- 文章详情 -->
   <div class="article" id="article"></div>
+
   <!-- 关于 -->
   <div class="about" id="about"></div>
 </div>
 
-<footer class="footer">&copy; 2026 我的博客 · 手工搭建</footer>
+<footer class="footer">© 2026 跨境航标 · 专注跨境电商实战知识</footer>
 
 <script>
-const $ = (s) => document.querySelector(s);
-const homeEl = $("#home");
+const $ = s => document.querySelector(s);
+const postsEl = $("#postList");
 const articleEl = $("#article");
 const aboutEl = $("#about");
+const homeEl = $("#home");
+const catNav = $("#catNav");
+const searchBox = $("#searchBox");
+const searchInput = $("#searchInput");
+
+const CATEGORIES = [
+  { slug:"daily-selection", name:"每日选品", icon:"📦", color:"#f59e0b" },
+  { slug:"operation-tips", name:"运营技巧", icon:"⚡", color:"#3b82f6" },
+  { slug:"platform-policy", name:"平台政策", icon:"📋", color:"#10b981" },
+  { slug:"logistics", name:"物流供应链", icon:"🚚", color:"#8b5cf6" },
+  { slug:"marketing", name:"营销推广", icon:"📣", color:"#ef4444" },
+  { slug:"case-study", name:"案例拆解", icon:"💡", color:"#06b6d4" },
+];
 
 let posts = [];
+let activeCat = "all";
+let searchQuery = "";
 
-function show(el) {
-  homeEl.style.display = "none";
-  articleEl.style.display = "none";
-  aboutEl.style.display = "none";
-  el.style.display = "";
+function showCatColor(slug) {
+  const c = CATEGORIES.find(c => c.slug === slug);
+  return c ? c.color : "#3b82f6";
+}
+function catName(slug) {
+  const c = CATEGORIES.find(c => c.slug === slug);
+  return c ? c.name : slug;
+}
+function catIcon(slug) {
+  const c = CATEGORIES.find(c => c.slug === slug);
+  return c ? c.icon : "";
 }
 
+function showView(view) {
+  homeEl.style.display = view==="home"?"":"none";
+  articleEl.style.display = view==="article"?"":"none";
+  aboutEl.style.display = view==="about"?"":"none";
+  searchBox.style.display = (view==="home"||view==="about")?"":"none";
+}
+
+/* ====== 数据加载 ====== */
 async function loadPosts() {
   try {
     const res = await fetch("posts/posts.json");
     posts = await res.json();
-  } catch (e) {
-    console.error("加载文章列表失败:", e);
+    posts.sort((a,b) => b.date.localeCompare(a.date));
+  } catch(e) {
+    console.error("加载文章失败:",e);
     posts = [];
   }
 }
 
-function renderHome() {
-  show(homeEl);
-  if (posts.length === 0) {
-    homeEl.innerHTML = '<p style="color:#aaa;text-align:center;padding:60px 0;">还没有文章 ~</p>';
+/* ====== 渲染分类按钮 ====== */
+function renderCatNav() {
+  const counts = {};
+  counts["all"] = posts.length;
+  posts.forEach(p => { counts[p.cat] = (counts[p.cat]||0)+1; });
+
+  let html = `<button class="cat-btn active" data-cat="all">全部<span class="count">${counts["all"]||0}</span></button>`;
+  CATEGORIES.forEach(c => {
+    const n = counts[c.slug]||0;
+    html += `<button class="cat-btn" data-cat="${c.slug}">${c.icon} ${c.name}<span class="count">${n}</span></button>`;
+  });
+  catNav.innerHTML = html;
+
+  catNav.querySelectorAll(".cat-btn").forEach(btn => {
+    btn.onclick = () => {
+      catNav.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeCat = btn.dataset.cat;
+      renderList();
+    };
+  });
+}
+
+/* ====== 渲染文章列表 ====== */
+function renderList() {
+  let filtered = posts;
+  if (activeCat !== "all") filtered = filtered.filter(p => p.cat === activeCat);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    filtered = filtered.filter(p =>
+      p.title.toLowerCase().includes(q) ||
+      p.excerpt.toLowerCase().includes(q)
+    );
+  }
+
+  if (filtered.length === 0) {
+    postsEl.innerHTML = `<div class="empty-state"><p>暂无匹配的文章</p></div>`;
     return;
   }
-  homeEl.innerHTML = posts.map((p, i) => `
-    <div class="post-card" onclick="openPost('${p.slug}')">
-      <div class="date">${p.date}</div>
-      <div class="title">${p.title}</div>
-      <div class="excerpt">${p.excerpt}</div>
-    </div>
-  `).join("");
+
+  postsEl.innerHTML = filtered.map(p => {
+    const color = showCatColor(p.cat);
+    return `
+      <div class="post-card" onclick="openPost('${p.slug}')">
+        <div class="meta">
+          <span class="cat-tag" style="background:${color}22;color:${color}">${catIcon(p.cat)} ${catName(p.cat)}</span>
+          <span class="date">${p.date}</span>
+        </div>
+        <h2>${p.title}</h2>
+        <p class="excerpt">${p.excerpt}</p>
+      </div>
+    `;
+  }).join("");
 }
 
+/* ====== 文章详情 ====== */
 async function openPost(slug) {
-  show(articleEl);
-  articleEl.innerHTML = '<p style="color:#aaa;">加载中...</p>';
+  showView("article");
+  articleEl.innerHTML = `<p style="color:var(--muted);text-align:center;padding:60px;">加载中...</p>`;
+  window.scrollTo(0,0);
+
   try {
     const res = await fetch("posts/" + slug + ".md");
+    if (!res.ok) throw new Error("404");
     const md = await res.text();
     const post = posts.find(p => p.slug === slug);
+
     articleEl.innerHTML = `
-      <span class="back" onclick="goHome()">← 返回</span>
-      <div class="post-title">${post ? post.title : ""}</div>
-      <div class="post-date">${post ? post.date : ""}</div>
-      <div class="content">${marked.parse(md)}</div>
+      <span class="back-btn" onclick="goHome()">← 返回首页</span>
+      <div class="post-header">
+        <h1>${post ? post.title : ""}</h1>
+        <div class="meta">
+          <span style="color:${showCatColor(post?.cat)}">${catIcon(post?.cat)} ${catName(post?.cat)}</span>
+          <span>·</span>
+          <span>${post ? post.date : ""}</span>
+        </div>
+      </div>
+      <div class="content">${md ? marked.parse(md) : ""}</div>
     `;
-    window.scrollTo(0, 0);
-  } catch (e) {
-    articleEl.innerHTML = '<p style="color:#aaa;">文章加载失败 ~</p>';
+  } catch(e) {
+    articleEl.innerHTML = `
+      <span class="back-btn" onclick="goHome()">← 返回首页</span>
+      <div class="empty-state"><p>文章加载失败</p></div>
+    `;
   }
 }
 
+/* ====== 导航 ====== */
 function goHome() {
-  renderHome();
-  window.scrollTo(0, 0);
+  showView("home");
+  renderList();
+  window.scrollTo(0,0);
+  updateNav("home");
+}
+function goAbout() {
+  showView("about");
+  window.scrollTo(0,0);
+  updateNav("about");
+}
+function updateNav(view) {
+  document.querySelectorAll(".topbar nav a").forEach(a => {
+    a.classList.toggle("active", a.dataset.nav === view);
+  });
 }
 
+/* ====== 路由 ====== */
 async function router() {
   const hash = location.hash || "#home";
   if (hash === "#home" || hash === "") {
-    renderHome();
+    showView("home"); renderList(); updateNav("home");
   } else if (hash === "#about") {
-    show(aboutEl);
+    goAbout();
   } else if (hash.startsWith("#post/")) {
     const slug = hash.slice(6);
     if (posts.some(p => p.slug === slug)) {
       await openPost(slug);
     } else {
-      renderHome();
+      goHome();
     }
   } else {
-    renderHome();
+    goHome();
   }
 }
+
+/* ====== 搜索 ====== */
+searchInput.oninput = () => {
+  searchQuery = searchInput.value.trim();
+  renderList();
+};
+
+/* ====== 导航链接 ====== */
+document.querySelectorAll(".topbar nav a").forEach(a => {
+  a.onclick = e => {
+    const view = a.dataset.nav;
+    if (view === "home") { goHome(); location.hash = "#home"; e.preventDefault(); }
+    else if (view === "about") { goAbout(); location.hash = "#about"; e.preventDefault(); }
+  };
+});
+
+/* ====== 关于内容 ====== */
+aboutEl.innerHTML = `
+  <h2>关于跨境航标</h2>
+  <p>跨境航标是一个专注于<strong style="color:var(--title)">跨境电商实战知识</strong>的博客。</p>
+  <p>我们每日更新选品推荐、运营技巧、平台政策解读、物流供应链优化、海外营销策略等实战内容，帮助跨境卖家在日常运营中少走弯路。</p>
+  <p>所有内容来自一线经验总结，力求务实、落地、可操作。</p>
+  <br>
+  <h2>栏目介绍</h2>
+  <p>📦 <strong style="color:var(--title)">每日选品</strong> — 热门产品趋势、蓝海品类挖掘、竞争分析</p>
+  <p>⚡ <strong style="color:var(--title)">运营技巧</strong> — Listing优化、广告投放、转化率提升</p>
+  <p>📋 <strong style="color:var(--title)">平台政策</strong> — 亚马逊/Shopee/TikTok等平台规则解读</p>
+  <p>🚚 <strong style="color:var(--title)">物流供应链</strong> — 海外仓、FBA头程、库存管理</p>
+  <p>📣 <strong style="color:var(--title)">营销推广</strong> — 站外引流、社交媒体、品牌建设</p>
+  <p>💡 <strong style="color:var(--title)">案例拆解</strong> — 成功卖家复盘、失败教训分析</p>
+`;
 
 window.onhashchange = router;
 
 (async () => {
   await loadPosts();
+  renderCatNav();
   router();
 })();
 </script>
-
 </body>
 </html>

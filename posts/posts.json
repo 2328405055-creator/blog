@@ -1,8 +1,100 @@
 [
   {
-    "slug": "hello-world",
-    "title": "Hello，我的博客上线啦！",
+    "slug": "hot-selection-may-2026",
+    "title": "2026年5月跨境热销品盘点：户外储能与智能家居崛起",
     "date": "2026-05-09",
-    "excerpt": "这是我用 HTML、CSS 和 JavaScript 亲手搭建的个人博客，记录我的学习与创作之旅。"
+    "excerpt": "本月欧美市场户外便携储能设备搜索量飙升120%，智能家居安防品类持续增长，这些趋势值得跨境卖家关注。",
+    "cat": "daily-selection"
+  },
+  {
+    "slug": "blue-ocean-toys",
+    "title": "蓝海挖掘：STEM教育玩具在东南亚市场的爆发机会",
+    "date": "2026-05-08",
+    "excerpt": "Shopee和Lazada数据显示，科学实验套装、编程启蒙玩具在东南亚6国的月销量增长超200%，竞争度却远低于3C品类。",
+    "cat": "daily-selection"
+  },
+  {
+    "slug": "pet-supplies-trend",
+    "title": "宠物出海新风口：智能喂食器与环保猫砂成黑马",
+    "date": "2026-05-06",
+    "excerpt": "全球宠物经济规模突破3000亿美元，智能宠物用品和环保耗材成为跨境电商增长最快的子类目之一。",
+    "cat": "daily-selection"
+  },
+  {
+    "slug": "amazon-listing-optimization",
+    "title": "亚马逊Listing优化全攻略：从标题到A+页面的完整框架",
+    "date": "2026-05-07",
+    "excerpt": "一个好的Listing是转化率的基础。本文拆解标题、五点描述、图片、A+内容每个环节的优化要点和常见误区。",
+    "cat": "operation-tips"
+  },
+  {
+    "slug": "ppc-advertising-guide",
+    "title": "亚马逊PPC广告投放实战：如何用30天将ACOS从40%降到15%",
+    "date": "2026-05-05",
+    "excerpt": "通过精准关键词分层、否定关键词策略和分时段竞价调整，系统性地降低广告成本，提升ROI。",
+    "cat": "operation-tips"
+  },
+  {
+    "slug": "conversion-rate-secrets",
+    "title": "转化率翻倍的秘密：5个被大多数卖家忽略的详情页细节",
+    "date": "2026-05-03",
+    "excerpt": "从移动端适配、视频内容布局到QA区管理，这些不起眼的细节正在悄悄影响你的转化率。",
+    "cat": "operation-tips"
+  },
+  {
+    "slug": "amazon-2026-policy-update",
+    "title": "亚马逊2026年最新政策解读：退货规则与账户健康评分变化",
+    "date": "2026-05-04",
+    "excerpt": "亚马逊近期更新了退货处理流程和账户健康评分机制，不合规可能导致销售权限被暂停，卖家需尽快了解调整。",
+    "cat": "platform-policy"
+  },
+  {
+    "slug": "tiktok-shop-cross-border",
+    "title": "TikTok Shop跨境店入驻全指南：资质、流程与避坑要点",
+    "date": "2026-05-02",
+    "excerpt": "TikTok Shop持续开放新站点，本文梳理各国站点入驻条件、所需资质、常见驳回原因及解决方案。",
+    "cat": "platform-policy"
+  },
+  {
+    "slug": "overseas-warehouse-strategy",
+    "title": "海外仓布局策略：第三方仓 vs FBA vs 自建仓怎么选？",
+    "date": "2026-05-01",
+    "excerpt": "不同阶段卖家对仓储的需求截然不同。本文对比三种模式的成本结构、时效和适用场景，帮你做出最优决策。",
+    "cat": "logistics"
+  },
+  {
+    "slug": "inventory-management",
+    "title": "跨境库存管理避坑指南：如何避免断货和冗余的双重困境",
+    "date": "2026-04-29",
+    "excerpt": "库存管理是现金流的核心。通过安全库存公式、备货周期计算和销售预测模型，实现库存的精细化管理。",
+    "cat": "logistics"
+  },
+  {
+    "slug": "social-media-traffic",
+    "title": "站外引流新思路：Instagram Reels + Pinterest的组合打法",
+    "date": "2026-04-28",
+    "excerpt": "单纯依赖站内广告成本越来越高，通过短视频和图片社交平台进行内容营销，正在成为高ROI的引流方式。",
+    "cat": "marketing"
+  },
+  {
+    "slug": "brand-building-strategy",
+    "title": "从铺货到品牌：跨境卖家品牌化转型的四个关键步骤",
+    "date": "2026-04-27",
+    "excerpt": "价格战越来越难打，品牌化是长期出路。本文拆解品牌定位、视觉体系、用户口碑和独立站建设的完整路径。",
+    "cat": "marketing"
+  },
+  {
+    "slug": "anker-case-study",
+    "title": "案例拆解：Anker如何从充电宝小卖家做到全球品牌？",
+    "date": "2026-04-26",
+    "excerpt": "深度复盘Anker的品牌化之路：产品力构建、用户口碑运营和多品牌矩阵策略，值得每个跨境卖家学习。",
+    "cat": "case-study"
+  },
+  {
+    "slug": "failed-case-lessons",
+    "title": "失败复盘：一个年销千万店铺的崩塌与教训",
+    "date": "2026-04-25",
+    "excerpt": "过度依赖单一平台、忽视合规风险、现金流管理失控——这个真实案例值得每个卖家警醒。",
+    "cat": "case-study"
   }
 ]
