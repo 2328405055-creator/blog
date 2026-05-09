@@ -564,6 +564,29 @@ def fetch_fill(needed, exclude_hashes):
     return results
 
 
+def generate_sitemap():
+    """从 posts.json 生成 sitemap.xml"""
+    posts = load_json(JSON_PATH)
+    base = "https://20020426.top"
+    now = datetime.now().strftime("%Y-%m-%d")
+
+    urls = [
+        f"  <url><loc>{base}</loc><lastmod>{now}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>",
+        f"  <url><loc>{base}/#section/cross-border</loc><lastmod>{now}</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>",
+        f"  <url><loc>{base}/#section/fitness</loc><lastmod>{now}</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>",
+        f"  <url><loc>{base}/#section/ai-news</loc><lastmod>{now}</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>",
+    ]
+    for p in posts:
+        d = p.get("date", now)
+        urls.append(f"  <url><loc>{base}/#post/{p['slug']}/{p['cat']}</loc><lastmod>{d}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>")
+
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(urls) + "\n</urlset>"
+    path = os.path.join(BASE_DIR, "sitemap.xml")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(xml)
+    print(f"[INFO] sitemap.xml 已更新 ({len(posts)} 篇文章)")
+
+
 # ============================================================
 # 入口
 # ============================================================
@@ -579,6 +602,7 @@ def main():
         os.makedirs(POSTS_DIR)
 
     generate_posts()
+    generate_sitemap()
 
     if do_push:
         print("\n[INFO] 推送至 GitHub...")
