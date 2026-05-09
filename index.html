@@ -289,6 +289,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 
 <!-- TODO -->
 <div class="todo-overlay" id="todoOverlay"><div class="todo-panel" id="todoPanel"></div></div>
+<div class="todo-overlay" id="clOverlay"><div class="todo-panel" id="clPanel"></div></div>
 
 <button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑</button>
 <button class="breath-btn" id="breathBtn" aria-label="呼吸放松">🧘</button>
@@ -417,7 +418,7 @@ function render(){
   html+=`<div class="side-card"><div class="sc-title">🧩 猜字谜</div><div class="sc-main" style="font-size:14px;letter-spacing:1px">${todayZM.q}</div><input class="sc-input" id="riddleInput" placeholder="输入答案..." onkeydown="if(event.key==='Enter')checkRiddle()" aria-label="字谜答案"><div class="sc-fb" id="riddleFeedback" aria-live="polite"></div></div>`;
 
   // Quick links
-  html+=`<div class="side-card"><div class="sc-title">🔗 快捷入口</div><div class="side-links"><a href="javascript:switchTab('cross-border')">🚀 跨境电商</a><a href="javascript:switchTab('fitness')">💪 每日健身</a><a href="javascript:switchTab('ai-news')">🤖 AI新闻</a><a href="javascript:openTodo()">📋 待办清单</a><a href="javascript:startBreath()">🧘 呼吸放松</a></div></div>`;
+  html+=`<div class="side-card"><div class="sc-title">🔗 快捷入口</div><div class="side-links"><a href="javascript:switchTab('cross-border')">🚀 跨境电商</a><a href="javascript:switchTab('fitness')">💪 每日健身</a><a href="javascript:switchTab('ai-news')">🤖 AI新闻</a><a href="javascript:openTodo()">📋 待办清单</a><a href="javascript:openChangelog()">📝 更新日志</a><a href="javascript:startBreath()">🧘 呼吸放松</a></div></div>`;
 
   html+=`</aside>`; // end side-col
 
@@ -482,6 +483,49 @@ function renderTodo(){
     const done=tasks.filter(t=>t.done).length;h+=`<p style="font-size:11px;color:var(--muted);margin-top:8px">${tasks.length} 任务，${done} 已完成</p>`}
   h+='<button class="td-close" onclick="closeTodo()">关闭</button>';panel.innerHTML=h;setTimeout(()=>{const i=document.getElementById('tdInput');if(i)i.focus()},100)}
 function checkPw(){if(document.getElementById('tdPw').value===TODO_PW){todoUnlocked=true;renderTodo()}else{alert('密码错误')}}
+// Changelog
+let clUnlocked=false;
+const CHANGELOG_HTML=`<div style="color:var(--title);font-size:14px;line-height:2;padding:10px 0">
+<h2 style="margin-bottom:4px">📝 更新日志</h2>
+<p style="color:var(--muted);font-size:12px;margin-bottom:14px">域名：20020426.top · GitHub：2328405055-creator/blog</p>
+<hr style="border-color:var(--border);margin-bottom:14px">
+
+<h3 style="color:var(--cyan);font-size:14px">2026-05-09 初始搭建</h3>
+<p style="font-size:13px;color:var(--text)">纯手写 HTML+CSS+JS 单页博客 · GitHub Pages 托管 · Cloudflare DNS · 自定义域名 · HTTPS · 蓝黑星空主题 · 13篇手工文章</p>
+
+<h3 style="color:var(--cyan);font-size:14px">2026-05-09 跨境电商栏目</h3>
+<p style="font-size:13px;color:var(--text)">Ozon/Yandex/俄罗斯市场/铺货选品 6子分类 · 徒手健身5子分类 · 分类筛选+搜索 · 自动内容生成器v1模板池方案 · 每日10篇</p>
+
+<h3 style="color:var(--cyan);font-size:14px">2026-05-09 来源驱动 v3</h3>
+<p style="font-size:13px;color:var(--text)">Google News RSS 抓取真实新闻 · 篇篇标注来源和原文链接 · 来源去重+质量过滤 · 有据可查</p>
+
+<h3 style="color:var(--cyan);font-size:14px">2026-05-09 网站个性化</h3>
+<p style="font-size:13px;color:var(--text)">网站名「猫明之主小站」· 个性化引言卡片 · Spotify+Bilibili导航 · Canvas星空粒子 · 浮动动效 · 渐变光条</p>
+
+<h3 style="color:var(--cyan);font-size:14px">2026-05-09 功能完善</h3>
+<p style="font-size:13px;color:var(--text)">404页面 · robots.txt · sitemap.xml · JSON-LD结构化数据 · Open Graph+Twitter Cards · HTTPS强制 · ARIA无障碍 · 键盘导航 · 日期卡片 · 歇后语 · 猜字谜 · 卢布汇率 · 呼吸工具 · 阅读进度条 · 回到顶部 · 文章目录TOC · 分享按钮 · 骨架屏 · 错误重试 · 汇率缓存 · 分页10篇/页</p>
+
+<h3 style="color:var(--cyan);font-size:14px">2026-05-09 AI新闻栏目</h3>
+<p style="font-size:13px;color:var(--text)">AI工具/行业动态/AI与电商/AI教程 4子分类 · 每日生成调整为5跨境+2健身+3AI</p>
+
+<h3 style="color:var(--cyan);font-size:14px">2026-05-09 TODO待办</h3>
+<p style="font-size:13px;color:var(--text)">导航栏待办按钮 · 密码catming · localStorage本地存储 · 添加/完成/删除</p>
+
+<h3 style="color:var(--cyan);font-size:14px">2026-05-09 双栏布局</h3>
+<p style="font-size:13px;color:var(--text)">1200px宽屏 · 主内容+侧边栏双栏 · 2列文章网格 · 工具常驻侧边栏 · 侧边栏悬浮固定 · 移动端汉堡菜单 · 起始日期2025-09-05（246天）</p>
+
+<hr style="border-color:var(--border);margin:14px 0">
+<p style="font-size:11px;color:var(--muted)">技术栈：Vanilla HTML+CSS+JS · marked.js · Python+feedparser · GitHub Pages · Cloudflare · Google News RSS</p>
+</div>`;
+function openChangelog(){document.getElementById('clOverlay').classList.add('on');renderChangelog()}
+function closeChangelog(){document.getElementById('clOverlay').classList.remove('on')}
+function renderChangelog(){
+  const panel=document.getElementById('clPanel');
+  if(!clUnlocked){panel.innerHTML=`<h2>🔐 更新日志</h2><div class="td-pw-row"><input type="password" id="clPw" placeholder="输入密码..." onkeydown="if(event.key==='Enter')checkClPw()"><button onclick="checkClPw()">解锁</button></div><button class="td-close" onclick="closeChangelog()">关闭</button>`;setTimeout(()=>{const i=document.getElementById('clPw');if(i)i.focus()},100);return}
+  panel.innerHTML=CHANGELOG_HTML+'<button class="td-close" onclick="closeChangelog()">关闭</button>';
+}
+function checkClPw(){if(document.getElementById('clPw').value===TODO_PW){clUnlocked=true;renderChangelog()}else{alert('密码错误')}}
+document.getElementById('clOverlay').onclick=function(e){if(e.target===this)closeChangelog()};
 function addTodo(){const i=document.getElementById('tdInput');if(!i)return;const v=i.value.trim();if(!v)return;const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');tasks.unshift({text:v,done:false});localStorage.setItem('todo_catming',JSON.stringify(tasks));i.value='';renderTodo()}
 function toggleTodo(idx){const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');if(tasks[idx]){tasks[idx].done=!tasks[idx].done;localStorage.setItem('todo_catming',JSON.stringify(tasks));renderTodo()}}
 function delTodo(idx){const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');tasks.splice(idx,1);localStorage.setItem('todo_catming',JSON.stringify(tasks));renderTodo()}
