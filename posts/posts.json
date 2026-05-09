@@ -1,100 +1,186 @@
 [
   {
-    "slug": "hot-selection-may-2026",
-    "title": "2026年5月跨境热销品盘点：户外储能与智能家居崛起",
+    "slug": "第1周徒手训练计划减脂冲刺-2026-05-09",
+    "title": "第1周徒手训练计划：减脂冲刺",
     "date": "2026-05-09",
-    "excerpt": "本月欧美市场户外便携储能设备搜索量飙升120%，智能家居安防品类持续增长，这些趋势值得跨境卖家关注。",
-    "cat": "daily-selection"
+    "excerpt": "新一周的训练计划安排，包含每日训练内容、组数次数的具体指导。",
+    "cat": "fitness",
+    "sub": "plan"
   },
   {
-    "slug": "blue-ocean-toys",
-    "title": "蓝海挖掘：STEM教育玩具在东南亚市场的爆发机会",
+    "slug": "14天俯卧撑挑战每天进步39个的进阶计划-2026-05-09",
+    "title": "14天俯卧撑挑战：每天进步39个的进阶计划",
+    "date": "2026-05-09",
+    "excerpt": "从基础俯卧撑到钻石俯卧撑的完整进阶路径，每天只需要20分钟。",
+    "cat": "fitness",
+    "sub": "male"
+  },
+  {
+    "slug": "瑜伽垫上的核心训练15个动作打造马甲线-2026-05-09",
+    "title": "瑜伽垫上的核心训练：15个动作打造马甲线",
+    "date": "2026-05-09",
+    "excerpt": "全部在瑜伽垫上完成的核心肌群训练方案，从平板支撑到卷腹的完整体系。",
+    "cat": "fitness",
+    "sub": "yoga-mat"
+  },
+  {
+    "slug": "ozon平台近期规则更新卖家需要注意的8个变化-2026-05-09",
+    "title": "Ozon平台近期规则更新：卖家需要注意的8个变化",
+    "date": "2026-05-09",
+    "excerpt": "解读Ozon最新政策调整，包含类目规则、佣金变化和新功能上线，帮助卖家及时调整运营策略。",
+    "cat": "cross-border",
+    "sub": "ozon"
+  },
+  {
+    "slug": "俄罗斯跨境物流陆运方案对比时效成本与稳定性的平衡-2026-05-09",
+    "title": "俄罗斯跨境物流陆运方案对比：时效、成本与稳定性的平衡",
+    "date": "2026-05-09",
+    "excerpt": "详细对比当前主流的对俄跨境物流方案，包含实际时效测试数据和成本测算。",
+    "cat": "cross-border",
+    "sub": "logistics"
+  },
+  {
+    "slug": "俄罗斯近期热销选品趋势厨房小家电品类飙升-2026-05-09",
+    "title": "俄罗斯近期热销选品趋势：厨房小家电品类飙升",
+    "date": "2026-05-09",
+    "excerpt": "根据Ozon近30天数据，户外露营装备品类搜索量和订单量同步飙升，本文分析这一趋势背后的原因和选品机会。",
+    "cat": "cross-border",
+    "sub": "selection"
+  },
+  {
+    "slug": "yandex-market运营全攻略从零开始的完整指南-2026-05-09",
+    "title": "Yandex Market运营全攻略：从零开始的完整指南",
+    "date": "2026-05-09",
+    "excerpt": "全面覆盖Yandex Market店铺运营的各个环节，包含商品上架、搜索优化和数据分析。",
+    "cat": "cross-border",
+    "sub": "yandex"
+  },
+  {
+    "slug": "俄罗斯电商2026年趋势报告ai选品-2026-05-09",
+    "title": "俄罗斯电商2026年趋势报告：AI选品",
+    "date": "2026-05-09",
+    "excerpt": "分析2026年俄罗斯电商市场的最新动态，包含政策环境、消费者行为变化和品类趋势。",
+    "cat": "cross-border",
+    "sub": "russia-market"
+  },
+  {
+    "slug": "跨境电商必备工具清单ozon卖家效率提升10件套-2026-05-09",
+    "title": "跨境电商必备工具清单：Ozon卖家效率提升10件套",
+    "date": "2026-05-09",
+    "excerpt": "从选品分析、ERP管理到翻译工具，整理Ozon卖家日常运营必备的工具组合。",
+    "cat": "cross-border",
+    "sub": "tools"
+  },
+  {
+    "slug": "ozon平台近期规则更新卖家需要注意的5个变化-2026-05-09",
+    "title": "Ozon平台近期规则更新：卖家需要注意的5个变化",
+    "date": "2026-05-09",
+    "excerpt": "解读Ozon最新政策调整，包含类目规则、佣金变化和新功能上线，帮助卖家及时调整运营策略。",
+    "cat": "cross-border",
+    "sub": "ozon"
+  },
+  {
+    "slug": "ozon-selection-basics",
+    "title": "Ozon选品入门：俄罗斯市场热销品类分析",
+    "date": "2026-05-09",
+    "excerpt": "Ozon平台选品核心逻辑：从俄罗斯消费习惯、季节性需求到竞争度评估，新手选品第一步。",
+    "cat": "cross-border",
+    "sub": "selection"
+  },
+  {
+    "slug": "russia-consumer-insight",
+    "title": "俄罗斯消费者画像：收入结构、购物偏好与支付习惯",
     "date": "2026-05-08",
-    "excerpt": "Shopee和Lazada数据显示，科学实验套装、编程启蒙玩具在东南亚6国的月销量增长超200%，竞争度却远低于3C品类。",
-    "cat": "daily-selection"
+    "excerpt": "了解俄罗斯消费者的真实面貌：平均收入、网购偏好、支付方式和物流期望，为选品打下基础。",
+    "cat": "cross-border",
+    "sub": "russia-market"
   },
   {
-    "slug": "pet-supplies-trend",
-    "title": "宠物出海新风口：智能喂食器与环保猫砂成黑马",
-    "date": "2026-05-06",
-    "excerpt": "全球宠物经济规模突破3000亿美元，智能宠物用品和环保耗材成为跨境电商增长最快的子类目之一。",
-    "cat": "daily-selection"
-  },
-  {
-    "slug": "amazon-listing-optimization",
-    "title": "亚马逊Listing优化全攻略：从标题到A+页面的完整框架",
+    "slug": "ozon-account-setup",
+    "title": "Ozon卖家账号注册全流程与常见驳回原因",
     "date": "2026-05-07",
-    "excerpt": "一个好的Listing是转化率的基础。本文拆解标题、五点描述、图片、A+内容每个环节的优化要点和常见误区。",
-    "cat": "operation-tips"
+    "excerpt": "从资料准备到账号激活，Ozon跨境店注册的每个步骤和注意事项。",
+    "cat": "cross-border",
+    "sub": "ozon"
   },
   {
-    "slug": "ppc-advertising-guide",
-    "title": "亚马逊PPC广告投放实战：如何用30天将ACOS从40%降到15%",
+    "slug": "yandex-market-entry",
+    "title": "Yandex Market入驻指南：与Ozon的差异化运营",
+    "date": "2026-05-06",
+    "excerpt": "Yandex Market平台特点、入驻条件和运营策略，与Ozon形成互补。",
+    "cat": "cross-border",
+    "sub": "yandex"
+  },
+  {
+    "slug": "bulk-listing-strategy",
+    "title": "铺货模式实战：如何在Ozon高效上架1000个SKU",
     "date": "2026-05-05",
-    "excerpt": "通过精准关键词分层、否定关键词策略和分时段竞价调整，系统性地降低广告成本，提升ROI。",
-    "cat": "operation-tips"
+    "excerpt": "铺货不是乱铺，从选品、ERP管理、图片处理到上架审核的完整流程。",
+    "cat": "cross-border",
+    "sub": "selection"
   },
   {
-    "slug": "conversion-rate-secrets",
-    "title": "转化率翻倍的秘密：5个被大多数卖家忽略的详情页细节",
-    "date": "2026-05-03",
-    "excerpt": "从移动端适配、视频内容布局到QA区管理，这些不起眼的细节正在悄悄影响你的转化率。",
-    "cat": "operation-tips"
-  },
-  {
-    "slug": "amazon-2026-policy-update",
-    "title": "亚马逊2026年最新政策解读：退货规则与账户健康评分变化",
+    "slug": "russia-logistics-guide",
+    "title": "俄罗斯跨境物流方案：FBO vs FBS vs 自发货怎么选",
     "date": "2026-05-04",
-    "excerpt": "亚马逊近期更新了退货处理流程和账户健康评分机制，不合规可能导致销售权限被暂停，卖家需尽快了解调整。",
-    "cat": "platform-policy"
+    "excerpt": "Ozon三种物流模式的成本对比和适用场景，帮你找到最优发货方案。",
+    "cat": "cross-border",
+    "sub": "logistics"
   },
   {
-    "slug": "tiktok-shop-cross-border",
-    "title": "TikTok Shop跨境店入驻全指南：资质、流程与避坑要点",
+    "slug": "ruble-payment-guide",
+    "title": "卢布收款全攻略：跨境回款渠道与汇率避险",
+    "date": "2026-05-03",
+    "excerpt": "俄罗斯跨境收款渠道对比：连连、PingPong、万里汇的实际使用体验和费率分析。",
+    "cat": "cross-border",
+    "sub": "logistics"
+  },
+  {
+    "slug": "ozon-promotion-tools",
+    "title": "Ozon推广工具详解：积分、模板和促销活动怎么用",
     "date": "2026-05-02",
-    "excerpt": "TikTok Shop持续开放新站点，本文梳理各国站点入驻条件、所需资质、常见驳回原因及解决方案。",
-    "cat": "platform-policy"
+    "excerpt": "Ozon站内推广渠道全解析，从积分设置到参与平台大促的实操指南。",
+    "cat": "cross-border",
+    "sub": "ozon"
   },
   {
-    "slug": "overseas-warehouse-strategy",
-    "title": "海外仓布局策略：第三方仓 vs FBA vs 自建仓怎么选？",
-    "date": "2026-05-01",
-    "excerpt": "不同阶段卖家对仓储的需求截然不同。本文对比三种模式的成本结构、时效和适用场景，帮你做出最优决策。",
-    "cat": "logistics"
+    "slug": "bodyweight-beginner-male",
+    "title": "男性徒手入门：零基础30天自重训练计划",
+    "date": "2026-05-09",
+    "excerpt": "不需要任何器械，只用一张瑜伽垫，30天从零建立训练习惯。包含胸、背、腿、核心的全面计划。",
+    "cat": "fitness",
+    "sub": "male"
   },
   {
-    "slug": "inventory-management",
-    "title": "跨境库存管理避坑指南：如何避免断货和冗余的双重困境",
-    "date": "2026-04-29",
-    "excerpt": "库存管理是现金流的核心。通过安全库存公式、备货周期计算和销售预测模型，实现库存的精细化管理。",
-    "cat": "logistics"
+    "slug": "bodyweight-beginner-female",
+    "title": "女性徒手塑形：瑜伽垫上的全身燃脂方案",
+    "date": "2026-05-08",
+    "excerpt": "专为女性设计的自重训练方案，强调核心激活、臀腿塑形和上肢线条，只需瑜伽垫。",
+    "cat": "fitness",
+    "sub": "female"
   },
   {
-    "slug": "social-media-traffic",
-    "title": "站外引流新思路：Instagram Reels + Pinterest的组合打法",
-    "date": "2026-04-28",
-    "excerpt": "单纯依赖站内广告成本越来越高，通过短视频和图片社交平台进行内容营销，正在成为高ROI的引流方式。",
-    "cat": "marketing"
+    "slug": "yoga-mat-fullbody",
+    "title": "一张瑜伽垫练全身：10个黄金自重动作详解",
+    "date": "2026-05-07",
+    "excerpt": "精选10个最高效的自重动作，覆盖全身大肌群，从动作要领到常见错误全面讲解。",
+    "cat": "fitness",
+    "sub": "yoga-mat"
   },
   {
-    "slug": "brand-building-strategy",
-    "title": "从铺货到品牌：跨境卖家品牌化转型的四个关键步骤",
-    "date": "2026-04-27",
-    "excerpt": "价格战越来越难打，品牌化是长期出路。本文拆解品牌定位、视觉体系、用户口碑和独立站建设的完整路径。",
-    "cat": "marketing"
+    "slug": "weekly-workout-plan",
+    "title": "每周徒手训练计划：胸背腿循环安排",
+    "date": "2026-05-06",
+    "excerpt": "推-拉-腿三分化训练计划，每周6练+1休的完整安排，适合已有基础的训练者。",
+    "cat": "fitness",
+    "sub": "plan"
   },
   {
-    "slug": "anker-case-study",
-    "title": "案例拆解：Anker如何从充电宝小卖家做到全球品牌？",
-    "date": "2026-04-26",
-    "excerpt": "深度复盘Anker的品牌化之路：产品力构建、用户口碑运营和多品牌矩阵策略，值得每个跨境卖家学习。",
-    "cat": "case-study"
-  },
-  {
-    "slug": "failed-case-lessons",
-    "title": "失败复盘：一个年销千万店铺的崩塌与教训",
-    "date": "2026-04-25",
-    "excerpt": "过度依赖单一平台、忽视合规风险、现金流管理失控——这个真实案例值得每个卖家警醒。",
-    "cat": "case-study"
+    "slug": "fitness-diet-basics",
+    "title": "徒手健身怎么吃：增肌减脂的基础饮食原则",
+    "date": "2026-05-05",
+    "excerpt": "不需要复杂的饮食计划，掌握蛋白质摄入、碳水循环和水分补充的核心原则。",
+    "cat": "fitness",
+    "sub": "diet"
   }
 ]
