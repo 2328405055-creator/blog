@@ -280,11 +280,14 @@ let searchQuery = '';
 
 async function loadPosts() {
   try {
-    const res = await fetch('posts/posts.json');
-    if (!res.ok) throw new Error('failed');
+    const res = await fetch('posts/posts.json?v=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     posts = await res.json();
     posts.sort((a,b) => b.date.localeCompare(a.date));
-  } catch(e) { posts = []; }
+  } catch(e) {
+    console.error('加载文章失败:', e);
+    posts = [];
+  }
 }
 
 function showView(view) {
