@@ -3,271 +3,383 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>学习仪表盘</title>
+<title>猫明之主小站</title>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
 :root {
-  --bg: #0a0e17; --card: #111827; --border: #1e293b;
-  --text: #c8d2e0; --title: #e8edf5; --muted: #6b7d99;
-  --blue: #3b82f6; --cyan: #06b6d4; --green: #10b981;
-  --radius: 10px;
+  --bg: #080c14; --card: #0f1420; --card-hover: #161d2e;
+  --border: #1c2438; --text: #bcc5d6; --title: #e2e8f4;
+  --muted: #5e6d87; --blue: #4b8cf7; --cyan: #22c9d0;
+  --purple: #9b72f2; --pink: #f07baa; --gold: #f0b85a;
+  --green: #34c97d; --radius: 12px;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:"PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--text); line-height:1.7; min-height:100vh; }
-.nav { background:rgba(10,14,23,0.94); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
-.nav-inner { max-width:800px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 20px; height:56px; }
-.nav .logo { font-size:17px; font-weight:700; color:var(--title); cursor:pointer; text-decoration:none; }
-.nav .logo span { color:var(--cyan); }
-.nav-tabs { display:flex; gap:4px; }
-.nav-tabs button { padding:6px 16px; border-radius:16px; border:1px solid var(--border); background:var(--card); color:var(--muted); cursor:pointer; font-size:13px; transition:all 0.2s; }
-.nav-tabs button:hover { border-color:var(--blue); color:var(--blue-light); }
+
+/* 星空粒子背景 */
+#particles {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  pointer-events:none; z-index:0;
+}
+
+body {
+  font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;
+  background:var(--bg); color:var(--text); line-height:1.7;
+  min-height:100vh; position:relative; overflow-x:hidden;
+}
+
+/* 全局容器 */
+.app { position:relative; z-index:1; }
+
+/* 导航栏 */
+.nav {
+  position:sticky; top:0; z-index:100;
+  background:rgba(8,12,20,0.88); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner {
+  max-width:880px; margin:0 auto; display:flex;
+  align-items:center; justify-content:space-between;
+  padding:0 20px; height:58px;
+}
+.nav-logo {
+  display:flex; align-items:center; gap:8px; cursor:pointer;
+  text-decoration:none; font-size:18px; font-weight:700;
+  color:var(--title); letter-spacing:1px;
+}
+.nav-logo .icon { font-size:24px; animation: float 3s ease-in-out infinite; }
+@keyframes float {
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(-4px); }
+}
+.nav-logo span { background:linear-gradient(135deg,var(--cyan),var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+.nav-right { display:flex; align-items:center; gap:4px; }
+.nav-right a {
+  display:flex; align-items:center; gap:5px;
+  padding:7px 14px; border-radius:18px; text-decoration:none;
+  font-size:13px; color:var(--muted); transition:all 0.25s;
+  border:1px solid transparent;
+}
+.nav-right a:hover {
+  color:var(--title); background:var(--card); border-color:var(--border);
+}
+.nav-right a.spotify:hover { color:#1DB954; border-color:#1DB95433; background:#1DB95411; }
+.nav-right a.bilibili:hover { color:#fb7299; border-color:#fb729933; background:#fb729911; }
+.nav-right svg { width:16px; height:16px; }
+
+/* 标签切换 */
+.nav-tabs { display:flex; gap:4px; margin-left:8px; }
+.nav-tabs button {
+  padding:6px 14px; border-radius:16px; border:1px solid var(--border);
+  background:var(--card); color:var(--muted); cursor:pointer;
+  font-size:13px; transition:all 0.25s;
+}
+.nav-tabs button:hover { border-color:var(--blue); color:var(--blue); }
 .nav-tabs button.on { background:var(--blue); border-color:var(--blue); color:#fff; }
-.main { max-width:800px; margin:0 auto; padding:0 20px 60px; }
-.hero { text-align:center; padding:40px 0 24px; }
-.hero h1 { font-size:26px; color:var(--title); }
-.hero p { color:var(--muted); font-size:14px; margin-top:6px; }
-.stats { display:flex; gap:20px; justify-content:center; margin-bottom:24px; }
-.stats .s { text-align:center; }
-.stats .s .n { font-size:24px; font-weight:700; color:var(--cyan); }
-.stats .s .l { font-size:11px; color:var(--muted); }
-.sub-row { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
-.sub-row button { padding:5px 14px; border-radius:14px; border:1px solid var(--border); background:var(--card); color:var(--muted); cursor:pointer; font-size:12px; transition:all 0.2s; }
-.sub-row button:hover, .sub-row button.on { border-color:var(--blue); color:var(--blue); }
-.sub-row button.on { background:rgba(59,130,246,0.1); }
-.search { margin-bottom:18px; }
-.search input { width:100%; padding:10px 16px; border-radius:18px; border:1px solid var(--border); background:var(--card); color:var(--title); font-size:14px; outline:none; }
-.search input:focus { border-color:var(--blue); }
+
+/* 主容器 */
+.main { max-width:880px; margin:0 auto; padding:0 20px 60px; position:relative; z-index:1; }
+
+/* Hero 区域 */
+.hero {
+  text-align:center; padding:56px 0 20px; position:relative;
+}
+.hero .site-name {
+  font-size:38px; font-weight:800; color:var(--title);
+  background:linear-gradient(135deg, var(--cyan) 0%, var(--purple) 50%, var(--pink) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:3px;
+}
+.hero .site-desc {
+  font-size:14px; color:var(--muted); margin-top:10px;
+  letter-spacing:2px;
+}
+
+/* 引言卡片 */
+.quote-card {
+  max-width:660px; margin:0 auto 36px;
+  background:linear-gradient(135deg, rgba(155,114,242,0.06) 0%, rgba(34,201,208,0.04) 100%);
+  border:1px solid var(--border); border-radius:var(--radius);
+  padding:28px 30px; position:relative; overflow:hidden;
+}
+.quote-card::before {
+  content:""; position:absolute; top:0; left:0; width:100%; height:2px;
+  background:linear-gradient(90deg, transparent, var(--purple), var(--cyan), transparent);
+  opacity:0.5;
+}
+.quote-card .q-icon {
+  font-size:32px; opacity:0.15; position:absolute; top:12px; left:16px;
+}
+.quote-card p {
+  font-size:14px; color:#9ba9c6; line-height:2.1;
+  text-align:center; position:relative; z-index:1;
+  letter-spacing:1px;
+}
+
+/* 统计栏 */
+.stats {
+  display:flex; gap:28px; justify-content:center; margin-bottom:28px;
+}
+.stat-item {
+  text-align:center; padding:14px 24px;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); transition:all 0.3s;
+  cursor:default;
+}
+.stat-item:hover { border-color:var(--purple); transform:translateY(-2px); box-shadow:0 8px 25px rgba(155,114,242,0.08); }
+.stat-num { font-size:28px; font-weight:700; color:var(--cyan); }
+.stat-label { font-size:11px; color:var(--muted); margin-top:2px; letter-spacing:1px; }
+
+/* 子分类 */
+.sub-row { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; justify-content:center; }
+.sub-btn {
+  padding:6px 16px; border-radius:16px; border:1px solid var(--border);
+  background:var(--card); color:var(--muted); cursor:pointer;
+  font-size:12px; transition:all 0.25s;
+}
+.sub-btn:hover { border-color:var(--cyan); color:var(--cyan); }
+.sub-btn.on { background:rgba(34,201,208,0.12); border-color:var(--cyan); color:var(--cyan); }
+
+/* 搜索 */
+.search { margin-bottom:22px; }
+.search input {
+  width:100%; max-width:500px; margin:0 auto; display:block;
+  padding:11px 18px; border-radius:22px;
+  border:1px solid var(--border); background:var(--card);
+  color:var(--title); font-size:14px; outline:none;
+  transition:all 0.3s;
+}
+.search input:focus { border-color:var(--purple); box-shadow:0 0 20px rgba(155,114,242,0.08); }
 .search input::placeholder { color:var(--muted); }
-.list { display:grid; gap:14px; }
-.card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; cursor:pointer; transition:all 0.25s; }
-.card:hover { background:#1a2235; border-color:var(--blue); transform:translateY(-2px); }
-.card .row1 { display:flex; align-items:center; gap:10px; margin-bottom:4px; font-size:13px; }
-.card .tag { padding:2px 10px; border-radius:10px; font-size:11px; }
-.card .date { color:var(--muted); }
-.card h3 { font-size:17px; color:var(--title); margin-bottom:4px; }
-.card .excerpt { font-size:13px; color:var(--muted); }
-.article { padding:20px 0; }
-.article .back { display:inline-flex; align-items:center; gap:4px; color:var(--muted); cursor:pointer; font-size:14px; margin-bottom:20px; }
-.article .back:hover { color:var(--blue); }
-.article h1 { font-size:26px; color:var(--title); line-height:1.3; margin-bottom:8px; }
-.article .meta { font-size:13px; color:var(--muted); margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--border); }
-.article .content { font-size:16px; line-height:1.9; }
-.article .content h2 { font-size:20px; color:var(--title); margin:24px 0 10px; }
-.article .content h3 { font-size:17px; color:var(--cyan); margin:20px 0 8px; }
+
+/* 文章卡片 */
+.list { display:grid; gap:16px; }
+.card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:22px 24px; cursor:pointer;
+  transition:all 0.3s; position:relative; overflow:hidden;
+}
+.card::after {
+  content:""; position:absolute; bottom:0; left:0; width:100%; height:2px;
+  background:linear-gradient(90deg, transparent, var(--purple), var(--cyan), transparent);
+  transform:scaleX(0); transition:transform 0.3s; opacity:0.4;
+}
+.card:hover { background:var(--card-hover); border-color:var(--blue); transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,0.3); }
+.card:hover::after { transform:scaleX(1); }
+.card .card-meta { display:flex; align-items:center; gap:10px; margin-bottom:6px; font-size:12px; }
+.card .card-tag { padding:3px 10px; border-radius:10px; font-size:11px; letter-spacing:1px; }
+.card .card-date { color:var(--muted); }
+.card h3 { font-size:17px; color:var(--title); margin-bottom:6px; line-height:1.4; }
+.card .card-excerpt { font-size:13px; color:var(--muted); line-height:1.6; }
+
+/* 文章详情 */
+.article { animation: fadeIn 0.4s; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
+.article .back-btn {
+  display:inline-flex; align-items:center; gap:4px; color:var(--muted);
+  cursor:pointer; font-size:14px; margin-bottom:24px; padding:6px 14px;
+  border-radius:16px; border:1px solid transparent; transition:all 0.2s;
+}
+.article .back-btn:hover { color:var(--cyan); border-color:var(--border); background:var(--card); }
+.article h1 { font-size:28px; color:var(--title); line-height:1.3; margin-bottom:10px; }
+.article .art-meta { font-size:13px; color:var(--muted); margin-bottom:28px; padding-bottom:18px; border-bottom:1px solid var(--border); display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.article .art-meta .art-source { color:var(--cyan); }
+.article .content { font-size:16px; line-height:1.95; }
+.article .content h2 { font-size:21px; color:var(--title); margin:28px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--border); }
+.article .content h3 { font-size:17px; color:var(--cyan); margin:22px 0 8px; }
 .article .content p { margin-bottom:12px; }
 .article .content ul,.article .content ol { margin:0 0 12px 22px; }
 .article .content li { margin-bottom:4px; }
-.article .content blockquote { border-left:3px solid var(--blue); padding:8px 16px; margin:14px 0; background:rgba(59,130,246,0.05); border-radius:0 6px 6px 0; color:var(--muted); }
-.article .content code { background:var(--card); padding:2px 6px; border-radius:4px; color:var(--cyan); }
-.article .content pre { background:#0d1117; padding:14px 18px; border-radius:8px; overflow-x:auto; margin-bottom:12px; border:1px solid var(--border); }
+.article .content blockquote { border-left:3px solid var(--purple); padding:10px 18px; margin:16px 0; background:rgba(155,114,242,0.05); border-radius:0 6px 6px 0; color:var(--muted); }
+.article .content code { background:var(--card); padding:2px 7px; border-radius:4px; color:var(--cyan); font-size:0.9em; }
+.article .content pre { background:#0a0d14; padding:14px 18px; border-radius:8px; overflow-x:auto; margin-bottom:12px; border:1px solid var(--border); }
+.article .content pre code { background:none; padding:0; color:var(--text); }
 .article .content table { width:100%; border-collapse:collapse; margin:12px 0; }
 .article .content td,.article .content th { border:1px solid var(--border); padding:8px 12px; }
 .article .content th { background:var(--card); color:var(--title); }
-.article .content a { color:var(--blue); }
+.article .content a { color:var(--cyan); }
 .article .content strong { color:var(--title); }
+
+/* 消息 */
 .msg { text-align:center; padding:60px 20px; color:var(--muted); }
-.footer { text-align:center; padding:30px; color:var(--muted); font-size:12px; border-top:1px solid var(--border); max-width:800px; margin:0 auto; }
+
+/* 页脚 */
+.footer {
+  text-align:center; padding:30px; color:var(--muted); font-size:12px;
+  border-top:1px solid var(--border); max-width:880px; margin:0 auto;
+  letter-spacing:1px; position:relative; z-index:1;
+}
+
+/* 滚动条 */
 ::-webkit-scrollbar { width:5px; }
 ::-webkit-scrollbar-track { background:var(--bg); }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+
+/* 响应式 */
+@media (max-width:700px) {
+  .hero .site-name { font-size:26px; }
+  .hero .site-desc { font-size:12px; }
+  .quote-card p { font-size:13px; line-height:1.9; }
+  .nav-right a span { display:none; }
+  .nav-tabs button { font-size:12px; padding:5px 10px; }
+  .card h3 { font-size:15px; }
+  .article h1 { font-size:22px; }
+  .stats { gap:12px; }
+  .stat-item { padding:10px 16px; }
+  .stat-num { font-size:22px; }
+}
 </style>
 </head>
 <body>
 
+<!-- 星空背景 -->
+<canvas id="particles"></canvas>
+
+<div class="app">
+
+<!-- 导航 -->
 <nav class="nav">
   <div class="nav-inner">
-    <span class="logo" onclick="showHome()">📚 学习<span>仪表盘</span></span>
-    <div class="nav-tabs">
-      <button class="on" data-tab="all" onclick="switchTab('all')">全部</button>
-      <button data-tab="cross-border" onclick="switchTab('cross-border')">🚀 跨境电商</button>
-      <button data-tab="fitness" onclick="switchTab('fitness')">💪 每日健身</button>
+    <a class="nav-logo" onclick="goHome()">
+      <span class="icon">🐱</span>
+      猫明之主<span>小站</span>
+    </a>
+    <div class="nav-right">
+      <div class="nav-tabs">
+        <button class="on" data-tab="all" onclick="switchTab('all')">全部</button>
+        <button data-tab="cross-border" onclick="switchTab('cross-border')">跨境电商</button>
+        <button data-tab="fitness" onclick="switchTab('fitness')">每日健身</button>
+      </div>
+      <a class="spotify" href="https://open.spotify.com" target="_blank" title="Spotify">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+        <span>Spotify</span>
+      </a>
+      <a class="bilibili" href="https://www.bilibili.com" target="_blank" title="Bilibili">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 01-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 01.16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/></svg>
+        <span>Bilibili</span>
+      </a>
     </div>
   </div>
 </nav>
 
+<!-- 主内容 -->
 <div class="main" id="main"></div>
 
-<footer class="footer">© 2026 学习仪表盘 · 持续积累</footer>
+<footer class="footer">© 2026 猫明之主小站 · 安静地生长</footer>
 
+</div>
+
+<!-- 星空粒子 -->
 <script>
-// ---- 全局状态 ----
-let posts = [];
-let currentTab = 'all';
-let currentSub = 'all';
-let currentSearch = '';
-
-const SUBS = {
-  'cross-border': [
-    {key:'all',name:'全部'},{key:'selection',name:'选品技巧'},{key:'ozon',name:'Ozon运营'},
-    {key:'yandex',name:'Yandex运营'},{key:'russia-market',name:'俄罗斯市场'},
-    {key:'logistics',name:'物流收款'},{key:'tools',name:'工具教程'},
-  ],
-  'fitness': [
-    {key:'all',name:'全部'},{key:'male',name:'男性训练'},{key:'female',name:'女性训练'},
-    {key:'yoga-mat',name:'瑜伽垫动作'},{key:'plan',name:'每日计划'},{key:'diet',name:'饮食建议'},
-  ],
-};
-
-const SUB_NAMES = {};
-Object.values(SUBS).forEach(arr => arr.forEach(s => SUB_NAMES[s.key] = s.name));
-for (let k in SUBS) SUB_NAMES[k] = '';
-
-// ---- 数据加载 ----
-async function loadData() {
-  try {
-    const r = await fetch('posts/posts.json?v=' + Date.now());
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    posts = await r.json();
-    posts.sort((a,b) => b.date.localeCompare(a.date));
-    return true;
-  } catch(e) {
-    console.error('加载失败:', e);
-    return false;
+(function(){
+  const c=document.getElementById('particles');
+  const ctx=c.getContext('2d');
+  let stars=[], w, h;
+  function resize(){ w=c.width=window.innerWidth; h=c.height=window.innerHeight; }
+  resize(); window.onresize=resize;
+  for(let i=0;i<80;i++) stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+0.5,o:Math.random(),s:Math.random()*0.005+0.002});
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    stars.forEach(s=>{
+      s.o+=s.s; if(s.o>1||s.o<0)s.s*=-1;
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(155,180,220,${s.o*0.6})`; ctx.fill();
+    });
+    requestAnimationFrame(draw);
   }
+  draw();
+})();
+</script>
+
+<!-- 主逻辑 -->
+<script>
+let posts=[], currentTab='all', currentSub='all', currentSearch='';
+
+const SUBS={
+  'cross-border':[{key:'all',name:'全部'},{key:'selection',name:'选品技巧'},{key:'ozon',name:'Ozon运营'},{key:'yandex',name:'Yandex运营'},{key:'russia-market',name:'俄罗斯市场'},{key:'logistics',name:'物流收款'},{key:'tools',name:'工具教程'}],
+  'fitness':[{key:'all',name:'全部'},{key:'male',name:'男性训练'},{key:'female',name:'女性训练'},{key:'yoga-mat',name:'瑜伽垫'},{key:'plan',name:'每日计划'},{key:'diet',name:'饮食建议'}],
+};
+const SUB_NAMES={}; Object.values(SUBS).forEach(a=>a.forEach(s=>SUB_NAMES[s.key]=s.name));
+
+const QUOTE=`亲爱的陌生人，愿你在人海茫茫中，仍能像一朵小小的白云，自由地飘过蓝天，不惊扰任何人，却把自己的洁白与柔软留给这世界。愿你的心永远清澈如山间清泉，无论世事如何喧嚣，都能映照出星光与月色。愿你遇见的每一次风雨，都能化作滋养生命的甘露；愿你走过的每一条路，都开满安静而温柔的花。愿你带着孩子般的纯真与对美好的相信，一路平安，一路向光。`;
+
+async function loadData(){
+  try{const r=await fetch('posts/posts.json?v='+Date.now());if(!r.ok)throw Error('HTTP '+r.status);posts=await r.json();posts.sort((a,b)=>b.date.localeCompare(a.date));return true}
+  catch(e){console.error(e);return false}
 }
 
-// ---- 渲染 ----
-function render() {
-  let filtered = posts;
+function catName(c){return c==='cross-border'?'跨境电商':c==='fitness'?'每日健身':c}
 
-  // 栏目筛选
-  if (currentTab !== 'all') {
-    filtered = filtered.filter(p => p.cat === currentTab);
+function render(){
+  let filtered=posts;
+  if(currentTab!=='all') filtered=filtered.filter(p=>p.cat===currentTab);
+  if(currentSub!=='all') filtered=filtered.filter(p=>p.sub===currentSub);
+  if(currentSearch){const q=currentSearch.toLowerCase();filtered=filtered.filter(p=>p.title.toLowerCase().includes(q)||p.excerpt.toLowerCase().includes(q))}
+
+  const crossCount=posts.filter(p=>p.cat==='cross-border').length;
+  const fitCount=posts.filter(p=>p.cat==='fitness').length;
+  const main=document.getElementById('main');
+  const isHome=currentTab==='all'&&currentSub==='all'&&!currentSearch;
+
+  let html='';
+
+  // Hero
+  html+=`<div class="hero"><div class="site-name">猫明之主小站</div><div class="site-desc">跨境电商实战 & 每日健身 · 安静学习，温柔生长</div></div>`;
+
+  // 引言(仅首页全部视图显示)
+  if(isHome){
+    html+=`<div class="quote-card"><span class="q-icon">&#10077;</span><p>${QUOTE}</p></div>`;
   }
 
-  // 子分类筛选
-  if (currentSub !== 'all') {
-    filtered = filtered.filter(p => p.sub === currentSub);
-  }
+  // 统计
+  html+=`<div class="stats"><div class="stat-item"><div class="stat-num">${posts.length}</div><div class="stat-label">文章总数</div></div><div class="stat-item"><div class="stat-num">${crossCount}</div><div class="stat-label">跨境电商</div></div><div class="stat-item"><div class="stat-num">${fitCount}</div><div class="stat-label">每日健身</div></div></div>`;
 
-  // 搜索
-  if (currentSearch) {
-    const q = currentSearch.toLowerCase();
-    filtered = filtered.filter(p =>
-      p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q)
-    );
-  }
-
-  const main = document.getElementById('main');
-  const crossCount = posts.filter(p => p.cat === 'cross-border').length;
-  const fitCount = posts.filter(p => p.cat === 'fitness').length;
-
-  // 统计栏
-  let statsHTML = `
-    <div class="hero">
-      <h1>📚 学习仪表盘</h1>
-      <p>跨境电商实战 + 每日健身，持续积累</p>
-    </div>
-    <div class="stats">
-      <div class="s"><div class="n">${posts.length}</div><div class="l">文章总数</div></div>
-      <div class="s"><div class="n">${crossCount}</div><div class="l">跨境电商</div></div>
-      <div class="s"><div class="n">${fitCount}</div><div class="l">每日健身</div></div>
-    </div>
-  `;
-
-  // 子分类按钮
-  let subHTML = '';
-  const subs = SUBS[currentTab === 'all' ? 'cross-border' : currentTab] || [];
-  if (currentTab !== 'all') {
-    subHTML = '<div class="sub-row">';
-    subs.forEach(s => {
-      subHTML += `<button class="${currentSub===s.key?'on':''}" onclick="switchSub('${s.key}')">${s.name}</button>`;
-    });
-    subHTML += '</div>';
+  // 子分类
+  if(currentTab!=='all'){
+    const subs=SUBS[currentTab]||[];
+    html+='<div class="sub-row">';
+    subs.forEach(s=>html+=`<button class="sub-btn${currentSub===s.key?' on':''}" onclick="switchSub('${s.key}')">${s.name}</button>`);
+    html+='</div>';
   }
 
   // 搜索
-  let searchHTML = `<div class="search"><input type="text" id="searchInput" placeholder="🔍 搜索文章..." value="${currentSearch.replace(/"/g,'&quot;')}" oninput="onSearch(this.value)"></div>`;
+  html+=`<div class="search"><input id="searchInput" placeholder="🔍 搜索文章..." value="${currentSearch.replace(/"/g,'&quot;')}" oninput="onSearch(this.value)"></div>`;
 
   // 文章列表
-  let listHTML = '';
-  if (filtered.length === 0) {
-    listHTML = '<div class="msg">暂无文章</div>';
-  } else {
-    listHTML = '<div class="list">';
-    filtered.forEach(p => {
-      const color = currentTab === 'fitness' ? 'var(--green)' : 'var(--blue)';
-      listHTML += `
-        <div class="card" onclick="showArticle('${p.slug}','${p.cat}')">
-          <div class="row1">
-            <span class="tag" style="background:${color}22;color:${color}">${SUB_NAMES[p.sub]||catName(p.cat)}</span>
-            <span class="date">${p.date}</span>
-          </div>
-          <h3>${p.title}</h3>
-          <p class="excerpt">${p.excerpt||''}</p>
-        </div>
-      `;
+  if(!filtered.length){
+    html+='<div class="msg">✨ 暂无文章，等待更新</div>';
+  }else{
+    html+='<div class="list">';
+    filtered.forEach(p=>{
+      const color=currentTab==='fitness'?'var(--green)':'var(--cyan)';
+      html+=`<div class="card" onclick="showArticle('${p.slug}','${p.cat}')"><div class="card-meta"><span class="card-tag" style="background:${color}22;color:${color}">${SUB_NAMES[p.sub]||catName(p.cat)}</span><span class="card-date">${p.date}</span></div><h3>${p.title}</h3><p class="card-excerpt">${p.excerpt||''}</p></div>`;
     });
-    listHTML += '</div>';
+    html+='</div>';
   }
 
-  main.innerHTML = statsHTML + subHTML + searchHTML + listHTML;
+  main.innerHTML=html;
+  main.style.animation='fadeIn 0.4s';
 }
 
-function catName(cat) {
-  return cat === 'cross-border' ? '跨境电商' : cat === 'fitness' ? '每日健身' : cat;
+function switchTab(tab){currentTab=tab;currentSub='all';currentSearch='';document.querySelectorAll('.nav-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));render();window.scrollTo(0,0)}
+function switchSub(sub){currentSub=sub;render()}
+function onSearch(v){currentSearch=v.trim();render()}
+
+async function showArticle(slug,cat){
+  const main=document.getElementById('main');main.innerHTML='<div class="msg">🕯 加载中...</div>';window.scrollTo(0,0);
+  try{
+    const r=await fetch('posts/'+slug+'.md');if(!r.ok)throw Error('404');
+    const md=await r.text(),post=posts.find(p=>p.slug===slug);
+    const color=cat==='fitness'?'var(--green)':'var(--cyan)';
+    main.innerHTML=`<div class="article"><span class="back-btn" onclick="switchTab('${cat}')">← 返回${catName(cat)}</span><h1>${post?.title||''}</h1><div class="art-meta"><span style="color:${color}">${SUB_NAMES[post?.sub]||catName(cat)}</span><span>·</span><span>${post?.date||''}</span>${post?.source_name?`<span>·</span><span class="art-source">来源：${post.source_name}</span>`:''}</div><div class="content">${marked.parse(md)}</div></div>`;
+  }catch(e){main.innerHTML=`<div class="msg">加载失败 <a href="javascript:switchTab('${cat}')">返回</a></div>`}
 }
 
-// ---- 交互 ----
-function switchTab(tab) {
-  currentTab = tab;
-  currentSub = 'all';
-  currentSearch = '';
-  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('on'));
-  document.querySelector(`[data-tab="${tab}"]`).classList.add('on');
-  render();
-  window.scrollTo(0,0);
-}
+function goHome(){switchTab('all')}
 
-function switchSub(sub) {
-  currentSub = sub;
-  render();
-}
-
-function onSearch(val) {
-  currentSearch = val.trim();
-  render();
-}
-
-async function showArticle(slug, cat) {
-  const main = document.getElementById('main');
-  main.innerHTML = '<div class="msg">加载中...</div>';
-  window.scrollTo(0,0);
-
-  try {
-    const r = await fetch('posts/' + slug + '.md');
-    if (!r.ok) throw new Error('404');
-    const md = await r.text();
-    const post = posts.find(p => p.slug === slug);
-    const color = cat === 'fitness' ? 'var(--green)' : 'var(--blue)';
-    main.innerHTML = `
-      <div class="article">
-        <div class="back" onclick="switchTab('${cat}')">← 返回${catName(cat)}</div>
-        <h1>${post?.title||''}</h1>
-        <div class="meta">
-          <span style="color:${color}">${SUB_NAMES[post?.sub]||catName(cat)}</span>
-          <span> · </span><span>${post?.date||''}</span>
-          ${post?.source_name ? `<span> · 来源：${post.source_name}</span>` : ''}
-        </div>
-        <div class="content">${marked.parse(md)}</div>
-      </div>
-    `;
-  } catch(e) {
-    main.innerHTML = `<div class="msg">加载失败 <a href="javascript:switchTab('${cat}')">返回</a></div>`;
-  }
-}
-
-function showHome() {
-  switchTab('all');
-}
-
-// ---- 初始化 ----
 (async function(){
-  const ok = await loadData();
-  if (!ok) {
-    document.getElementById('main').innerHTML = '<div class="msg">文章加载失败，请刷新重试</div>';
-    return;
-  }
+  if(!await loadData()){document.getElementById('main').innerHTML='<div class="msg">文章加载失败，请刷新重试</div>';return}
   render();
 })();
 </script>
