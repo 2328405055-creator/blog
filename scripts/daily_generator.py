@@ -38,6 +38,16 @@ RSS_SOURCES = {
         # Google News — Yandex Market 电商
         "https://news.google.com/rss/search?q=Yandex+Market+%E4%BF%84%E7%BD%97%E6%96%AF+%E7%94%B5%E5%95%86+%E5%8D%96%E5%AE%B6&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
     ],
+    "ai-news": [
+        # Google News — AI人工智能 最新
+        "https://news.google.com/rss/search?q=AI+%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD+%E6%9C%80%E6%96%B0&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # Google News — AI工具 应用
+        "https://news.google.com/rss/search?q=AI%E5%B7%A5%E5%85%B7+%E5%BA%94%E7%94%A8+%E6%95%99%E7%A8%8B&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # Google News — AI电商 跨境
+        "https://news.google.com/rss/search?q=AI+%E7%94%B5%E5%95%86+%E8%B7%A8%E5%A2%83+%E5%BA%94%E7%94%A8&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # Google News — artificial intelligence news
+        "https://news.google.com/rss/search?q=artificial+intelligence+AI+tools+news&hl=en&gl=US&ceid=US:en",
+    ],
     "fitness": [
         # Google News — 徒手健身 自重训练 教程
         "https://news.google.com/rss/search?q=%E5%BE%92%E6%89%8B%E5%81%A5%E8%BA%AB+%E8%87%AA%E9%87%8D%E8%AE%AD%E7%BB%83+%E6%95%99%E7%A8%8B+%E4%BF%AF%E5%8D%A7%E6%92%91+%E6%B7%B1%E8%B9%B2&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
@@ -234,6 +244,17 @@ def classify_fitness(title):
 
 
 # ============================================================
+def classify_ai(title):
+    t = title.lower()
+    if any(w in t for w in ["工具", "tool", "应用", "platform"]):
+        return "ai-tools"
+    if any(w in t for w in ["电商", "跨境", "ecommerce", "零售", "卖家"]):
+        return "ai-ecommerce"
+    if any(w in t for w in ["教程", "指南", "tutorial", "guide", "how"]):
+        return "ai-tutorial"
+    return "ai-industry"
+
+
 # Markdown 构建
 # ============================================================
 
@@ -341,11 +362,60 @@ def build_fitness_post(entry):
 """, cat
 
 
+AI_CAT_NAMES = {
+    "ai-tools": "AI工具", "ai-industry": "行业动态",
+    "ai-ecommerce": "AI与电商", "ai-tutorial": "AI教程",
+}
+
+
+def build_ai_post(entry):
+    title = entry["title"]
+    source_name = entry["source_name"]
+    domain = entry["domain"]
+    link = entry["link"]
+    cat = classify_ai(title)
+    cat_name = AI_CAT_NAMES.get(cat, "AI新闻")
+    search_url = build_search_link(title, domain)
+
+    return f"""# {title}
+
+> 🤖 分类：{cat_name}
+> 📅 采集日期：{datetime.now().strftime('%Y-%m-%d')}
+> 📰 来源：**{source_name}**
+
+---
+
+## 来源信息
+
+本文信息来自 **{source_name}** 的真实 AI 行业报道。
+
+---
+
+## AI 与跨境电商的交汇
+
+无论这则 AI 新闻的具体内容是什么，对跨境电商卖家来说，AI 正在改变：
+
+- 🔹 **选品智能化：** AI 工具正在帮助卖家分析市场趋势和消费者偏好
+- 🔹 **内容生成：** 产品描述、广告文案的 AI 自动化处理
+- 🔹 **客服优化：** AI 翻译和智能客服降低跨境沟通成本
+- 🔹 **数据驱动：** 从经验决策转向 AI 辅助的数据决策
+
+---
+
+## 查看原文
+
+📎 **原文链接：** [点击查看原文]({link})
+🔍 **站内搜索：** [在 {source_name} 站内搜索]({search_url})
+
+> ⚠️ 本文为 AI 行业新闻采集，版权归原来源所有。完整内容请点击原文链接阅读。
+""", cat
+
+
 # ============================================================
 # 主逻辑
 # ============================================================
 
-def generate_posts(limit_cb=7, limit_fit=3):
+def generate_posts(limit_cb=5, limit_fit=2, limit_ai=3):
     tracker = load_json(TRACKER_PATH)
     all_posts = load_json(JSON_PATH)
     existing_slugs = set(p["slug"] for p in all_posts)
@@ -362,50 +432,52 @@ def generate_posts(limit_cb=7, limit_fit=3):
     cb_entries = fetch_all_feeds("cross-border", limit_per_feed=6)
     cb_fresh = [e for e in cb_entries if str_hash(e["title"]) not in posted_titles]
     print(f"  获取 {len(cb_entries)} 条，{len(cb_fresh)} 条可用")
-
-    need_extra = 0
     for entry in cb_fresh[:limit_cb]:
         new_posts.append(build_and_save(entry, "cross-border", date_str, existing_slugs))
-    if len(new_posts) < limit_cb:
-        need_extra += limit_cb - len(new_posts)
 
     # ---- 健身 ----
     print("[INFO] 抓取健身内容...")
     fit_entries = fetch_all_feeds("fitness", limit_per_feed=4)
     fit_fresh = [e for e in fit_entries if str_hash(e["title"]) not in posted_titles]
     print(f"  获取 {len(fit_entries)} 条，{len(fit_fresh)} 条可用")
-
-    fit_count = 0
     for entry in fit_fresh[:limit_fit]:
         new_posts.append(build_and_save(entry, "fitness", date_str, existing_slugs))
-        fit_count += 1
-    if fit_count < limit_fit:
-        need_extra += limit_fit - fit_count
 
-    # ---- 补充来源 ----
-    total = len([p for p in new_posts if p["cat"] == "cross-border"])
-    fit_total = len([p for p in new_posts if p["cat"] == "fitness"])
-    need_cb = limit_cb - total
-    need_fit = limit_fit - fit_total
+    # ---- AI新闻 ----
+    print("[INFO] 抓取 AI 新闻...")
+    ai_entries = fetch_all_feeds("ai-news", limit_per_feed=5)
+    ai_fresh = [e for e in ai_entries if str_hash(e["title"]) not in posted_titles]
+    print(f"  获取 {len(ai_entries)} 条，{len(ai_fresh)} 条可用")
+    for entry in ai_fresh[:limit_ai]:
+        new_posts.append(build_and_save(entry, "ai-news", date_str, existing_slugs))
 
-    if need_cb > 0 or need_fit > 0:
-        print(f"[INFO] 内容不足 (缺CB:{need_cb} Fit:{need_fit})，补充搜索...")
-        fill_all = fetch_fill(need_cb + need_fit, posted_titles)
+    # ---- 补充 ----
+    cb_total = sum(1 for p in new_posts if p["cat"] == "cross-border")
+    fit_total = sum(1 for p in new_posts if p["cat"] == "fitness")
+    ai_total = sum(1 for p in new_posts if p["cat"] == "ai-news")
+
+    if cb_total < limit_cb or fit_total < limit_fit or ai_total < limit_ai:
+        print(f"[INFO] 补充搜索 (缺CB:{limit_cb-cb_total} Fit:{limit_fit-fit_total} AI:{limit_ai-ai_total})...")
+        fill_all = fetch_fill(max(0,limit_cb-cb_total+limit_fit-fit_total+limit_ai-ai_total), posted_titles)
         for entry in fill_all:
-            if entry["section"] == "cross-border" and total < limit_cb:
+            sec = entry["section"]
+            if sec == "cross-border" and cb_total < limit_cb:
                 new_posts.append(build_and_save(entry, "cross-border", date_str, existing_slugs))
-                total += 1
-            elif entry["section"] == "fitness" and fit_total < limit_fit:
+                cb_total += 1
+            elif sec == "fitness" and fit_total < limit_fit:
                 new_posts.append(build_and_save(entry, "fitness", date_str, existing_slugs))
                 fit_total += 1
+            elif sec == "ai-news" and ai_total < limit_ai:
+                new_posts.append(build_and_save(entry, "ai-news", date_str, existing_slugs))
+                ai_total += 1
 
     save_json(TRACKER_PATH, tracker)
-    # build_and_save 内部已保存 JSON，这里重新加载获取最新计数
     current_total = len(load_json(JSON_PATH))
 
     cb_count = sum(1 for p in new_posts if p["cat"] == "cross-border")
     fit_count = sum(1 for p in new_posts if p["cat"] == "fitness")
-    print(f"\n[DONE] {date_str} — 跨境电商 {cb_count} 篇 + 健身 {fit_count} 篇")
+    ai_count = sum(1 for p in new_posts if p["cat"] == "ai-news")
+    print(f"\n[DONE] {date_str} — 跨境电商 {cb_count} + 健身 {fit_count} + AI新闻 {ai_count} = {len(new_posts)} 篇")
     print(f"  线上共 {current_total} 篇文章 → http://20020426.top")
 
     return new_posts
@@ -415,8 +487,10 @@ def build_and_save(entry, section, date_str, existing_slugs):
     title = entry["title"]
     if section == "cross-border":
         md_content, cat = build_cross_border_post(entry)
-    else:
+    elif section == "fitness":
         md_content, cat = build_fitness_post(entry)
+    else:
+        md_content, cat = build_ai_post(entry)
 
     slug_base = slugify(title) + "-" + date_str
     slug = slug_base
@@ -451,6 +525,7 @@ def fetch_fill(needed, exclude_hashes):
     fill_urls = [
         ("cross-border", "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+%E4%BF%84%E7%BD%97%E6%96%AF+%E9%80%89%E5%93%81+%E8%BF%90%E8%90%A5+%E7%89%A9%E6%B5%81&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"),
         ("fitness", "https://news.google.com/rss/search?q=%E5%BE%92%E6%89%8B+%E8%87%AA%E9%87%8D+%E8%AE%AD%E7%BB%83+%E6%95%99%E7%A8%8B+%E4%BF%AF%E5%8D%A7%E6%92%91+%E6%B7%B1%E8%B9%B2+%E7%91%9C%E4%BC%BD+%E5%81%A5%E8%BA%AB&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"),
+        ("ai-news", "https://news.google.com/rss/search?q=AI+%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD+%E5%B7%A5%E5%85%B7+%E6%95%99%E7%A8%8B+%E5%BA%94%E7%94%A8&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"),
     ]
 
     results = []
