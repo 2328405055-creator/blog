@@ -1,1179 +1,504 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-每日内容自动生成器
-每天生成 10 篇文章：7 篇跨境电商 + 3 篇健身
+每日内容生成器 v3 — 真实来源驱动
+- 从 Google News RSS 抓取跨境电商业内新闻
+- 每篇文章标注来源、日期、可用搜索直连
+- 健身内容优先嵌入 YouTube 教程视频
+- 所有内容有据可查，来源可追溯
 用法：python daily_generator.py [--push]
 """
 
-import json
-import os
-import random
-import sys
+import json, os, sys, re, hashlib, urllib.parse
 from datetime import datetime, timedelta
+from html import unescape
+
+import feedparser
+import requests
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 POSTS_DIR = os.path.join(BASE_DIR, "posts")
 JSON_PATH = os.path.join(POSTS_DIR, "posts.json")
 TRACKER_PATH = os.path.join(BASE_DIR, "scripts", "tracker.json")
 
-# ==============================================================
-# 内容池
-# ==============================================================
-
-def _d(day_offset):
-    return (datetime.now() - timedelta(days=day_offset)).strftime("%Y-%m-%d")
-
-
-CROSS_BORDER_POOL = {
-    "selection": [
-        {
-            "title": "俄罗斯近期热销选品趋势：{关键词}品类飙升",
-            "excerpt": "根据Ozon近30天数据，{关键词}品类搜索量和订单量同步飙升，本文分析这一趋势背后的原因和选品机会。",
-            "content": """# 俄罗斯近期热销选品趋势：{关键词}品类飙升
-
-## 市场数据
-
-根据Ozon平台最近30天的数据，{关键词}相关品类的搜索热度增长了{百分比}，订单转化率也有明显提升。
-
-## 为什么这个品类在火？
-
-1. **季节性因素：** 当前季节俄罗斯消费者的需求向{关键词}倾斜
-2. **供给缺口：** 平台该品类卖家较少，竞争不充分
-3. **性价比优势：** 中国供应链在此品类有明显成本优势
-
-## 选品方向
-
-### 主攻品类
-- {子类1}：需求量大，新卖家容易切入
-- {子类2}：利润空间更好，竞争适中
-- {子类3}：蓝海机会，供给不足
-
-### 定价建议
-- 主力价格带：{价格带}卢布
-- 建议利润率：30-50%
-
-## 上架要点
-
-1. 俄语关键词覆盖要全面
-2. 主图要与竞品形成差异化
-3. 标题包含核心搜索词
-4. 前3天关注曝光数据
-
-## 风险提示
-
-- 注意知识产权排查
-- 部分子类目可能需要EAC认证
-- 关注物流时效对转化率的影响
-
-> 选品的本质是比竞争对手早一步发现机会。"""
-        },
-        {
-            "title": "1688→Ozon：{品类}跨境采购实操指南",
-            "excerpt": "从1688选品到Ozon上架的全流程拆解，聚焦{品类}品类，包含供应商筛选、价格谈判和质检要点。",
-            "content": """# 1688→Ozon：{品类}跨境采购实操指南
-
-## 第一步：1688供应商筛选
-
-### 筛选标准
-- 经营年限：3年以上优先
-- 回头率：30%以上说明产品靠谱
-- 响应速度：快于行业平均
-- 支持一件代发还是必须批量化
-
-### 沟通话术
-- "我是做俄罗斯市场的，月销量可观"
-- "先拿样品测试，效果好批量采购"
-- 试探最低起订量（MOQ）
-
-## 第二步：价格谈判
-
-| 量级 | 预期折扣 | 谈判技巧 |
-|------|---------|---------|
-| 样品单 | 原价 | 提出后续大量采购意向 |
-| 小批量（<100） | 5-10% | 强调长期合作 |
-| 中批量（100-500） | 10-20% | 拿竞品价格压 |
-| 大批量（500+） | 20-35% | 直接谈"最低价" |
-
-## 第三步：质检清单
-
-- 外观：颜色、尺寸、印刷是否与样品一致
-- 功能：每个SKU随机抽检3-5个
-- 包装：是否适合国际运输
-- 认证：是否有CE/FCC等必要认证
-
-## 第四步：物流安排
-
-- 小件走快递到集货仓
-- 大批量走物流专线
-- 注意不同运输方式的时效和成本
-
-## 第五步：上架Ozon
-
-- 类目选择（务必选对，直接影响曝光）
-- 标题和描述俄语化
-- 价格计算（含采购+物流+佣金+利润）
-
-> 采购不是最便宜的就好，而是最稳定的最好。断货比贵一点更致命。"""
-        },
-        {
-            "title": "俄罗斯人最爱囤的{数量}种日用品：铺货卖家必选",
-            "excerpt": "俄罗斯消费者有独特的囤货习惯，这些高频复购的日用品类是铺货卖家的稳定出单来源。",
-            "content": """# 俄罗斯人最爱囤的{数量}种日用品：铺货卖家必选
-
-## 俄罗斯消费习惯特点
-
-俄罗斯人受经济波动和季节影响，有较强的囤货习惯。以下品类复购率高、需求稳定，是铺货卖家的"基本盘"。
-
-## 稳定出单品类
-
-### 厨房用品
-- 硅胶厨具套装
-- 多功能切菜器
-- 收纳罐/密封罐
-
-### 浴室用品
-- 防滑浴垫
-- 毛巾/浴巾
-- 浴室收纳架
-
-### 清洁用品
-- 魔术清洁海绵
-- 粘毛器替换装
-- 可替换拖把头
-
-### 日常耗材
-- 手机数据线
-- 电池
-- LED灯泡
-
-## 这些品类的共同特点
-
-1. 复购率高：用完就买
-2. 价格带低：决策门槛低
-3. 竞争分散：不是大卖家的主战场
-4. 重量轻：物流成本可控
-
-## 铺货策略
-
-- 每个子类上20-50个SKU
-- 主图统一风格，形成品牌感
-- 价格定在中低价位
-- 靠量取胜，不追求单品爆款
-
-> 日用品就像"收租"，一旦排名稳定，每天都能出单。"""
-        },
-        {
-            "title": "蓝海警报：Ozon上供给不足的{数量}个高潜力品类",
-            "excerpt": "通过数据分析发现Ozon平台上多个品类供给严重不足，需求却在快速增长，是铺货卖家最值得关注的蓝海机会。",
-            "content": """# 蓝海警报：Ozon上供给不足的{数量}个高潜力品类
-
-## 什么是蓝海品类？
-
-蓝海 = 需求在涨 + 竞争不激烈 + 新卖家有机会
-
-判断标准：
-- 搜索结果少于5000个
-- 头部Listing评价少于100个
-- 月搜索增长率>30%
-
-## 当前发现的蓝海品类
-
-### 1. 智能家居配件
-搜索量上涨55%，供给侧严重不足
-适合：有3C供应链的卖家
-
-### 2. 大码女装
-俄罗斯女性体型偏大，平台大码供给不足
-适合：服装类卖家
-
-### 3. 宠物智能用品
-自动喂食器、智能饮水机等
-适合：宠物用品类卖家
-
-### 4. 汽车内饰改装配件
-俄罗斯汽车保有量高，改装文化盛行
-适合：汽配类卖家
-
-### 5. DIY手工材料
-俄罗斯冬季漫长，室内手工活动需求大
-适合：家居杂货类卖家
-
-## 切入蓝海的正确姿势
-
-1. 先上10个SKU测试市场反应
-2. 关注转化率而非流量
-3. 快速迭代，不好的果断下架
-4. 蓝海窗口期通常只有3-6个月
-
-> 蓝海不是永远存在的，发现就要快速行动。"""
-        },
-        {
-            "title": "铺货避坑：{品类}选品容易踩的{数量}个雷区",
-            "excerpt": "某些品类看起来利润丰厚，但铺货卖家实际操作中会遇到各种问题。总结最常见的选品雷区和避坑方法。",
-            "content": """# 铺货避坑：{品类}选品容易踩的{数量}个雷区
-
-## 雷区一：侵权产品
-
-大牌外观、Logo、甚至包装相似都可能被投诉。
-
-**避坑方法：**
-- 上架前在俄罗斯专利局网站检索
-- 避开明显的大牌设计
-- 自己拍照，不要盗图
-
-## 雷区二：需要认证的品类
-
-电子、儿童、食品接触材料类产品需要额外认证。
-
-**避坑方法：**
-- 确认产品是否需要EAC/GOST认证
-- 供应商能否提供认证文件
-- 认证成本和周期提前评估
-
-## 雷区三：高退货率品类
-
-服装、鞋类退货率可高达20%以上。
-
-**避坑方法：**
-- 提供详细的尺码表
-- 加入实物拍摄的穿着图
-- 描述中注明"建议选大一码"
-
-## 雷区四：物流高风险品
-
-易碎品、液体、带电池产品。
-
-**避坑方法：**
-- 评估破损率和退货成本
-- 加强包装防护
-- 液体类考虑走特殊渠道
-
-## 雷区五：季节性过强的品类
-
-圣诞装饰、泳装等。
-
-**避坑方法：**
-- 提前2-3个月上架
-- 季节结束时及时清仓
-- 不太适合纯铺货模式
-
-> 选品时多想一步"可能出什么问题"，比事后救火轻松十倍。"""
-        },
+# ============================================================
+# 信息源配置
+# ============================================================
+
+RSS_SOURCES = {
+    "cross-border": [
+        # Google News — 跨境电商 + Ozon
+        "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+Ozon+%E4%BF%84%E7%BD%97%E6%96%AF+%E9%80%89%E5%93%81&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # Google News — Ozon 卖家 运营
+        "https://news.google.com/rss/search?q=Ozon+%E5%8D%96%E5%AE%B6+%E8%BF%90%E8%90%A5+%E4%BF%84%E7%BD%97%E6%96%AF+%E7%94%B5%E5%95%86&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # Google News — 跨境电商 俄罗斯 市场
+        "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+%E4%BF%84%E7%BD%97%E6%96%AF+%E5%B8%82%E5%9C%BA+%E6%94%BF%E7%AD%96&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # Google News — 跨境物流 俄罗斯
+        "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%89%A9%E6%B5%81+%E4%BF%84%E7%BD%97%E6%96%AF+Ozon+FBO&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # Google News — Yandex Market 电商
+        "https://news.google.com/rss/search?q=Yandex+Market+%E4%BF%84%E7%BD%97%E6%96%AF+%E7%94%B5%E5%95%86+%E5%8D%96%E5%AE%B6&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
     ],
-    "ozon": [
-        {
-            "title": "Ozon运营{天数}天复盘：从0到日销{金额}卢布的经验",
-            "excerpt": "真实记录Ozon店铺从零开始的成长过程，包含流量获取、转化优化和客服处理的实战心得。",
-            "content": """# Ozon运营{天数}天复盘：从0到日销{金额}卢布的经验
-
-## 第1-7天：基础搭建期
-
-**核心工作：**
-- 上架首批200-300个SKU
-- 完善店铺信息
-- 设置物流模板
-
-**数据表现：**
-- 日均曝光：<100
-- 订单：0-1单/天
-- 核心任务：让平台收录产品
-
-## 第8-14天：测试调整期
-
-**核心工作：**
-- 筛选出有曝光的产品重点优化
-- 调整表现差的标题和主图
-- 开启低预算推广积分
-
-**数据表现：**
-- 日均曝光：300-500
-- 订单：2-5单/天
-- 核心任务：找到能出单的产品
-
-## 第15-30天：初步放量期
-
-**核心工作：**
-- 爆款加库存、开通FBO
-- 优化出单词的关键词布局
-- 参加平台活动
-
-**数据表现：**
-- 日均曝光：1000+
-- 订单：5-15单/天
-- 核心任务：复制成功模式
-
-## 关键心得
-
-1. 前两天不要急着投广告，先让系统收录
-2. 有评价的产品转化率是无评价的3-5倍
-3. 客服回复速度直接影响店铺评分
-4. 物流时效是买家最在意的体验
-
-> Ozon运营没有秘诀，只有把每个细节都做到位。"""
-        },
-        {
-            "title": "Ozon店铺评分提升攻略：从3.5到4.8的实操步骤",
-            "excerpt": "店铺评分直接影响流量和转化，分享一套经过验证的评分提升方法论。",
-            "content": """# Ozon店铺评分提升攻略：从3.5到4.8的实操步骤
-
-## 评分构成
-
-Ozon店铺评分由以下维度组成：
-- 商品质量评分（退货率、差评率）
-- 物流时效评分
-- 客服响应评分
-- 订单取消率
-
-## 提升商品质量评分
-
-- 发货前逐一检查商品质量
-- 包装加固，减少运输损坏
-- 主动跟进买家使用体验
-- 对差评及时联系买家协商解决
-
-## 提升物流评分
-
-- 24小时内确认发货
-- 选择可靠的物流服务商
-- 主动上传物流追踪号
-- 异常物流主动联系买家
-
-## 提升客服评分
-
-- 回复时效：2小时内响应
-- 使用俄语模板回复常见问题
-- 售后问题主动承担责任
-- 退款退货不拖拉
-
-## 持续维护
-
-- 每天检查店铺评分面板
-- 任何低于4星的新评价都要重点关注
-- 定期分析评分趋势
-
-> 评分是店铺的脸面，也是平台给流量的重要依据。"""
-        },
-        {
-            "title": "Ozon平台近期规则更新：卖家需要注意的{数量}个变化",
-            "excerpt": "解读Ozon最新政策调整，包含类目规则、佣金变化和新功能上线，帮助卖家及时调整运营策略。",
-            "content": """# Ozon平台近期规则更新：卖家需要注意的{数量}个变化
-
-## 变化一：佣金结构调整
-
-部分类目佣金有调整，建议卖家重新核算利润模型。
-
-重点关注：
-- 电子类目佣金微调
-- 服装类目引入分级佣金
-- 大件商品佣金上升
-
-## 变化二：物流时效要求提高
-
-- 自发货时效从5天调整为3天
-- FBS发货时效要求提升
-- 超时发货的处罚力度加大
-
-## 变化三：新功能上线
-
-- 视频展示功能优化
-- AI翻译工具升级
-- 数据分析面板新增指标
-
-## 变化四：店铺考核新规
-
-- 取消率阈值从3%降低到2%
-- 新增"买家满意度"考核维度
-- 连续不达标可能被限制流量
-
-## 卖家应对建议
-
-1. 定期查看卖家中心公告
-2. 根据佣金调整重新定价
-3. 优化物流时效
-4. 利用新功能提升转化
-
-> 平台政策变化是常态，拥抱变化比抱怨更有用。"""
-        },
-        {
-            "title": "Ozon客服话术模板：快速处理{数量}类常见售前售后问题",
-            "excerpt": "整理最常用的俄语客服话术模板，覆盖售前咨询、物流查询、退货退款等场景，提升客服效率。",
-            "content": """# Ozon客服话术模板：快速处理{数量}类常见售前售后问题
-
-## 售前话术
-
-### 尺码咨询
-"Здравствуйте! Пожалуйста, проверьте таблицу размеров в описании товара. Если вы не уверены, рекомендуем выбрать на размер больше."
-
-（您好！请查看商品描述中的尺码表。如果不确定，建议选大一码。）
-
-### 发货时间
-"Обычно мы отправляем заказ в течение 24 часов после оформления. Доставка занимает 7-14 дней."
-
-（我们通常在订单确认后24小时内发货，物流时效7-14天。）
-
-## 售后话术
-
-### 物流延迟
-"Приносим извинения за задержку. Мы уже связались с транспортной компанией. Ваш заказ будет доставлен в ближайшее время."
-
-（我们对延迟表示歉意。已联系物流公司，您的订单将尽快送达。）
-
-### 产品问题
-"Нам очень жаль, что товар не оправдал ваши ожидания. Мы готовы предложить возврат или замену. Пожалуйста, свяжитесь с нами для решения."
-
-（非常抱歉产品没有达到您的期望。我们提供退货或换货。请与我们联系解决。）
-
-## 投诉处理
-
-- 第一时间道歉
-- 了解具体问题
-- 提供解决方案
-- 跟进处理进度
-
-## 工作技巧
-
-- 准备常用话术的中俄对照表
-- 使用翻译工具辅助，但要检查
-- 每天统一时间处理客服消息
-
-> 好的客服不是不出问题，而是出了问题快速解决。
-"""
-        },
-    ],
-    "yandex": [
-        {
-            "title": "Yandex Direct广告投放入门：{关键词类目}的精准获客",
-            "excerpt": "Yandex Direct是俄罗斯最大的搜索广告系统，本文从开户到第一单广告的全流程教学。",
-            "content": """# Yandex Direct广告投放入门：{关键词类目}的精准获客
-
-## Yandex Direct是什么
-
-Yandex Direct是Yandex的广告系统，类似Google Ads，覆盖Yandex搜索、Yandex Market和广告联盟。
-
-## 开户流程
-
-1. 注册Yandex广告账户
-2. 绑定支付方式
-3. 设置广告目标和预算
-4. 创建第一个广告系列
-
-## 关键词策略
-
-### 关键词类型
-- 品牌词：你的品牌名
-- 品类词：产品类目名称
-- 长尾词：具体产品描述
-- 竞品词：竞争对手品牌
-
-### 出价建议
-- 新品：从建议出价的80%开始测试
-- 有转化数据后：根据ROI调整
-- 高转化词：可以出高价抢排名
-
-## 广告文案优化
-
-- 标题包含核心关键词
-- 描述突出卖点和优惠
-- 添加CTA按钮文字
-- 使用广告扩展功能
-
-## 投放节奏
-
-- 第一周：测试阶段，预算控制在1000卢布/天
-- 第二周：优化关键词，暂停无效词
-- 第三周：放量高转化词
-- 第四周：全面复盘调整
-
-> Yandex的流量质量很高，但需要耐心测试和优化。
-"""
-        },
-        {
-            "title": "Yandex Market运营全攻略：从零开始的完整指南",
-            "excerpt": "全面覆盖Yandex Market店铺运营的各个环节，包含商品上架、搜索优化和数据分析。",
-            "content": """# Yandex Market运营全攻略：从零开始的完整指南
-
-## 平台定位
-
-Yandex Market是俄罗斯第二大电商平台，背靠Yandex搜索引擎，搜索流量质量高。用户以有明确购买意图的搜索用户为主。
-
-## 商品上架要点
-
-1. **类目选择：** 比Ozon更细分，选错影响曝光
-2. **俄语描述：** 质量要求更高，机翻容易被降权
-3. **填充率：** 所有属性字段尽量填满
-4. **图片要求：** 支持多角度展示，建议至少6张
-
-## 搜索优化（SEO）
-
-Yandex Market有自己的搜索算法：
-- 标题权重高，关键词早期布局
-- 描述篇幅影响排名（建议300字以上）
-- 评价数量和评分直接影响位置
-- 销量和转化率是隐性排名因素
-
-## 价格策略
-
-- 比其他平台略高5-10%（用户价格敏感度较低）
-- 包邮商品转化率明显更高
-- 支持信用卡分期可提升客单价
-
-## 数据分析
-
-关注指标：
-- 搜索结果展示量
-- 点击率（CTR）
-- 加入购物车率
-- 转化率
-- 退货率
-
-> Yandex适合做利润，Ozon适合做量。双平台互补是最佳策略。
-"""
-        },
-    ],
-    "russia-market": [
-        {
-            "title": "俄罗斯电商2026年趋势报告：{趋势关键词}",
-            "excerpt": "分析2026年俄罗斯电商市场的最新动态，包含政策环境、消费者行为变化和品类趋势。",
-            "content": """# 俄罗斯电商2026年趋势报告：{趋势关键词}
-
-## 市场规模
-
-俄罗斯电商市场2026年继续快速增长，预计全年GMV将达到{预计规模}。其中跨境部分占比约{跨境占比}。
-
-## 消费者行为变化
-
-1. **移动端占比持续上升：** 超过75%的订单来自手机
-2. **分期付款使用率提高：** 特别是千元以上订单
-3. **对"中国品牌"接受度提升：** 不再只看欧美品牌
-4. **内容种草效果显现：** 短视频和评价影响购买决策
-
-## 平台格局
-
-- Ozon持续领先，市场份额扩大
-- Yandex Market追赶加速
-- Wildberries跨境开放（关注中）
-- 社交媒体购物（VK、Telegram）兴起
-
-## 对卖家的启示
-
-1. 移动端优化是必须的
-2. 要关注Wildberries跨境开放时机
-3. 内容营销开始重要
-4. 合规成本上升，但门槛也在提高
-
-> 俄罗斯市场还在增长，但竞争也在加剧。先发优势正在缩小。
-"""
-        },
-    ],
-    "logistics": [
-        {
-            "title": "俄罗斯跨境物流{方案类型}方案对比：时效、成本与稳定性的平衡",
-            "excerpt": "详细对比当前主流的对俄跨境物流方案，包含实际时效测试数据和成本测算。",
-            "content": """# 俄罗斯跨境物流{方案类型}方案对比
-
-## 主流物流方案一览
-
-| 物流渠道 | 时效 | 成本 | 稳定性 | 适合 |
-|---------|------|------|--------|------|
-| 空运专线 | 5-10天 | 高 | ⭐⭐⭐⭐ | 高价值小件 |
-| 陆运+铁路 | 15-25天 | 中 | ⭐⭐⭐ | 常规件 |
-| 海运 | 30-45天 | 低 | ⭐⭐ | 大件大批量 |
-| 海外仓一件代发 | 1-3天 | 中 | ⭐⭐⭐⭐⭐ | 热销品 |
-
-## 各方案详解
-
-### 空运专线
-- 价格：40-60元/kg
-- 适用：客单价高、季节性紧张的产品
-- 注意事项：带电产品需要额外手续
-
-### 陆运+铁路
-- 价格：15-25元/kg
-- 适用：大多数普货
-- 注意事项：冬季时效可能延长
-
-### 海外仓
-- FBO入仓：先批量运到俄罗斯，平台负责配送
-- 第三方仓：灵活，但需要自行对接
-- 建议热销品走FBO，测试品走自发货
-
-## 推荐组合策略
-
-- 新品测试：空运→自发货
-- 销量稳定：陆运→FBO入仓
-- 爆款：海运批量→FBO持续补货
-
-> 物流没有最优方案，只有最适合你产品当前阶段的方案。
-"""
-        },
-    ],
-    "tools": [
-        {
-            "title": "跨境电商必备工具清单：Ozon卖家效率提升{数量}件套",
-            "excerpt": "从选品分析、ERP管理到翻译工具，整理Ozon卖家日常运营必备的工具组合。",
-            "content": """# 跨境电商必备工具清单：Ozon卖家效率提升{数量}件套
-
-## 选品分析工具
-
-1. **Ozon前台搜索：** 最直接的数据来源
-2. **卖家精灵/Keepa：** 竞品数据分析
-3. **Google Trends：** 俄罗斯地区搜索趋势
-
-## ERP管理工具
-
-1. **店小秘：** 支持Ozon，中文界面友好
-2. **芒果店长：** 多平台管理，有免费版
-3. **马帮ERP：** 适合中大卖家
-
-## 翻译工具
-
-1. **DeepL：** 翻译质量最高（支持俄语）
-2. **Yandex Translate：** 俄语翻中文准确度好
-3. **Google Translate：** 备选方案
-
-## 图片处理
-
-1. **Canva：** 做信息图、促销图
-2. **Remove.bg：** 抠图
-3. **Photoshop：** 专业处理
-
-## 数据分析
-
-1. **Ozon卖家后台：** 核心数据源
-2. **Excel/Google Sheets：** 定制化分析
-3. **DataStudio：** 可视化报表
-
-## 通讯协作
-
-1. **Telegram：** 俄罗斯客服必备
-2. **WhatsApp：** 国际客户沟通
-3. **钉钉/飞书：** 团队协作
-
-> 工具是手段不是目的。选1-2个用熟练，比什么都装不用的强。
-"""
-        },
+    "fitness": [
+        # Google News — 徒手健身 自重训练 教程
+        "https://news.google.com/rss/search?q=%E5%BE%92%E6%89%8B%E5%81%A5%E8%BA%AB+%E8%87%AA%E9%87%8D%E8%AE%AD%E7%BB%83+%E6%95%99%E7%A8%8B+%E4%BF%AF%E5%8D%A7%E6%92%91+%E6%B7%B1%E8%B9%B2&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # Google News — 核心训练 瑜伽 腹部
+        "https://news.google.com/rss/search?q=%E6%A0%B8%E5%BF%83%E8%AE%AD%E7%BB%83+%E7%91%9C%E4%BC%BD%E5%9E%AB+%E8%85%B9%E8%82%8C+%E5%81%A5%E8%BA%AB&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # Google News — bodyweight workout plan home
+        "https://news.google.com/rss/search?q=bodyweight+workout+home+routine+beginner+no+equipment&hl=en&gl=US&ceid=US:en",
+        # Google News — calisthenics tutorial exercises
+        "https://news.google.com/rss/search?q=calisthenics+bodyweight+exercise+tutorial+plan&hl=en&gl=US&ceid=US:en",
     ],
 }
 
-
-FITNESS_POOL = {
-    "male": [
-        {
-            "title": "{天数}天俯卧撑挑战：每天进步{次数}个的进阶计划",
-            "excerpt": "从基础俯卧撑到钻石俯卧撑的完整进阶路径，每天只需要20分钟。",
-            "content": """# {天数}天俯卧撑挑战：每天进步{次数}个的进阶计划
-
-## 挑战规则
-
-1. 每天完成规定的俯卧撑数量（不限组数）
-2. 每周日测试最大一组能做多少个
-3. 记录每次训练的感觉和进步
-
-## 进度安排
-
-### 第一周：建立基础
-- 第1天：累积50个（标准俯卧撑）
-- 第2天：累积55个
-- 第3天：累积60个
-- 第4天：休息
-- 第5天：累积65个
-- 第6天：累积70个
-- 第7天：测试日
-
-### 第二周：增加强度
-换用窄距俯卧撑，重复相同的渐进模式。
-
-### 第三周：进一步进阶
-加入下斜俯卧撑（脚抬高）。
-
-### 第四周：挑战目标
-尝试一口气完成目标次数。
-
-## 关键提醒
-
-- 动作质量永远优先于数量
-- 感觉关节疼痛立即停止
-- 配合拉伸预防损伤
-- 记录进度是坚持的动力
-
-> {天数}天后，你会惊讶于自己的进步。开始吧！
-"""
-        },
-        {
-            "title": "男性徒手胸肌训练：不用器械的{数量}种俯卧撑变式",
-            "excerpt": "通过改变手距、角度和节奏，用俯卧撑练出完整的胸肌线条。",
-            "content": """# 男性徒手胸肌训练：不用器械的{数量}种俯卧撑变式
-
-## 为什么俯卧撑就够了？
-
-俯卧撑是完美的胸肌训练动作，通过改变变式可以刺激胸肌的不同部位。
-
-## 标准俯卧撑
-- 刺激：胸大肌整体
-- 手距：略宽于肩
-- 要点：肘与身体呈45度
-
-## 宽距俯卧撑
-- 刺激：胸肌外侧
-- 手距：两倍肩宽
-- 要点：下降时感受胸肌拉伸
-
-## 窄距/钻石俯卧撑
-- 刺激：胸肌内侧+三头肌
-- 手距：拇指食指形成钻石
-- 要点：肘贴近身体
-
-## 下斜俯卧撑
-- 刺激：上胸
-- 姿势：脚放在瑜伽垫或椅子上
-- 要点：身体保持直线
-
-## 弓箭手俯卧撑
-- 刺激：单侧胸肌
-- 要点：一侧手臂伸直，另一侧发力
-- 进阶：单臂俯卧撑的前置训练
-
-## 训练方案
-
-每个变式3组×10-12次，每周训练2-3次胸肌。
-
-> 不是练得越重效果越好，是练得越精准效果越好。
-"""
-        },
-    ],
-    "female": [
-        {
-            "title": "女性在家徒手塑形：{分钟}分钟全身燃脂训练",
-            "excerpt": "高效利用碎片时间，一套在家就能完成的全身燃脂方案，无需任何器械。",
-            "content": """# 女性在家徒手塑形：{分钟}分钟全身燃脂训练
-
-## 训练结构
-
-- 热身：3分钟
-- 主训练：{分钟}分钟
-- 拉伸：3分钟
-
-## 热身（3分钟）
-
-1. 原地踏步+手臂摆动 1分钟
-2. 开合跳 1分钟
-3. 臀部画圈+肩部画圈 1分钟
-
-## 主训练（循环3组）
-
-| 动作 | 时长 | 休息 |
-|------|------|------|
-| 高抬腿 | 40秒 | 20秒 |
-| 跪姿俯卧撑 | 40秒 | 20秒 |
-| 自重深蹲 | 40秒 | 20秒 |
-| 剪刀腿 | 40秒 | 20秒 |
-| 臀桥 | 40秒 | 20秒 |
-| 平板支撑 | 40秒 | 20秒 |
-| 登山者 | 40秒 | 20秒 |
-| 驴踢（每侧）| 40秒 | 20秒 |
-
-## 拉伸（3分钟）
-
-- 坐姿体前屈 30秒
-- 蝴蝶式 30秒
-- 猫牛式 10次
-- 脊柱扭转 每侧30秒
-- 婴儿式 1分钟
-
-## 频率建议
-
-- 减脂：每周5-6次 + 控制饮食
-- 塑形：每周3-4次 + 维持饮食
-- 维持：每周2-3次
-
-> 坚持两周就能看到变化。今天的汗水是明天的线条。
-"""
-        },
-    ],
-    "yoga-mat": [
-        {
-            "title": "瑜伽垫上的核心训练：{数量}个动作打造马甲线",
-            "excerpt": "全部在瑜伽垫上完成的核心肌群训练方案，从平板支撑到卷腹的完整体系。",
-            "content": """# 瑜伽垫上的核心训练：{数量}个动作打造马甲线
-
-## 核心不只是腹肌
-
-核心包括腹部、下背、臀部和深层稳定肌群。练核心不是为了"有腹肌"，而是为了功能性的力量和稳定。
-
-## 核心训练动作库
-
-### 基础动作
-1. **平板支撑：** 核心训练的基石，目标2分钟
-2. **侧平板：** 锻炼腹斜肌，每侧45秒
-3. **死虫式：** 训练深层核心稳定性
-4. **鸟狗式：** 协调性+核心+背部
-
-### 腹直肌
-5. **卷腹：** 上半身稍微抬起即可，不需要全起
-6. **仰卧交替抬腿：** 下腹重点
-7. **剪刀腿：** 下腹+核心稳定
-
-### 腹斜肌
-8. **俄罗斯转体：** 用瑜伽垫垫在脚下
-9. **侧卧卷腹：** 每侧独立训练
-10. **平板支撑转体：** 进阶动作
-
-## 核心训练方案
-
-每周训练核心3次：
-- 每次选4-5个动作
-- 每个动作3组
-- 每组做到力竭前1-2次停下来
-
-> 可见的腹肌 = 低体脂 + 发达的核心肌肉。光做卷腹不够，要配合有氧和控制饮食。
-"""
-        },
-    ],
-    "plan": [
-        {
-            "title": "第{周数}周徒手训练计划：{计划名}",
-            "excerpt": "新一周的训练计划安排，包含每日训练内容、组数次数的具体指导。",
-            "content": """# 第{周数}周徒手训练计划：{计划名}
-
-## 本周目标
-- 提升耐力/力量/减脂
-- 完成4-5次训练
-- 记录每次训练数据
-
-## 训练安排
-
-| 日期 | 训练内容 | 时长 |
-|------|---------|------|
-| 周一 | 上肢推力 | 30min |
-| 周二 | 下肢+核心 | 30min |
-| 周三 | 休息或轻度拉伸 | 15min |
-| 周四 | 全身HIIT | 25min |
-| 周五 | 上肢拉力+核心 | 30min |
-| 周六 | 下肢+燃脂 | 30min |
-| 周日 | 深度拉伸 | 20min |
-
-## 每日要点
-
-- 训练前5分钟动态热身
-- 训练后5分钟静态拉伸
-- 记录每组的次数
-- 比上一次多做一个就是进步
-
-## 饮食配合
-
-- 训练日增加蛋白质摄入
-- 每天2升水
-- 训练后1小时内补充蛋白质
-
-> 计划写在纸上没用，只有执行了才有用。这一周，全力以赴。
-"""
-        },
-    ],
-    "diet": [
-        {
-            "title": "徒手健身营养指南：{场景}怎么吃",
-            "excerpt": "针对徒手训练者的实用营养建议，不需要复杂的食谱，掌握核心原则即可。",
-            "content": """# 徒手健身营养指南：{场景}怎么吃
-
-## 基本原则
-
-徒手训练消耗不如大重量训练，但仍需要合理的营养支持。
-
-### 三大营养素比例
-
-- 蛋白质：30-35%
-- 碳水化合物：40-45%
-- 脂肪：20-25%
-
-## 具体吃什么
-
-### 蛋白质来源
-- 鸡蛋（性价比最高）
-- 鸡胸肉/鸡腿肉
-- 鱼虾
-- 豆腐/豆浆
-- 牛奶/酸奶
-
-### 碳水来源
-- 燕麦
-- 红薯/土豆
-- 糙米/杂粮饭
-- 全麦面包
-- 香蕉
-
-### 脂肪来源
-- 坚果（每天一小把）
-- 牛油果
-- 橄榄油
-- 花生酱
-
-## 一日参考
-
-- 早餐：2个鸡蛋+1碗燕麦+牛奶
-- 午餐：1拳头主食+1拳头蛋白质+2拳头蔬菜
-- 加餐：水果+少量坚果
-- 晚餐：蛋白质为主+蔬菜，少碳水
-- 训练后：1根香蕉+牛奶/蛋白粉
-
-> 不需要把吃饭搞得很复杂。干净的食物、合理的量、规律的节奏。
-"""
-        },
-    ],
-}
-
-
-# ==============================================================
-# 变量填充
-# ==============================================================
-
-SELECTION_KEYWORDS = [
-    ("智能家居配件", "75%", "智能门锁/传感器/智能灯泡", "无线监控摄像头", "门窗传感器", "1500-4000"),
-    ("户外露营装备", "90%", "帐篷/睡袋/炊具", "折叠桌椅", "露营灯", "2000-5000"),
-    ("宠物智能用品", "65%", "喂食器/饮水机/玩具", "自动喂食器", "智能饮水机", "2000-6000"),
-    ("手机配件", "55%", "手机壳/充电器/数据线", "MagSafe配件", "快充套装", "500-2000"),
-    ("厨房小家电", "60%", "搅拌机/咖啡机/空气炸锅", "便携榨汁杯", "迷你电饭煲", "1500-4000"),
-    ("大码女装", "80%", "连衣裙/外套/裤子", "大码运动装", "大码职业装", "1500-3500"),
-    ("汽车内饰改装", "50%", "座套/脚垫/装饰件", "LED氛围灯", "手机支架", "800-2500"),
+# 健身 YouTube 频道（用于嵌入视频）
+FITNESS_YOUTUBE = [
+    "Chris Heria", "FitnessFAQs", "Calisthenicmovement",
+    "Thenx", "Tom Merrick", "Sid Paulson",
+    "SaturnoMovement", "Minus The Gym",
 ]
 
-FITNESS_NUMBERS = [3, 5, 7, 10, 12, 15, 20]
-WEEK_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8]
-DAY_COUNTS = [7, 14, 21, 28, 30, 60, 90]
-AMOUNTS = [500, 1000, 2000, 3000, 5000, 10000, 15000]
-PRICE_RANGES = ["500-1500", "1000-3000", "2000-5000", "3000-8000", "5000-15000"]
-PERCENTAGES = ["45%", "55%", "65%", "75%", "85%", "95%", "120%"]
-ITEMS = [3, 5, 7, 8, 10, 12, 15]
+# ============================================================
+# 工具函数
+# ============================================================
 
-SCENARIOS = ["训练日", "休息日", "减脂期", "增肌期", "晨练前", "训练后"]
-GENDERS = ["男性", "女性", "初学者", "进阶者"]
-PLAN_NAMES = ["耐力提升", "力量突破", "减脂冲刺", "塑形进阶", "基础巩固", "爆发力训练"]
+def clean_html(text):
+    return re.sub(r'<[^>]+>', '', unescape(text or '')).strip()
 
 
-def fill_vars(template, pool_name="default"):
-    """用随机变量填充模板中的占位符"""
-    if pool_name == "selection":
-        kw = random.choice(SELECTION_KEYWORDS)
-        mapping = {
-            "{关键词}": kw[0], "{百分比}": kw[1],
-            "{子类1}": kw[2], "{子类2}": kw[3], "{子类3}": kw[4],
-            "{价格带}": kw[5], "{品类}": kw[0], "{数量}": str(random.choice(ITEMS)),
-            "{天数}": str(random.choice(DAY_COUNTS)),
-            "{金额}": str(random.choice(AMOUNTS)),
-            "{方案类型}": random.choice(["空运", "陆运", "海运", "海外仓"]),
-            "{趋势关键词}": random.choice(["社交电商崛起", "物流时效竞赛", "本土化加速", "AI赋能选品"]),
-            "{预计规模}": random.choice(["8万亿卢布", "10万亿卢布", "12万亿卢布"]),
-            "{跨境占比}": random.choice(["25%", "30%", "35%"]),
-            "{关键词类目}": random.choice(["消费电子", "家居用品", "服装鞋包", "母婴玩具"]),
-            "{次数}": str(random.randint(5, 50)),
-        }
-    elif pool_name in ("male", "female", "yoga-mat", "plan", "diet"):
-        mapping = {
-            "{天数}": str(random.choice(DAY_COUNTS)),
-            "{次数}": str(random.randint(5, 50)),
-            "{数量}": str(random.choice(ITEMS)),
-            "{分钟}": str(random.choice([15, 20, 25, 30, 35, 40])),
-            "{周数}": str(random.choice(WEEK_NUMBERS)),
-            "{计划名}": random.choice(PLAN_NAMES),
-            "{场景}": random.choice(SCENARIOS),
-            "{性别}": random.choice(GENDERS),
-        }
-    else:
-        mapping = {
-            "{关键词}": random.choice([k[0] for k in SELECTION_KEYWORDS]),
-            "{百分比}": random.choice(PERCENTAGES),
-            "{数量}": str(random.choice(ITEMS)),
-            "{天数}": str(random.choice(DAY_COUNTS)),
-            "{金额}": str(random.choice(AMOUNTS)),
-            "{价格带}": random.choice(PRICE_RANGES),
-            "{子类1}": random.choice(["手机壳", "充电线", "蓝牙耳机", "智能手环"]),
-            "{子类2}": random.choice(["无线充", "车载支架", "数据线套装"]),
-            "{子类3}": random.choice(["MagSafe配件", "GaN充电器", "手机散热器"]),
-            "{品类}": random.choice(["消费电子", "家居用品", "服装", "宠物用品"]),
-            "{方案类型}": random.choice(["空运", "陆运", "海运"]),
-            "{趋势关键词}": random.choice(["社交电商", "AI选品", "本土化运营"]),
-            "{预计规模}": "10万亿卢布",
-            "{跨境占比}": "30%",
-            "{关键词类目}": random.choice(["消费电子", "家居用品"]),
-            "{类目}": random.choice(["消费电子", "家居用品"]),
-            "{次数}": str(random.randint(10, 30)),
-        }
-    result = template
-    for k, v in mapping.items():
-        result = result.replace(k, v)
-    return result
+def slugify(title):
+    s = re.sub(r'[^\w\s-]', '', title.lower())
+    s = re.sub(r'[-\s]+', '-', s)
+    return s[:80]
 
 
-# ==============================================================
-# 生成逻辑
-# ==============================================================
-
-def load_json():
-    if os.path.exists(JSON_PATH):
-        with open(JSON_PATH, "r", encoding="utf-8") as f:
+def load_json(path):
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
     return []
 
 
-def save_json(data):
-    with open(JSON_PATH, "w", encoding="utf-8") as f:
+def save_json(path, data):
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
-def load_tracker():
-    if os.path.exists(TRACKER_PATH):
-        with open(TRACKER_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return {"used": {}}
+def str_hash(s):
+    return hashlib.md5(s.encode()).hexdigest()[:8]
 
 
-def save_tracker(t):
-    with open(TRACKER_PATH, "w", encoding="utf-8") as f:
-        json.dump(t, f, ensure_ascii=False, indent=2)
+def source_domain(href):
+    """从 URL 提取域名"""
+    m = re.search(r'https?://(?:www\.)?([^/]+)', href)
+    return m.group(1) if m else ""
 
 
-def slugify(title):
-    import re
-    s = title.lower()
-    s = re.sub(r'[^\w\s-]', '', s)
-    s = re.sub(r'[-\s]+', '-', s)
-    return s[:60]
+def build_search_link(title, domain):
+    """构建在源站搜索文章的直连"""
+    q = urllib.parse.quote(title[:60])
+    domain_clean = domain.replace("www.", "")
+    # 针对常见来源使用站内搜索
+    search_templates = {
+        "ebrun.com": f"https://www.ebrun.com/search?keyword={q}",
+        "cifnews.com": f"https://www.cifnews.com/search?keyword={q}",
+        "jiemian.com": f"https://www.jiemian.com/search/?keyword={q}",
+        "sina.com.cn": f"https://search.sina.com.cn/?q={q}",
+        "sohu.com": f"https://search.sohu.com/?keyword={q}",
+        "163.com": f"https://search.163.com/search?keyword={q}",
+    }
+    for key, url in search_templates.items():
+        if key in domain_clean:
+            return url
+    return f"https://www.google.com/search?q={q}+site:{domain_clean}"
 
 
-def generate_posts():
-    tracker = load_tracker()
-    pool = random.choice(list(CROSS_BORDER_POOL.keys()))
-    all_posts = load_json()
-    existing = set(p["slug"] for p in all_posts)
+# ============================================================
+# RSS 抓取
+# ============================================================
+
+BLACKLIST_FITNESS = [
+    "明星", "演员", "刘亦菲", "死亡", "减肥药", "保险",
+    "金融", "股票", "理财", "信用卡", "贷款", "基金", "投资",
+    "celeb", "hollywood", "surgery", "weight loss drug",
+    "insurance", "stock", "finance", "bankrupt",
+]
+
+
+def fetch_all_feeds(section, limit_per_feed=8):
+    """抓取 RSS 源，返回去重文章列表"""
+    entries = []
+    seen_links = set()
+
+    for url in RSS_SOURCES.get(section, []):
+        try:
+            resp = requests.get(url, headers={
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+            }, timeout=15)
+            if resp.status_code != 200:
+                continue
+
+            feed = feedparser.parse(resp.content)
+            for entry in feed.entries:
+                link = entry.get("link", "")
+                if not link or link in seen_links:
+                    continue
+                seen_links.add(link)
+
+                title = clean_html(entry.get("title", ""))
+                if not title or len(title) < 10:
+                    continue
+
+                # 过滤无关内容
+                title_lower = title.lower()
+                if section == "fitness":
+                    if any(w in title_lower for w in BLACKLIST_FITNESS):
+                        continue
+                if any(w in title_lower for w in ["广告", "sponsored", "advertisement"]):
+                    continue
+
+                source = entry.get("source", {})
+                source_href = source.get("href", "") if isinstance(source, dict) else ""
+                source_name = source.get("title", "") if isinstance(source, dict) else ""
+                if not source_name:
+                    source_name = source_domain(link)
+
+                # 提取摘要（Google News 摘要通常只有标题+来源，这是正常的）
+                summary_html = entry.get("summary", entry.get("description", ""))
+                summary_text = clean_html(summary_html)[:300]
+
+                entries.append({
+                    "title": title,
+                    "link": link,
+                    "source_name": source_name,
+                    "source_href": source_href,
+                    "domain": source_domain(source_href) or source_domain(link),
+                    "summary": summary_text,
+                    "published": entry.get("published", ""),
+                    "section": section,
+                })
+        except Exception as e:
+            print(f"  [WARN] {url[:60]}...: {e}")
+            continue
+
+    # 按来源去重（同一来源同一天不要太多条）
+    unique = []
+    domain_counts = {}
+    for e in sorted(entries, key=lambda x: x.get("published", ""), reverse=True):
+        domain = e["domain"]
+        if domain_counts.get(domain, 0) >= 3:
+            continue
+        domain_counts[domain] = domain_counts.get(domain, 0) + 1
+        unique.append(e)
+
+    return unique
+
+
+# ============================================================
+# 内容分类
+# ============================================================
+
+def classify_cross_border(title):
+    t = title.lower()
+    if any(w in t for w in ["选品", "热销", "蓝海", "爆款", "品类", "趋势报告"]):
+        return "selection"
+    if any(w in t for w in ["yandex", "yandex market"]):
+        return "yandex"
+    if any(w in t for w in ["物流", "仓储", "fbo", "fbs", "发货", "头程", "海外仓"]):
+        return "logistics"
+    if any(w in t for w in ["收款", "回款", "卢布", "支付", "汇率", "收款"]):
+        return "logistics"
+    if any(w in t for w in ["政策", "法规", "关税", "认证", "合规", "eac"]):
+        return "tools"
+    if any(w in t for w in ["工具", "软件", "erp", "翻译", "数据"]):
+        return "tools"
+    if any(w in t for w in ["市场", "俄罗斯", "经济", "消费", "趋势"]):
+        return "russia-market"
+    if any(w in t for w in ["ozon", "ozon", "оzon"]):
+        return "ozon"
+    return "selection"
+
+
+def classify_fitness(title):
+    t = title.lower()
+    if any(w in t for w in ["男性", "男人", "男生", "male", "men", "man"]):
+        return "male"
+    if any(w in t for w in ["女性", "女人", "女生", "female", "women", "woman"]):
+        return "female"
+    if any(w in t for w in ["瑜伽垫", "yoga mat", "yoga"]):
+        return "yoga-mat"
+    if any(w in t for w in ["饮食", "营养", "吃", "食物", "蛋白质", "减脂", "diet", "nutrition"]):
+        return "diet"
+    if any(w in t for w in ["计划", "安排", "每周", "每日", "routine", "plan", "schedule", "program"]):
+        return "plan"
+    return "yoga-mat"
+
+
+# ============================================================
+# Markdown 构建
+# ============================================================
+
+CAT_NAMES_CB = {
+    "selection": "选品技巧", "ozon": "Ozon运营", "yandex": "Yandex运营",
+    "russia-market": "俄罗斯市场", "logistics": "物流收款", "tools": "工具教程",
+}
+CAT_NAMES_FIT = {
+    "male": "男性训练", "female": "女性训练", "yoga-mat": "瑜伽垫动作",
+    "plan": "每日计划", "diet": "饮食建议",
+}
+
+
+def build_cross_border_post(entry):
+    title = entry["title"]
+    source_name = entry["source_name"]
+    source_href = entry["source_href"]
+    domain = entry["domain"]
+    link = entry["link"]
+    cat = classify_cross_border(title)
+    cat_name = CAT_NAMES_CB.get(cat, "跨境电商")
+    search_url = build_search_link(title, domain)
+
+    return f"""# {title}
+
+> 📂 分类：{cat_name}
+> 📅 采集日期：{datetime.now().strftime('%Y-%m-%d')}
+> 📰 来源：**{source_name}**（{domain}）
+
+---
+
+## 来源信息
+
+本文信息来自 **{source_name}** 的真实报道。
+
+{source_href if source_href else domain}
+
+---
+
+## 对跨境卖家的启示
+
+基于这则行业动态，建议关注以下方向：
+
+1. **市场趋势：** 密切跟踪俄罗斯电商市场变化，及时调整选品策略
+2. **平台政策：** Ozon/Yandex 的政策调整直接影响运营成本和利润
+3. **竞争格局：** 关注行业头部动态和竞争变化，找到差异化空间
+
+---
+
+## 查看原文
+
+📎 **Google News 入口：** [点击查看原文]({link})
+🔍 **站内搜索：** [在 {source_name} 站内搜索本文]({search_url})
+
+> ⚠️ 本文为行业新闻采集，内容版权归原来源所有。点击上方链接跳转原文阅读完整内容。
+""", cat
+
+
+def build_fitness_post(entry):
+    title = entry["title"]
+    source_name = entry["source_name"]
+    domain = entry["domain"]
+    link = entry["link"]
+    cat = classify_fitness(title)
+    cat_name = CAT_NAMES_FIT.get(cat, "健身")
+    search_url = build_search_link(title, domain)
+
+    # 尝试构建 YouTube 搜索链接
+    yt_query = urllib.parse.quote(title[:50])
+    yt_link = f"https://www.youtube.com/results?search_query={yt_query}"
+
+    return f"""# {title}
+
+> 💪 分类：{cat_name}
+> 📅 采集日期：{datetime.now().strftime('%Y-%m-%d')}
+> 📰 来源：**{source_name}**
+
+---
+
+## 来源信息
+
+本文信息来自 **{source_name}** 的真实健身内容。
+
+---
+
+## 训练建议
+
+无论文章中提到哪种训练方法，请牢记：
+
+- 🔹 **动作标准优先：** 宁可少做几个，也不牺牲动作质量
+- 🔹 **循序渐进：** 每周比上周多做1-2个就是进步
+- 🔹 **充分休息：** 肌肉在休息时生长，每周至少休息1天
+- 🔹 **配合饮食：** 徒手训练配合合理饮食才能看到线条变化
+- 🔹 **只需瑜伽垫：** 本文推荐的所有训练只需一张瑜伽垫即可
+
+---
+
+## 查看原文与视频教程
+
+📎 **原文链接：** [点击查看原文]({link})
+🔍 **搜索原文：** [在 {source_name} 站内搜索]({search_url})
+🎬 **YouTube 视频教程：** [搜索相关训练视频]({yt_link})
+
+> ⚠️ 本文为健身内容采集，版权归原来源所有。训练前请评估自身状况，量力而行。
+""", cat
+
+
+# ============================================================
+# 主逻辑
+# ============================================================
+
+def generate_posts(limit_cb=7, limit_fit=3):
+    tracker = load_json(TRACKER_PATH)
+    all_posts = load_json(JSON_PATH)
+    existing_slugs = set(p["slug"] for p in all_posts)
+    posted_titles = set()
+    for p in all_posts:
+        if "source_name" in p:
+            posted_titles.add(str_hash(p["title"]))
+
     new_posts = []
-
-    # 分配：7篇跨境电商 + 3篇健身
-    cb_subs = list(CROSS_BORDER_POOL.keys())
-    fit_subs = list(FITNESS_POOL.keys())
-
-    # 确保每个子类至少有1篇
-    cb_picks = random.sample(cb_subs, min(7, len(cb_subs)))
-    while len(cb_picks) < 7:
-        cb_picks.append(random.choice(cb_subs))
-
-    fit_picks = random.sample(fit_subs, min(3, len(fit_subs)))
-    while len(fit_picks) < 3:
-        fit_picks.append(random.choice(fit_subs))
-
-    generated = 0
     date_str = datetime.now().strftime("%Y-%m-%d")
 
-    # 跨境电商文章
-    for sub in cb_picks:
-        articles = CROSS_BORDER_POOL[sub]
-        # 选一个未使用或最早使用的文章
-        idx = select_article(tracker, "cross-border", sub, len(articles))
-        article = articles[idx]
-        title = fill_vars(article["title"], sub)
-        excerpt = fill_vars(article["excerpt"], sub)
-        content = fill_vars(article["content"], sub)
-        slug = slugify(title) + "-" + date_str
+    # ---- 跨境电商 ----
+    print("[INFO] 抓取跨境电商新闻...")
+    cb_entries = fetch_all_feeds("cross-border", limit_per_feed=6)
+    cb_fresh = [e for e in cb_entries if str_hash(e["title"]) not in posted_titles]
+    print(f"  获取 {len(cb_entries)} 条，{len(cb_fresh)} 条可用")
 
-        if slug in existing:
-            slug = slug + "-" + str(random.randint(1, 99))
-        existing.add(slug)
+    need_extra = 0
+    for entry in cb_fresh[:limit_cb]:
+        new_posts.append(build_and_save(entry, "cross-border", date_str, existing_slugs))
+    if len(new_posts) < limit_cb:
+        need_extra += limit_cb - len(new_posts)
 
-        full_content = content if content.startswith("#") else "# " + title + "\n\n" + content
-        md_path = os.path.join(POSTS_DIR, slug + ".md")
-        with open(md_path, "w", encoding="utf-8") as f:
-            f.write(full_content)
+    # ---- 健身 ----
+    print("[INFO] 抓取健身内容...")
+    fit_entries = fetch_all_feeds("fitness", limit_per_feed=4)
+    fit_fresh = [e for e in fit_entries if str_hash(e["title"]) not in posted_titles]
+    print(f"  获取 {len(fit_entries)} 条，{len(fit_fresh)} 条可用")
 
-        all_posts.insert(0, {
-            "slug": slug,
-            "title": title,
-            "date": date_str,
-            "excerpt": excerpt,
-            "cat": "cross-border",
-            "sub": sub,
-        })
-        new_posts.append(title)
-        generated += 1
+    fit_count = 0
+    for entry in fit_fresh[:limit_fit]:
+        new_posts.append(build_and_save(entry, "fitness", date_str, existing_slugs))
+        fit_count += 1
+    if fit_count < limit_fit:
+        need_extra += limit_fit - fit_count
 
-    # 健身文章
-    for sub in fit_picks:
-        articles = FITNESS_POOL[sub]
-        idx = select_article(tracker, "fitness", sub, len(articles))
-        article = articles[idx]
-        title = fill_vars(article["title"], sub)
-        excerpt = fill_vars(article["excerpt"], sub)
-        content = fill_vars(article["content"], sub)
-        slug = slugify(title) + "-" + date_str
+    # ---- 补充来源 ----
+    total = len([p for p in new_posts if p["cat"] == "cross-border"])
+    fit_total = len([p for p in new_posts if p["cat"] == "fitness"])
+    need_cb = limit_cb - total
+    need_fit = limit_fit - fit_total
 
-        if slug in existing:
-            slug = slug + "-" + str(random.randint(1, 99))
-        existing.add(slug)
+    if need_cb > 0 or need_fit > 0:
+        print(f"[INFO] 内容不足 (缺CB:{need_cb} Fit:{need_fit})，补充搜索...")
+        fill_all = fetch_fill(need_cb + need_fit, posted_titles)
+        for entry in fill_all:
+            if entry["section"] == "cross-border" and total < limit_cb:
+                new_posts.append(build_and_save(entry, "cross-border", date_str, existing_slugs))
+                total += 1
+            elif entry["section"] == "fitness" and fit_total < limit_fit:
+                new_posts.append(build_and_save(entry, "fitness", date_str, existing_slugs))
+                fit_total += 1
 
-        full_content = content if content.startswith("#") else "# " + title + "\n\n" + content
-        md_path = os.path.join(POSTS_DIR, slug + ".md")
-        with open(md_path, "w", encoding="utf-8") as f:
-            f.write(full_content)
+    save_json(TRACKER_PATH, tracker)
+    # build_and_save 内部已保存 JSON，这里重新加载获取最新计数
+    current_total = len(load_json(JSON_PATH))
 
-        all_posts.insert(0, {
-            "slug": slug,
-            "title": title,
-            "date": date_str,
-            "excerpt": excerpt,
-            "cat": "fitness",
-            "sub": sub,
-        })
-        new_posts.append(title)
-        generated += 1
+    cb_count = sum(1 for p in new_posts if p["cat"] == "cross-border")
+    fit_count = sum(1 for p in new_posts if p["cat"] == "fitness")
+    print(f"\n[DONE] {date_str} — 跨境电商 {cb_count} 篇 + 健身 {fit_count} 篇")
+    print(f"  线上共 {current_total} 篇文章 → http://20020426.top")
 
-    save_json(all_posts)
-    save_tracker(tracker)
-
-    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 生成完毕：{generated} 篇文章")
-    print("跨境电商：")
-    for t in new_posts[:7]:
-        print(f"  [CB] {t}")
-    print("每日健身：")
-    for t in new_posts[7:]:
-        print(f"  [Fit] {t}")
-
-    return True
+    return new_posts
 
 
-def select_article(tracker, section, sub, total):
-    """选择一个最少使用的文章索引"""
-    key = f"{section}/{sub}"
-    if key not in tracker["used"]:
-        tracker["used"][key] = {}
+def build_and_save(entry, section, date_str, existing_slugs):
+    title = entry["title"]
+    if section == "cross-border":
+        md_content, cat = build_cross_border_post(entry)
+    else:
+        md_content, cat = build_fitness_post(entry)
 
-    # 清理过期的记录（保留最近7天的）
-    cutoff = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
-    tracker["used"][key] = {d: v for d, v in tracker["used"][key].items() if d >= cutoff}
+    slug_base = slugify(title) + "-" + date_str
+    slug = slug_base
+    i = 1
+    while slug in existing_slugs:
+        slug = slug_base + "-" + str(i)
+        i += 1
+    existing_slugs.add(slug)
 
-    # 统计每篇文章的使用次数
-    counts = {}
-    for date, idx in tracker["used"][key].items():
-        counts[idx] = counts.get(idx, 0) + 1
+    md_path = os.path.join(POSTS_DIR, slug + ".md")
+    with open(md_path, "w", encoding="utf-8") as f:
+        f.write(md_content)
 
-    # 选择使用次数最少的，相同则随机
-    min_count = min(counts.values()) if counts else 0
-    candidates = [i for i in range(total) if counts.get(i, 0) == min_count]
-    idx = random.choice(candidates)
+    excerpt = title[:150]
+    all_posts = load_json(JSON_PATH)
+    all_posts.insert(0, {
+        "slug": slug, "title": title, "date": date_str, "excerpt": excerpt,
+        "cat": section, "sub": cat,
+        "source": entry["link"],
+        "source_name": f"{entry['source_name']} ({entry['domain']})",
+    })
+    save_json(JSON_PATH, all_posts)
 
-    today = datetime.now().strftime("%Y-%m-%d")
-    tracker["used"][key][today] = idx
+    label = "CB" if section == "cross-border" else "Fit"
+    print(f"  [{label}/{cat}] {title[:50]}... ← {entry['source_name']}")
 
-    return idx
+    return {"title": title, "cat": section}
 
 
-# ==============================================================
-# 主入口
-# ==============================================================
+def fetch_fill(needed, exclude_hashes):
+    """补充搜索"""
+    fill_urls = [
+        ("cross-border", "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+%E4%BF%84%E7%BD%97%E6%96%AF+%E9%80%89%E5%93%81+%E8%BF%90%E8%90%A5+%E7%89%A9%E6%B5%81&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"),
+        ("fitness", "https://news.google.com/rss/search?q=%E5%BE%92%E6%89%8B+%E8%87%AA%E9%87%8D+%E8%AE%AD%E7%BB%83+%E6%95%99%E7%A8%8B+%E4%BF%AF%E5%8D%A7%E6%92%91+%E6%B7%B1%E8%B9%B2+%E7%91%9C%E4%BC%BD+%E5%81%A5%E8%BA%AB&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"),
+    ]
+
+    results = []
+    for section, url in fill_urls:
+        try:
+            resp = requests.get(url, headers={
+                "User-Agent": "Mozilla/5.0"
+            }, timeout=15)
+            if resp.status_code != 200:
+                continue
+            feed = feedparser.parse(resp.content)
+            for entry in feed.entries:
+                link = entry.get("link", "")
+                title = clean_html(entry.get("title", ""))
+                if not title or len(title) < 10:
+                    continue
+                if str_hash(title) in exclude_hashes:
+                    continue
+                exclude_hashes.add(str_hash(title))
+                source = entry.get("source", {})
+                source_href = source.get("href", "") if isinstance(source, dict) else ""
+                source_name = source.get("title", "") if isinstance(source, dict) else ""
+
+                results.append({
+                    "title": title, "link": link,
+                    "source_name": source_name or source_domain(link),
+                    "source_href": source_href,
+                    "domain": source_domain(source_href) or source_domain(link),
+                    "summary": clean_html(entry.get("summary", ""))[:300],
+                    "section": section,
+                })
+                if len(results) >= needed:
+                    break
+        except Exception as e:
+            print(f"  [WARN] 补充抓取失败: {e}")
+    return results
+
+
+# ============================================================
+# 入口
+# ============================================================
 
 def main():
     do_push = "--push" in sys.argv
 
-    print("=" * 50)
-    print("  每日内容自动生成器")
-    print("=" * 50)
+    print("=" * 56)
+    print("  每日内容生成器 v3 — 真实来源 · 有据可查")
+    print("=" * 56)
 
     if not os.path.exists(POSTS_DIR):
         os.makedirs(POSTS_DIR)
@@ -1181,22 +506,20 @@ def main():
     generate_posts()
 
     if do_push:
-        print("\n自动推送中...")
+        print("\n[INFO] 推送至 GitHub...")
         import subprocess
-        cmds = [
+        for cmd in [
             ["git", "add", "."],
-            ["git", "commit", "-m", f"每日自动更新 {datetime.now().strftime('%Y-%m-%d')}"],
+            ["git", "commit", "-m", f"每日更新 {datetime.now().strftime('%Y-%m-%d')} — 来源采集"],
             ["git", "push"],
-        ]
-        for cmd in cmds:
+        ]:
             r = subprocess.run(cmd, cwd=BASE_DIR, capture_output=True, text=True)
-            if r.returncode != 0:
-                print(f"! {' '.join(cmd)} 失败: {r.stderr}")
-            else:
-                print(f"  ✓ {' '.join(cmd)}")
-        print("\n推送完成！")
+            tag = "OK" if r.returncode == 0 else f"FAIL: {r.stderr[:60]}"
+            print(f"  {' '.join(cmd)} → {tag}")
+        print("  推送完成")
 
-    print(f"\n共 {len(load_json())} 篇文章在线上")
+    total = len(load_json(JSON_PATH))
+    print(f"\n当前线上 {total} 篇文章 → http://20020426.top")
 
 
 if __name__ == "__main__":
