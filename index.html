@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>猫明之主小站</title>
+<title>猫明之主小站 · 跨境电商 & 健身学习</title>
+<meta name="description" content="猫明之主小站 — 跨境电商(Ozon/Yandex/俄罗斯铺货选品)实战指南 + 徒手健身每日教程。安静学习，温柔生长。">
+<meta name="keywords" content="跨境电商,Ozon,Yandex,俄罗斯,选品,铺货,徒手健身,自重训练,瑜伽垫">
+<meta property="og:title" content="猫明之主小站">
+<meta property="og:description" content="跨境电商实战指南 + 每日徒手健身教程">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#080c14">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐱</text></svg>">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
 :root {
@@ -11,15 +18,20 @@
   --border: #1c2438; --text: #bcc5d6; --title: #e2e8f4;
   --muted: #5e6d87; --blue: #4b8cf7; --cyan: #22c9d0;
   --purple: #9b72f2; --pink: #f07baa; --gold: #f0b85a;
-  --green: #34c97d; --radius: 12px;
+  --green: #34c97d; --red: #f04b6e;
+  --radius: 12px;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 
-/* 星空粒子背景 */
-#particles {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  pointer-events:none; z-index:0;
+/* 阅读进度条 */
+#progress-bar {
+  position:fixed; top:0; left:0; height:3px;
+  background:linear-gradient(90deg, var(--cyan), var(--purple));
+  z-index:200; transition:width 0.15s;
 }
+
+/* 星空 */
+#particles { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
 
 body {
   font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;
@@ -27,167 +39,106 @@ body {
   min-height:100vh; position:relative; overflow-x:hidden;
 }
 
-/* 全局容器 */
 .app { position:relative; z-index:1; }
 
-/* 导航栏 */
-.nav {
-  position:sticky; top:0; z-index:100;
-  background:rgba(8,12,20,0.88); backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);
-}
-.nav-inner {
-  max-width:880px; margin:0 auto; display:flex;
-  align-items:center; justify-content:space-between;
-  padding:0 20px; height:58px;
-}
-.nav-logo {
-  display:flex; align-items:center; gap:8px; cursor:pointer;
-  text-decoration:none; font-size:18px; font-weight:700;
-  color:var(--title); letter-spacing:1px;
-}
-.nav-logo .icon { font-size:24px; animation: float 3s ease-in-out infinite; }
-@keyframes float {
-  0%,100% { transform:translateY(0); }
-  50% { transform:translateY(-4px); }
-}
+/* 导航 */
+.nav { position:sticky; top:0; z-index:100; background:rgba(8,12,20,0.88); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
+.nav-inner { max-width:900px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 20px; height:58px; }
+.nav-logo { display:flex; align-items:center; gap:8px; cursor:pointer; text-decoration:none; font-size:18px; font-weight:700; color:var(--title); letter-spacing:1px; }
+.nav-logo .icon { font-size:24px; animation:float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
 .nav-logo span { background:linear-gradient(135deg,var(--cyan),var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-
-.nav-right { display:flex; align-items:center; gap:4px; }
-.nav-right a {
-  display:flex; align-items:center; gap:5px;
-  padding:7px 14px; border-radius:18px; text-decoration:none;
-  font-size:13px; color:var(--muted); transition:all 0.25s;
-  border:1px solid transparent;
-}
-.nav-right a:hover {
-  color:var(--title); background:var(--card); border-color:var(--border);
-}
+.nav-right { display:flex; align-items:center; gap:2px; }
+.nav-right a { display:flex; align-items:center; gap:5px; padding:7px 14px; border-radius:18px; text-decoration:none; font-size:13px; color:var(--muted); transition:all 0.25s; border:1px solid transparent; }
+.nav-right a:hover { color:var(--title); background:var(--card); border-color:var(--border); }
 .nav-right a.spotify:hover { color:#1DB954; border-color:#1DB95433; background:#1DB95411; }
 .nav-right a.bilibili:hover { color:#fb7299; border-color:#fb729933; background:#fb729911; }
 .nav-right svg { width:16px; height:16px; }
-
-/* 标签切换 */
 .nav-tabs { display:flex; gap:4px; margin-left:8px; }
-.nav-tabs button {
-  padding:6px 14px; border-radius:16px; border:1px solid var(--border);
-  background:var(--card); color:var(--muted); cursor:pointer;
-  font-size:13px; transition:all 0.25s;
-}
+.nav-tabs button { padding:6px 14px; border-radius:16px; border:1px solid var(--border); background:var(--card); color:var(--muted); cursor:pointer; font-size:13px; transition:all 0.25s; }
 .nav-tabs button:hover { border-color:var(--blue); color:var(--blue); }
 .nav-tabs button.on { background:var(--blue); border-color:var(--blue); color:#fff; }
 
 /* 主容器 */
-.main { max-width:880px; margin:0 auto; padding:0 20px 60px; position:relative; z-index:1; }
+.main { max-width:900px; margin:0 auto; padding:0 20px 60px; }
 
-/* Hero 区域 */
-.hero {
-  text-align:center; padding:56px 0 20px; position:relative;
-}
-.hero .site-name {
-  font-size:38px; font-weight:800; color:var(--title);
-  background:linear-gradient(135deg, var(--cyan) 0%, var(--purple) 50%, var(--pink) 100%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  background-clip:text;
-  letter-spacing:3px;
-}
-.hero .site-desc {
-  font-size:14px; color:var(--muted); margin-top:10px;
-  letter-spacing:2px;
-}
+/* Hero */
+.hero { text-align:center; padding:52px 0 16px; }
+.site-name { font-size:38px; font-weight:800; color:var(--title); background:linear-gradient(135deg,var(--cyan)0%,var(--purple)50%,var(--pink)100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; letter-spacing:3px; }
+.site-desc { font-size:14px; color:var(--muted); margin-top:10px; letter-spacing:2px; }
 
-/* 引言卡片 */
+/* 引言 */
 .quote-card {
-  max-width:660px; margin:0 auto 36px;
-  background:linear-gradient(135deg, rgba(155,114,242,0.06) 0%, rgba(34,201,208,0.04) 100%);
+  max-width:680px; margin:0 auto 32px;
+  background:linear-gradient(135deg,rgba(155,114,242,0.06)0%,rgba(34,201,208,0.04)100%);
   border:1px solid var(--border); border-radius:var(--radius);
-  padding:28px 30px; position:relative; overflow:hidden;
+  padding:28px 30px 24px; position:relative; overflow:hidden;
 }
-.quote-card::before {
-  content:""; position:absolute; top:0; left:0; width:100%; height:2px;
-  background:linear-gradient(90deg, transparent, var(--purple), var(--cyan), transparent);
-  opacity:0.5;
-}
-.quote-card .q-icon {
-  font-size:32px; opacity:0.15; position:absolute; top:12px; left:16px;
-}
-.quote-card p {
-  font-size:14px; color:#9ba9c6; line-height:2.1;
-  text-align:center; position:relative; z-index:1;
-  letter-spacing:1px;
-}
+.quote-card::before { content:""; position:absolute; top:0; left:0; width:100%; height:2px; background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),transparent); opacity:0.5; }
+.quote-card .q-icon { font-size:32px; opacity:0.12; position:absolute; top:12px; left:16px; }
+.quote-card p { font-size:14px; color:#9ba9c6; line-height:2.1; text-align:center; position:relative; z-index:1; letter-spacing:1px; }
+.quote-card .q-copy { position:absolute; bottom:8px; right:14px; background:none; border:1px solid var(--border); color:var(--muted); padding:3px 10px; border-radius:12px; cursor:pointer; font-size:11px; transition:all 0.2s; z-index:2; }
+.quote-card .q-copy:hover { border-color:var(--cyan); color:var(--cyan); }
+.quote-card .q-copy.copied { border-color:var(--green); color:var(--green); }
 
-/* 统计栏 */
-.stats {
-  display:flex; gap:28px; justify-content:center; margin-bottom:28px;
-}
-.stat-item {
-  text-align:center; padding:14px 24px;
+/* 工具条 */
+.toolbar { display:flex; gap:12px; margin-bottom:24px; flex-wrap:wrap; justify-content:center; }
+.rate-widget {
+  display:flex; align-items:center; gap:8px;
   background:var(--card); border:1px solid var(--border);
-  border-radius:var(--radius); transition:all 0.3s;
-  cursor:default;
+  border-radius:20px; padding:8px 16px; font-size:12px; color:var(--muted);
 }
+.rate-widget .r-val { color:var(--gold); font-weight:600; font-size:14px; }
+.rate-widget .r-up { color:var(--green); font-size:11px; }
+
+/* 统计 */
+.stats { display:flex; gap:20px; justify-content:center; margin-bottom:24px; }
+.stat-item { text-align:center; padding:14px 24px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); transition:all 0.3s; cursor:default; }
 .stat-item:hover { border-color:var(--purple); transform:translateY(-2px); box-shadow:0 8px 25px rgba(155,114,242,0.08); }
 .stat-num { font-size:28px; font-weight:700; color:var(--cyan); }
 .stat-label { font-size:11px; color:var(--muted); margin-top:2px; letter-spacing:1px; }
 
 /* 子分类 */
-.sub-row { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; justify-content:center; }
-.sub-btn {
-  padding:6px 16px; border-radius:16px; border:1px solid var(--border);
-  background:var(--card); color:var(--muted); cursor:pointer;
-  font-size:12px; transition:all 0.25s;
-}
+.sub-row { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; justify-content:center; }
+.sub-btn { padding:6px 16px; border-radius:16px; border:1px solid var(--border); background:var(--card); color:var(--muted); cursor:pointer; font-size:12px; transition:all 0.25s; }
 .sub-btn:hover { border-color:var(--cyan); color:var(--cyan); }
 .sub-btn.on { background:rgba(34,201,208,0.12); border-color:var(--cyan); color:var(--cyan); }
 
 /* 搜索 */
-.search { margin-bottom:22px; }
-.search input {
-  width:100%; max-width:500px; margin:0 auto; display:block;
-  padding:11px 18px; border-radius:22px;
-  border:1px solid var(--border); background:var(--card);
-  color:var(--title); font-size:14px; outline:none;
-  transition:all 0.3s;
-}
+.search { margin-bottom:20px; }
+.search input { width:100%; max-width:500px; margin:0 auto; display:block; padding:11px 18px; border-radius:22px; border:1px solid var(--border); background:var(--card); color:var(--title); font-size:14px; outline:none; transition:all 0.3s; }
 .search input:focus { border-color:var(--purple); box-shadow:0 0 20px rgba(155,114,242,0.08); }
 .search input::placeholder { color:var(--muted); }
 
 /* 文章卡片 */
 .list { display:grid; gap:16px; }
-.card {
-  background:var(--card); border:1px solid var(--border);
-  border-radius:var(--radius); padding:22px 24px; cursor:pointer;
-  transition:all 0.3s; position:relative; overflow:hidden;
-}
-.card::after {
-  content:""; position:absolute; bottom:0; left:0; width:100%; height:2px;
-  background:linear-gradient(90deg, transparent, var(--purple), var(--cyan), transparent);
-  transform:scaleX(0); transition:transform 0.3s; opacity:0.4;
-}
+.card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:22px 24px; cursor:pointer; transition:all 0.3s; position:relative; overflow:hidden; }
+.card::after { content:""; position:absolute; bottom:0; left:0; width:100%; height:2px; background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),transparent); transform:scaleX(0); transition:transform 0.3s; opacity:0.4; }
 .card:hover { background:var(--card-hover); border-color:var(--blue); transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,0.3); }
 .card:hover::after { transform:scaleX(1); }
-.card .card-meta { display:flex; align-items:center; gap:10px; margin-bottom:6px; font-size:12px; }
+.card .card-meta { display:flex; align-items:center; gap:10px; margin-bottom:6px; font-size:12px; flex-wrap:wrap; }
 .card .card-tag { padding:3px 10px; border-radius:10px; font-size:11px; letter-spacing:1px; }
 .card .card-date { color:var(--muted); }
+.card .card-read { color:var(--muted); font-size:11px; }
 .card h3 { font-size:17px; color:var(--title); margin-bottom:6px; line-height:1.4; }
 .card .card-excerpt { font-size:13px; color:var(--muted); line-height:1.6; }
 
 /* 文章详情 */
-.article { animation: fadeIn 0.4s; }
-@keyframes fadeIn { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
-.article .back-btn {
-  display:inline-flex; align-items:center; gap:4px; color:var(--muted);
-  cursor:pointer; font-size:14px; margin-bottom:24px; padding:6px 14px;
-  border-radius:16px; border:1px solid transparent; transition:all 0.2s;
-}
+.article { animation:fadeIn 0.4s; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.article .back-btn { display:inline-flex; align-items:center; gap:4px; color:var(--muted); cursor:pointer; font-size:14px; margin-bottom:8px; padding:6px 14px; border-radius:16px; border:1px solid transparent; transition:all 0.2s; }
 .article .back-btn:hover { color:var(--cyan); border-color:var(--border); background:var(--card); }
+.article .toc { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:24px; }
+.article .toc .toc-title { font-size:13px; font-weight:600; color:var(--title); margin-bottom:10px; letter-spacing:2px; }
+.article .toc a { display:block; color:var(--muted); text-decoration:none; font-size:13px; padding:4px 0; padding-left:0; transition:all 0.2s; border-left:2px solid transparent; }
+.article .toc a:hover { color:var(--cyan); border-left-color:var(--cyan); padding-left:10px; }
+.article .toc a.toc-h3 { padding-left:20px; font-size:12px; }
 .article h1 { font-size:28px; color:var(--title); line-height:1.3; margin-bottom:10px; }
 .article .art-meta { font-size:13px; color:var(--muted); margin-bottom:28px; padding-bottom:18px; border-bottom:1px solid var(--border); display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
 .article .art-meta .art-source { color:var(--cyan); }
 .article .content { font-size:16px; line-height:1.95; }
-.article .content h2 { font-size:21px; color:var(--title); margin:28px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--border); }
-.article .content h3 { font-size:17px; color:var(--cyan); margin:22px 0 8px; }
+.article .content h2 { font-size:21px; color:var(--title); margin:32px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--border); }
+.article .content h3 { font-size:17px; color:var(--cyan); margin:24px 0 8px; }
 .article .content p { margin-bottom:12px; }
 .article .content ul,.article .content ol { margin:0 0 12px 22px; }
 .article .content li { margin-bottom:4px; }
@@ -204,22 +155,58 @@ body {
 /* 消息 */
 .msg { text-align:center; padding:60px 20px; color:var(--muted); }
 
-/* 页脚 */
-.footer {
-  text-align:center; padding:30px; color:var(--muted); font-size:12px;
-  border-top:1px solid var(--border); max-width:880px; margin:0 auto;
-  letter-spacing:1px; position:relative; z-index:1;
+/* 回到顶部 */
+#toTop {
+  position:fixed; bottom:28px; right:24px; z-index:150;
+  width:42px; height:42px; border-radius:50%;
+  background:var(--card); border:1px solid var(--border);
+  color:var(--muted); cursor:pointer; font-size:18px;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; transform:translateY(10px); transition:all 0.3s;
+  pointer-events:none;
 }
+#toTop.show { opacity:1; transform:translateY(0); pointer-events:auto; }
+#toTop:hover { border-color:var(--cyan); color:var(--cyan); box-shadow:0 4px 20px rgba(34,201,208,0.15); }
 
-/* 滚动条 */
+/* 呼吸工具 */
+.breath-btn {
+  position:fixed; bottom:28px; right:76px; z-index:150;
+  width:42px; height:42px; border-radius:50%;
+  background:var(--card); border:1px solid var(--border);
+  color:var(--muted); cursor:pointer; font-size:16px;
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.3s;
+}
+.breath-btn:hover { border-color:var(--purple); color:var(--purple); }
+.breath-overlay {
+  position:fixed; inset:0; background:rgba(8,12,20,0.85);
+  z-index:300; display:none; align-items:center; justify-content:center;
+}
+.breath-overlay.on { display:flex; }
+.breath-box { text-align:center; }
+.breath-circle {
+  width:160px; height:160px; border-radius:50%;
+  border:3px solid var(--purple); margin:0 auto 20px;
+  display:flex; align-items:center; justify-content:center;
+  transition:all 4s ease-in-out;
+  color:var(--title); font-size:18px; letter-spacing:2px;
+}
+.breath-circle.inhale { transform:scale(1.5); border-color:var(--cyan); box-shadow:0 0 60px rgba(34,201,208,0.2); }
+.breath-circle.hold { border-color:var(--gold); }
+.breath-circle.exhale { transform:scale(0.8); border-color:var(--purple); }
+.breath-close { color:var(--muted); cursor:pointer; font-size:13px; border:1px solid var(--border); padding:6px 20px; border-radius:16px; background:none; transition:all 0.2s; }
+.breath-close:hover { color:var(--red); border-color:var(--red); }
+
+/* 页脚 */
+.footer { text-align:center; padding:30px; color:var(--muted); font-size:12px; border-top:1px solid var(--border); max-width:900px; margin:0 auto; letter-spacing:1px; position:relative; z-index:1; }
+.footer .days { color:var(--cyan); }
+
 ::-webkit-scrollbar { width:5px; }
 ::-webkit-scrollbar-track { background:var(--bg); }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
 
-/* 响应式 */
 @media (max-width:700px) {
-  .hero .site-name { font-size:26px; }
-  .hero .site-desc { font-size:12px; }
+  .site-name { font-size:26px; }
   .quote-card p { font-size:13px; line-height:1.9; }
   .nav-right a span { display:none; }
   .nav-tabs button { font-size:12px; padding:5px 10px; }
@@ -228,23 +215,20 @@ body {
   .stats { gap:12px; }
   .stat-item { padding:10px 16px; }
   .stat-num { font-size:22px; }
+  .breath-btn { right:72px; bottom:80px; }
 }
 </style>
 </head>
 <body>
 
-<!-- 星空背景 -->
+<div id="progress-bar"></div>
 <canvas id="particles"></canvas>
 
 <div class="app">
 
-<!-- 导航 -->
 <nav class="nav">
   <div class="nav-inner">
-    <a class="nav-logo" onclick="goHome()">
-      <span class="icon">🐱</span>
-      猫明之主<span>小站</span>
-    </a>
+    <a class="nav-logo" onclick="goHome()"><span class="icon">🐱</span>猫明之主<span>小站</span></a>
     <div class="nav-right">
       <div class="nav-tabs">
         <button class="on" data-tab="all" onclick="switchTab('all')">全部</button>
@@ -263,79 +247,93 @@ body {
   </div>
 </nav>
 
-<!-- 主内容 -->
 <div class="main" id="main"></div>
 
-<footer class="footer">© 2026 猫明之主小站 · 安静地生长</footer>
+<footer class="footer" id="footer"></footer>
 
 </div>
 
-<!-- 星空粒子 -->
+<!-- 回到顶部 -->
+<button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+
+<!-- 呼吸放松 -->
+<button class="breath-btn" id="breathBtn" title="呼吸放松">🧘</button>
+<div class="breath-overlay" id="breathOverlay">
+  <div class="breath-box">
+    <div class="breath-circle" id="breathCircle">准备</div>
+    <br>
+    <button class="breath-close" onclick="stopBreath()">关闭</button>
+  </div>
+</div>
+
+<!-- 星空 -->
 <script>
 (function(){
-  const c=document.getElementById('particles');
-  const ctx=c.getContext('2d');
-  let stars=[], w, h;
-  function resize(){ w=c.width=window.innerWidth; h=c.height=window.innerHeight; }
-  resize(); window.onresize=resize;
-  for(let i=0;i<80;i++) stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+0.5,o:Math.random(),s:Math.random()*0.005+0.002});
-  function draw(){
-    ctx.clearRect(0,0,w,h);
-    stars.forEach(s=>{
-      s.o+=s.s; if(s.o>1||s.o<0)s.s*=-1;
-      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(155,180,220,${s.o*0.6})`; ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
+  const c=document.getElementById('particles'),ctx=c.getContext('2d');
+  let stars=[],w,h;
+  function resize(){w=c.width=window.innerWidth;h=c.height=window.innerHeight}
+  resize();window.onresize=resize;
+  for(let i=0;i<80;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+0.5,o:Math.random(),s:Math.random()*0.005+0.002});
+  (function draw(){ctx.clearRect(0,0,w,h);stars.forEach(s=>{s.o+=s.s;if(s.o>1||s.o<0)s.s*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(155,180,220,${s.o*0.6})`;ctx.fill()});requestAnimationFrame(draw)})()
 })();
 </script>
 
 <!-- 主逻辑 -->
 <script>
-let posts=[], currentTab='all', currentSub='all', currentSearch='';
+let posts=[],currentTab='all',currentSub='all',currentSearch='',breathTimer=null;
 
 const SUBS={
   'cross-border':[{key:'all',name:'全部'},{key:'selection',name:'选品技巧'},{key:'ozon',name:'Ozon运营'},{key:'yandex',name:'Yandex运营'},{key:'russia-market',name:'俄罗斯市场'},{key:'logistics',name:'物流收款'},{key:'tools',name:'工具教程'}],
   'fitness':[{key:'all',name:'全部'},{key:'male',name:'男性训练'},{key:'female',name:'女性训练'},{key:'yoga-mat',name:'瑜伽垫'},{key:'plan',name:'每日计划'},{key:'diet',name:'饮食建议'}],
 };
-const SUB_NAMES={}; Object.values(SUBS).forEach(a=>a.forEach(s=>SUB_NAMES[s.key]=s.name));
-
+const SUB_NAMES={};Object.values(SUBS).forEach(a=>a.forEach(s=>SUB_NAMES[s.key]=s.name));
 const QUOTE=`你来了，愿你在人海茫茫中，仍能像一朵小小的白云，自由地飘过蓝天，不惊扰任何人，却把自己的洁白与柔软留给这世界。愿你的心永远清澈如山间清泉，无论世事如何喧嚣，都能映照出星光与月色。愿你遇见的每一次风雨，都能化作滋养生命的甘露；愿你走过的每一条路，都开满安静而温柔的花。愿你带着孩子般的纯真与对美好的相信，一路平安，一路向光。`;
+const SITE_START=new Date('2026-05-09');
 
+// 汇率
+let rubRate=null;
+async function fetchRate(){
+  try{
+    const r=await fetch('https://open.er-api.com/v6/latest/CNY');
+    const d=await r.json();
+    rubRate=d.rates?.RUB||null;
+  }catch(e){}
+}
+
+function catName(c){return c==='cross-border'?'跨境电商':c==='fitness'?'每日健身':c}
+function readTime(title){const len=(title||'').length;return Math.max(1,Math.ceil(len/8))+' 分钟阅读'}
 async function loadData(){
   try{const r=await fetch('posts/posts.json?v='+Date.now());if(!r.ok)throw Error('HTTP '+r.status);posts=await r.json();posts.sort((a,b)=>b.date.localeCompare(a.date));return true}
   catch(e){console.error(e);return false}
 }
 
-function catName(c){return c==='cross-border'?'跨境电商':c==='fitness'?'每日健身':c}
-
+// 渲染
 function render(){
   let filtered=posts;
-  if(currentTab!=='all') filtered=filtered.filter(p=>p.cat===currentTab);
-  if(currentSub!=='all') filtered=filtered.filter(p=>p.sub===currentSub);
+  if(currentTab!=='all')filtered=filtered.filter(p=>p.cat===currentTab);
+  if(currentSub!=='all')filtered=filtered.filter(p=>p.sub===currentSub);
   if(currentSearch){const q=currentSearch.toLowerCase();filtered=filtered.filter(p=>p.title.toLowerCase().includes(q)||p.excerpt.toLowerCase().includes(q))}
 
   const crossCount=posts.filter(p=>p.cat==='cross-border').length;
   const fitCount=posts.filter(p=>p.cat==='fitness').length;
-  const main=document.getElementById('main');
   const isHome=currentTab==='all'&&currentSub==='all'&&!currentSearch;
+  const days=Math.ceil((Date.now()-SITE_START)/86400000);
+  const main=document.getElementById('main');
 
   let html='';
-
-  // Hero
   html+=`<div class="hero"><div class="site-name">猫明之主小站</div><div class="site-desc">跨境电商实战 & 每日健身 · 安静学习，温柔生长</div></div>`;
 
-  // 引言(仅首页全部视图显示)
   if(isHome){
-    html+=`<div class="quote-card"><span class="q-icon">&#10077;</span><p>${QUOTE}</p></div>`;
+    html+=`<div class="quote-card"><span class="q-icon">&#10077;</span><p>${QUOTE}</p><button class="q-copy" id="qCopy" onclick="copyQuote()">📋 复制</button></div>`;
   }
 
-  // 统计
+  html+=`<div class="toolbar">`;
+  html+=`<div class="rate-widget" title="人民币兑卢布汇率（每日参考）">💱 1 CNY ≈ <span class="r-val">${rubRate?rubRate.toFixed(2):'--'}</span> RUB</div>`;
+  html+=`<div class="rate-widget">📅 小站已运行 <span style="color:var(--cyan);font-weight:600">${days}</span> 天</div>`;
+  html+=`</div>`;
+
   html+=`<div class="stats"><div class="stat-item"><div class="stat-num">${posts.length}</div><div class="stat-label">文章总数</div></div><div class="stat-item"><div class="stat-num">${crossCount}</div><div class="stat-label">跨境电商</div></div><div class="stat-item"><div class="stat-num">${fitCount}</div><div class="stat-label">每日健身</div></div></div>`;
 
-  // 子分类
   if(currentTab!=='all'){
     const subs=SUBS[currentTab]||[];
     html+='<div class="sub-row">';
@@ -343,43 +341,92 @@ function render(){
     html+='</div>';
   }
 
-  // 搜索
   html+=`<div class="search"><input id="searchInput" placeholder="🔍 搜索文章..." value="${currentSearch.replace(/"/g,'&quot;')}" oninput="onSearch(this.value)"></div>`;
 
-  // 文章列表
   if(!filtered.length){
     html+='<div class="msg">✨ 暂无文章，等待更新</div>';
   }else{
     html+='<div class="list">';
     filtered.forEach(p=>{
       const color=currentTab==='fitness'?'var(--green)':'var(--cyan)';
-      html+=`<div class="card" onclick="showArticle('${p.slug}','${p.cat}')"><div class="card-meta"><span class="card-tag" style="background:${color}22;color:${color}">${SUB_NAMES[p.sub]||catName(p.cat)}</span><span class="card-date">${p.date}</span></div><h3>${p.title}</h3><p class="card-excerpt">${p.excerpt||''}</p></div>`;
+      html+=`<div class="card" onclick="showArticle('${p.slug}','${p.cat}')"><div class="card-meta"><span class="card-tag" style="background:${color}22;color:${color}">${SUB_NAMES[p.sub]||catName(p.cat)}</span><span class="card-date">${p.date}</span><span class="card-read">${readTime(p.title)}</span></div><h3>${p.title}</h3><p class="card-excerpt">${p.excerpt||''}</p></div>`;
     });
     html+='</div>';
   }
 
   main.innerHTML=html;
   main.style.animation='fadeIn 0.4s';
+
+  // 页脚
+  document.getElementById('footer').innerHTML=`© 2026 猫明之主小站 · 已安静运行 <span class="days">${days}</span> 天 · <a href="javascript:startBreath()" style="color:var(--muted)">🧘 放松一下</a>`;
 }
 
+// 复制引言
+function copyQuote(){
+  navigator.clipboard.writeText(QUOTE).then(()=>{
+    const b=document.getElementById('qCopy');
+    b.textContent='✓ 已复制';b.classList.add('copied');
+    setTimeout(()=>{b.textContent='📋 复制';b.classList.remove('copied')},2000);
+  }).catch(()=>{});
+}
+
+// 导航
 function switchTab(tab){currentTab=tab;currentSub='all';currentSearch='';document.querySelectorAll('.nav-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));render();window.scrollTo(0,0)}
 function switchSub(sub){currentSub=sub;render()}
 function onSearch(v){currentSearch=v.trim();render()}
 
+// 文章详情
 async function showArticle(slug,cat){
   const main=document.getElementById('main');main.innerHTML='<div class="msg">🕯 加载中...</div>';window.scrollTo(0,0);
   try{
     const r=await fetch('posts/'+slug+'.md');if(!r.ok)throw Error('404');
     const md=await r.text(),post=posts.find(p=>p.slug===slug);
     const color=cat==='fitness'?'var(--green)':'var(--cyan)';
-    main.innerHTML=`<div class="article"><span class="back-btn" onclick="switchTab('${cat}')">← 返回${catName(cat)}</span><h1>${post?.title||''}</h1><div class="art-meta"><span style="color:${color}">${SUB_NAMES[post?.sub]||catName(cat)}</span><span>·</span><span>${post?.date||''}</span>${post?.source_name?`<span>·</span><span class="art-source">来源：${post.source_name}</span>`:''}</div><div class="content">${marked.parse(md)}</div></div>`;
+    const toc=buildTOC(md);
+    main.innerHTML=`<div class="article"><span class="back-btn" onclick="switchTab('${cat}')">← 返回${catName(cat)}</span><h1>${post?.title||''}</h1><div class="art-meta"><span style="color:${color}">${SUB_NAMES[post?.sub]||catName(cat)}</span><span>·</span><span>${post?.date||''}</span><span>·</span><span>${readTime(md)}</span>${post?.source_name?`<span>·</span><span class="art-source">来源：${post.source_name}</span>`:''}</div>${toc}<div class="content">${marked.parse(md)}</div></div>`;
   }catch(e){main.innerHTML=`<div class="msg">加载失败 <a href="javascript:switchTab('${cat}')">返回</a></div>`}
 }
 
+// 文章目录
+function buildTOC(md){
+  const headings=[...md.matchAll(/^(#{2,3})\s+(.+)$/gm)];
+  if(headings.length<2)return'';
+  let html='<div class="toc"><div class="toc-title">📑 目录</div>';
+  headings.forEach(m=>{const lv=m[1].length,text=m[2],id=text.replace(/[^\w一-鿿]/g,'-').toLowerCase();html+=`<a class="${lv===3?'toc-h3':''}" href="javascript:document.getElementById('${id}').scrollIntoView({behavior:'smooth'})">${lv===2?'●':'◦'} ${text}</a>`});
+  html+='</div>';
+  return html;
+}
+
+// 覆盖 marked 渲染，给标题加 id
+marked.use({
+  renderer:{heading(t){const id=t.text.replace(/[^\w一-鿿]/g,'-').toLowerCase();return`<h${t.depth} id="${id}">${t.text}</h${t.depth}>`}}
+});
+
 function goHome(){switchTab('all')}
 
+// 阅读进度
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  const p=h>0?Math.min(100,Math.round(window.scrollY/h*100)):0;
+  document.getElementById('progress-bar').style.width=p+'%';
+  document.getElementById('toTop').classList.toggle('show',window.scrollY>400);
+});
+
+// 呼吸工具
+function startBreath(){document.getElementById('breathOverlay').classList.add('on');runBreath()}
+function stopBreath(){document.getElementById('breathOverlay').classList.remove('on');clearInterval(breathTimer);document.getElementById('breathCircle').textContent='准备';document.getElementById('breathCircle').className='breath-circle'}
+function runBreath(){
+  const c=document.getElementById('breathCircle');let phase=0;
+  const phases=[{text:'吸气',cls:'breath-circle inhale',dur:4000},{text:'屏息',cls:'breath-circle hold',dur:2000},{text:'呼气',cls:'breath-circle exhale',dur:4000},{text:'静息',cls:'breath-circle',dur:2000}];
+  function tick(){const p=phases[phase%4];c.textContent=p.text;c.className=p.cls;phase++;breathTimer=setTimeout(tick,p.dur)}
+  tick();
+}
+document.getElementById('breathOverlay').onclick=function(e){if(e.target===this)stopBreath()};
+document.getElementById('breathBtn').onclick=startBreath;
+
+// 启动
 (async function(){
-  if(!await loadData()){document.getElementById('main').innerHTML='<div class="msg">文章加载失败，请刷新重试</div>';return}
+  await Promise.all([loadData(),fetchRate()]);
   render();
 })();
 </script>
