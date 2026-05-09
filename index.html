@@ -302,7 +302,7 @@ const SUBS={
 };
 const SUB_NAMES={}; Object.values(SUBS).forEach(a=>a.forEach(s=>SUB_NAMES[s.key]=s.name));
 
-const QUOTE=`亲爱的陌生人，愿你在人海茫茫中，仍能像一朵小小的白云，自由地飘过蓝天，不惊扰任何人，却把自己的洁白与柔软留给这世界。愿你的心永远清澈如山间清泉，无论世事如何喧嚣，都能映照出星光与月色。愿你遇见的每一次风雨，都能化作滋养生命的甘露；愿你走过的每一条路，都开满安静而温柔的花。愿你带着孩子般的纯真与对美好的相信，一路平安，一路向光。`;
+const QUOTE=`你来了，愿你在人海茫茫中，仍能像一朵小小的白云，自由地飘过蓝天，不惊扰任何人，却把自己的洁白与柔软留给这世界。愿你的心永远清澈如山间清泉，无论世事如何喧嚣，都能映照出星光与月色。愿你遇见的每一次风雨，都能化作滋养生命的甘露；愿你走过的每一条路，都开满安静而温柔的花。愿你带着孩子般的纯真与对美好的相信，一路平安，一路向光。`;
 
 async function loadData(){
   try{const r=await fetch('posts/posts.json?v='+Date.now());if(!r.ok)throw Error('HTTP '+r.status);posts=await r.json();posts.sort((a,b)=>b.date.localeCompare(a.date));return true}
