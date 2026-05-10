@@ -504,7 +504,8 @@ function revealXHY(){if(todayXHY.show){pickXHY();render()}else{todayXHY.show=tru
 function checkRiddle(){const i=document.getElementById('riddleInput'),f=document.getElementById('riddleFeedback');if(!i||!f)return;const v=i.value.trim();if(!v)return;if(v===riddleAnswer){f.textContent='✅ 答对了！';f.className='sc-fb ok';setTimeout(()=>{pickZM();render()},1500)}else{f.textContent='❌ 不对，再试试';f.className='sc-fb no'}}
 function switchTab(t){currentTab=t;currentSub='all';currentSearch='';currentPage=1;render();window.scrollTo(0,0);closeMenu()}
 function switchSub(s){currentSub=s;currentPage=1;render()}
-function onSearch(v){currentSearch=v.trim();currentPage=1;render()}
+let searchTimer=null;
+function onSearch(v){currentSearch=v;clearTimeout(searchTimer);searchTimer=setTimeout(()=>{currentSearch=currentSearch.trim();currentPage=1;render()},300)}
 function goPage(n){currentPage=Math.max(1,n);render();document.getElementById('articleList').scrollIntoView({behavior:'smooth'})}
 function goHome(){switchTab('all')}
 function toggleMenu(){const m=document.getElementById('navMenu');m.classList.toggle('open');document.getElementById('hamBtn').setAttribute('aria-expanded',m.classList.contains('open'))}
