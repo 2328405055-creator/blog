@@ -290,26 +290,6 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 .lb-tabs button.on{border-color:var(--cyan);color:var(--cyan);background:rgba(34,201,208,0.08)}
 
 /* ====== TODO OVERLAY ====== */
-.todo-overlay{position:fixed;inset:0;background:rgba(8,12,20,0.92);z-index:400;display:none;align-items:center;justify-content:center}
-.todo-overlay.on{display:flex}
-.todo-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);width:500px;max-width:90vw;max-height:80vh;overflow-y:auto;padding:28px}
-.todo-panel h2{color:var(--title);margin-bottom:16px}
-.todo-panel .td-input-row{display:flex;gap:8px;margin-bottom:16px}
-.todo-panel .td-input-row input{flex:1;padding:10px 14px;border-radius:var(--rs);border:1px solid var(--border);background:var(--bg);color:var(--title);font-size:14px;outline:none}
-.todo-panel .td-input-row button{padding:10px 20px;border-radius:var(--rs);border:none;background:var(--cyan);color:#000;cursor:pointer;font-weight:600;font-size:13px}
-.todo-panel .td-list{list-style:none}
-.todo-panel .td-list li{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
-.todo-panel .td-list li.done .td-text{text-decoration:line-through;color:var(--muted)}
-.todo-panel .td-list .td-toggle{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);cursor:pointer;flex-shrink:0}
-.todo-panel .td-list li.done .td-toggle{background:var(--green);border-color:var(--green)}
-.todo-panel .td-list .td-text{flex:1}
-.todo-panel .td-list .td-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:2px 6px}
-.todo-panel .td-list .td-del:hover{color:var(--red)}
-.todo-panel .td-pw-row{display:flex;gap:8px;margin-bottom:16px}
-.todo-panel .td-pw-row input{flex:1;padding:10px 14px;border-radius:var(--rs);border:1px solid var(--border);background:var(--bg);color:var(--title);font-size:14px;outline:none}
-.todo-panel .td-pw-row button{padding:10px 20px;border-radius:var(--rs);border:none;background:var(--purple);color:#fff;cursor:pointer;font-weight:600;font-size:13px}
-.todo-panel .td-close{display:block;width:100%;margin-top:16px;padding:8px;border-radius:var(--rs);border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:13px}
-.todo-panel .td-close:hover{color:var(--red);border-color:var(--red)}
 
 /* ====== FLOATING BUTTONS ====== */
 #toTop{position:fixed;bottom:32px;right:28px;z-index:150;width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);transition:all 0.35s;pointer-events:none;backdrop-filter:blur(8px)}
@@ -317,7 +297,6 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 #toTop:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 6px 24px rgba(34,201,208,0.12)}
 .breath-btn{position:fixed;bottom:32px;right:80px;z-index:150;width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.35s}
 .breath-btn:hover{border-color:var(--purple);color:var(--purple);box-shadow:0 6px 24px rgba(155,114,242,0.12)}
-.todo-nav-btn{padding:6px 12px!important;font-size:12px!important}
 
 /* ====== BREATH ====== */
 .breath-overlay{position:fixed;inset:0;background:rgba(8,12,20,0.88);z-index:300;display:none;align-items:center;justify-content:center}
@@ -371,7 +350,6 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
       <a class="bilibili" href="https://www.bilibili.com" target="_blank" rel="noopener" aria-label="Bilibili">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 01-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 01.16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/></svg>
       </a>
-      <a class="todo-nav-btn" href="javascript:openTodo()" aria-label="待办清单">📋 待办</a>
     </div>
   </div>
 </nav>
@@ -382,7 +360,6 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 </div>
 
 <!-- TODO -->
-<div class="todo-overlay" id="todoOverlay"><div class="todo-panel" id="todoPanel"></div></div>
 <div class="game-overlay" id="sudoOverlay"><div class="game-panel" id="sudoPanel" style="width:420px"></div></div>
 
 <button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑</button>
@@ -588,7 +565,7 @@ function render(){
   </div></div>`;
 
   // Quick links
-  html+=`<div class="side-card"><div class="sc-title">🔗 快捷入口</div><div class="side-links"><a href="javascript:switchTab('cross-border')">🚀 跨境教程</a><a href="javascript:switchTab('fitness')">💪 每日健身</a><a href="javascript:switchTab('ai-news')">🤖 AI学习</a><a href="javascript:switchTab('ozon-pick')">🏆 Ozon选品</a><a href="javascript:openTodo()">📋 待办清单</a><a href="javascript:openChangelog()">📝 更新日志</a><a href="javascript:startBreath()">🧘 呼吸放松</a></div></div>`;
+  html+=`<div class="side-card"><div class="sc-title">🔗 快捷入口</div><div class="side-links"><a href="javascript:switchTab('cross-border')">🚀 跨境教程</a><a href="javascript:switchTab('fitness')">💪 每日健身</a><a href="javascript:switchTab('ai-news')">🤖 AI学习</a><a href="javascript:switchTab('ozon-pick')">🏆 Ozon选品</a><a href="javascript:startBreath()">🧘 呼吸放松</a></div></div>`;
 
   html+=`</aside>`; // end side-col
 
@@ -650,41 +627,7 @@ function toggleMenu(){const m=document.getElementById('navMenu');m.classList.tog
 function closeMenu(){document.getElementById('navMenu').classList.remove('open');document.getElementById('hamBtn').setAttribute('aria-expanded','false')}
 
 // ====== TODO ======
-function openTodo(){document.getElementById('todoOverlay').classList.add('on');renderTodo()}
-function closeTodo(){document.getElementById('todoOverlay').classList.remove('on')}
-function renderTodo(){
-  const panel=document.getElementById('todoPanel');
-    const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');
-  let h=`<h2>📋 待办清单</h2><div class="td-input-row"><input type="text" id="tdInput" placeholder="添加新任务..." onkeydown="if(event.key==='Enter')addTodo()"><button onclick="addTodo()">添加</button></div>`;
-  if(!tasks.length){h+='<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px">清单是空的 ✨</div>'}else{
-    h+='<ul class="td-list">';tasks.forEach((t,i)=>{h+=`<li class="${t.done?'done':''}"><span class="td-toggle" onclick="toggleTodo(${i})" role="checkbox" aria-checked="${t.done}" tabindex="0"></span><span class="td-text">${t.text.replace(/</g,'&lt;')}</span><button class="td-del" onclick="delTodo(${i})" aria-label="删除">✕</button></li>`});h+='</ul>';
-    const done=tasks.filter(t=>t.done).length;h+=`<p style="font-size:11px;color:var(--muted);margin-top:8px">${tasks.length} 任务，${done} 已完成</p>`}
-  h+='<button class="td-close" onclick="closeTodo()">关闭</button>';panel.innerHTML=h;setTimeout(()=>{const i=document.getElementById('tdInput');if(i)i.focus()},100)}
 // Changelog
-function addTodo(){const i=document.getElementById('tdInput');if(!i)return;const v=i.value.trim();if(!v)return;const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');tasks.unshift({text:v,done:false});localStorage.setItem('todo_catming',JSON.stringify(tasks));i.value='';renderTodo()}
-(()=>{const k='todo_catming';if(localStorage.getItem(k)&&!/[?&]seed(&|$)/.test(location.search))return;const epic=[
-{v:'04:30 起床 · 冷水澡 · 零下180度液氮冷冻舱激活端粒',done:false},
-{v:'05:00 冥想1小时 · 用脑电波连接宇宙暗物质获取今日insight',done:false},
-{v:'06:00 空腹有氧 · 负重30kg跑山10km · 顺便听完3本有声书(3倍速)',done:false},
-{v:'07:30 早餐 · 16种超级食物smoothie · 边喝边读Bloomberg+WSJ+36氪',done:false},
-{v:'08:00 深度工作Block1 · 搭建跨境电商AI Agent自动化选品+上架+客服全链路',done:false},
-{v:'10:00 开会 · 与俄罗斯Ozon/WB官方对接API · 全程俄语 · 不带翻译',done:false},
-{v:'11:00 深度工作Block2 · 用Rust重写ERP系统 · 延迟控制在纳秒级',done:false},
-{v:'12:30 午餐 · 精确计算 macros 40/30/30 · 同时回测量化交易策略',done:false},
-{v:'13:00 午休15分钟 · 用NSDR非睡眠深度休息法 · HRV恢复至120ms',done:false},
-{v:'13:15 深度工作Block3 · 训练私有GPT-5级别模型 · 微调RLHF对齐人类价值观',done:false},
-{v:'15:30 徒手健身 · 单臂倒立撑5×10 · 前水平慢速双力臂 · 龙旗10分钟',done:false},
-{v:'17:00 内容创作 · 输出3篇公众号+2个YouTube脚本+1篇论文preprint',done:false},
-{v:'18:30 跨境电商 · 分析10万条竞品数据 · 找到3个蓝海niche · ROI 800%+',done:false},
-{v:'20:00 社交 · 与5位行业大佬视频 · 顺手牵线做成2笔跨境deal',done:false},
-{v:'21:00 学习时间 · 修完MIT最新强化学习课程 · 读完两本纸质书并写读书笔记',done:false},
-{v:'22:30 复盘 · 写日记 · 感恩练习 · 用Notion搭建人生第二大脑知识图谱',done:false},
-{v:'23:00 睡前仪式 · 红光疗法 · 80°C桑拿 · 规划明日18项任务',done:false},
-{v:'23:30 睡觉 · 戴Whoop+Oura+Apple Watch三件套监测深睡眠 · 目标是REM占比40%',done:false}
-];localStorage.setItem('todo_catming',JSON.stringify(epic))})()
-function toggleTodo(idx){const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');if(tasks[idx]){tasks[idx].done=!tasks[idx].done;localStorage.setItem('todo_catming',JSON.stringify(tasks));renderTodo()}}
-function delTodo(idx){const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');tasks.splice(idx,1);localStorage.setItem('todo_catming',JSON.stringify(tasks));renderTodo()}
-document.getElementById('todoOverlay').onclick=function(e){if(e.target===this)closeTodo()};
 
 // ====== SCROLL ======
 window.addEventListener('scroll',()=>{
