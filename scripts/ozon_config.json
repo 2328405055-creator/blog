@@ -3,8 +3,8 @@
   "scrape_sources": {
     "wildberries": {
       "enabled": true,
-      "base_url": "https://search.wb.ru/exactmatch/ru/common/v18/search",
-      "api_version": "v18",
+      "base_url": "https://search.wb.ru/exactmatch/ru/common/v5/search",
+      "api_version": "v5",
       "dest": "-1257786",
       "request_delay_seconds": 8,
       "max_pages_per_query": 1,
@@ -49,7 +49,7 @@
     },
     "yandex_wordstat": {
       "enabled": false,
-      "_comment": "需 Yandex Direct OAuth token. 获取方式: https://oauth.yandex.ru/ 注册应用 → direct.yandex.ru 申请 API 访问",
+      "_comment": "Yandex Direct API 需企业认证,暂时禁用",
       "oauth_token": "",
       "client_login": "",
       "use_sandbox": true

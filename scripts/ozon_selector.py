@@ -187,12 +187,13 @@ def fetch_wildberries_products(config):
                     resp = requests.get(url, headers=headers, timeout=25)
                     if resp.status_code == 200:
                         data = resp.json()
-                        # v18: products 在 data.products
-                        products = data.get("data", {}).get("products", [])
+                        # v5: products 在顶层; v18: 在 data.products
+                        products = data.get("products", [])
                         if not products:
-                            products = data.get("products", [])
+                            products = data.get("data", {}).get("products", [])
                         if attempt == 0:
-                            print(f"  [{sort_mode}] {keyword}: {len(products)}件 (HTTP 200)")
+                            total = data.get("total", data.get("data", {}).get("total", 0))
+                            print(f"  [{sort_mode}] {keyword}: {len(products)}件 (总计{total:,}件)")
 
                         for p in products:
                             nm_id = str(p.get("id", ""))
@@ -209,16 +210,17 @@ def fetch_wildberries_products(config):
                             if rating < min_rating or reviews < min_reviews:
                                 continue
 
-                            # v18: 价格可能在 salePriceU, priceU, 或 sizes[0].price.total
-                        price_kop = int(p.get("salePriceU") or p.get("priceU") or 0)
-                        if price_kop == 0:
+                            # 价格优先: sizes[0].price.product > salePriceU > priceU > sizes[0].price.basic
+                            price_kop = 0
                             sizes = p.get("sizes", [])
                             if sizes:
-                                s0 = sizes[0]
-                                price_kop = int(s0.get("price", {}).get("total", 0) or s0.get("price", {}).get("basic", 0) or 0)
-                        if price_kop < 5000:  # < 50 RUB
-                            continue
-                        price_rub = price_kop // 100
+                                sp = sizes[0].get("price", {})
+                                price_kop = int(sp.get("product", 0) or sp.get("basic", 0) or 0)
+                            if price_kop == 0:
+                                price_kop = int(p.get("salePriceU") or p.get("priceU") or 0)
+                            if price_kop < 5000:  # < 50 RUB
+                                continue
+                            price_rub = price_kop // 100
 
                             brand = p.get("brand", "")
                             all_products.append({
@@ -234,7 +236,7 @@ def fetch_wildberries_products(config):
                                 "sort_mode": sort_mode,
                                 "search_keyword": keyword,
                             })
-                        break
+                            break
                     elif resp.status_code == 429:
                         wait = (2 ** attempt) * delay + random.random() * 5
                         time.sleep(wait)
