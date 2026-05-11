@@ -469,8 +469,16 @@ function render(){
   // SIDEBAR
   html+=`<aside class="side-col" aria-label="侧边栏">`;
 
-  // Music
-  html+=`<div class="side-card"><div class="sc-title">🎵 此刻音乐</div><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/6Xr9Xc1vYQmgrYyqC4mY18?utm_source=generator" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>`;
+  // Music player with toggle
+  html+=`<div class="side-card" style="padding:0;overflow:hidden;border:0;background:transparent">
+    <div style="padding:14px 16px 8px;display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="toggleMusic()">
+      <span class="sc-title" style="margin:0">🎵 猫明歌单</span>
+      <span style="font-size:11px;color:var(--muted)" id="musicToggle">展开 ▸</span>
+    </div>
+    <div id="musicPanel" style="display:none">
+      <iframe style="border-radius:0" src="https://open.spotify.com/embed/playlist/6Xr9Xc1vYQmgrYyqC4mY18?utm_source=generator" width="100%" height="380" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+  </div>`;
 
   // Date card
   html+=`<div class="side-card date-card"><div class="sc-title">📅 今日</div><div class="sc-main">${dateStr}</div><div class="sc-sub">已运行 <span style="color:var(--cyan)">${days}</span> 天</div></div>`;
@@ -758,6 +766,13 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='ArrowRight'&&sudoSelected)selectCell(sudoSelected[0],Math.min(8,sudoSelected[1]+1));
   else return;e.preventDefault();
 });
+
+// Music toggle
+function toggleMusic(){
+  const p=document.getElementById('musicPanel'),t=document.getElementById('musicToggle');
+  if(p.style.display==='none'){p.style.display='';t.textContent='收起 ▾'}
+  else{p.style.display='none';t.textContent='展开 ▸'}
+}
 
 // ====== PETS ======
 let petPhotos=[],lbIdx=0;
