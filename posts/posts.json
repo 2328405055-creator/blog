@@ -3,13 +3,13 @@
     "slug": "ozon-daily-pick-2026-05-11",
     "title": "🏆 Ozon每日选品推荐 — 2026-05-11",
     "date": "2026-05-11",
-    "excerpt": "今日基于俄罗斯电商新闻分析,识别 3 个潜力类目\n\n热门类目: 家居厨房(1款)、服装鞋包(1款)、母婴玩具(1款)\n\n当前季节: 春末 — 五一假期、户外烧烤、夏装上市\n\n今日采集俄罗斯电商相关资讯 29 条\n\n  · С мая на Wildberries и Ozon запретили э",
+    "excerpt": "WB真实销量数据: iPhone硅胶壳(¥8.9/4.8星/3625评)、无线耳机(¥41.1/4.6星)、智能插座(¥63.0/4.9星/17391评)...共3款精选商品",
     "cat": "ozon-pick",
     "sub": "daily-select",
     "featured": true,
-    "verified": true,
-    "source": "Wildberries API + Google News RSS",
-    "source_name": "Ozon选品机器人"
+    "verified": false,
+    "source": "Wildberries v5 API",
+    "source_name": "Ozon选品机器人 v2"
   },
   {
     "slug": "the-no-gym-full-body-calisthenics-circuit-mens-health-2026-05-11",

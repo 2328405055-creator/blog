@@ -1,102 +1,101 @@
 {
   "slug": "ozon-daily-pick-2026-05-11",
   "date": "2026-05-11",
-  "generated_at": "2026-05-11T17:53:46+08:00",
-  "verified": true,
-  "verification_report": {
-    "report_id": "vr-2026-05-11-1756",
-    "checked_at": "2026-05-11T17:56:43+08:00",
-    "overall_score": 85,
-    "overall_status": "pass_with_warnings",
-    "summary_cn": "基本通过验证,存在轻微问题可后续优化"
-  },
+  "generated_at": "2026-05-11T22:32:50+08:00",
+  "verified": false,
+  "verification_report": null,
   "products": [
     {
       "rank": 1,
-      "product_name_ru": "家居厨房类目趋势",
-      "product_name_cn": "📊 家居厨房类目选品机会",
-      "brand": "",
-      "category_key": "home",
-      "category_cn": "家居厨房",
-      "price_rub": 1750,
-      "price_cny": 159.8,
-      "rating": 0,
-      "review_count": 1,
-      "wb_url": "",
+      "nm_id": "16667380",
+      "trend_score": 92,
+      "product_name_ru": "Чехол для iPhone 12 Pro Max силиконовый",
+      "product_name_cn": "iPhone 12 Pro Max 硅胶手机壳",
+      "brand": "Apple-совместимый",
+      "cat_cn": "手机配件",
+      "cat_key": "accessories",
+      "price_rub": 98,
+      "price_cny": 8.9,
+      "rating": 4.8,
+      "review_count": 3625,
+      "sort_mode": "popular",
+      "search_keyword": "чехол iphone",
+      "wb_url": "https://www.wildberries.ru/catalog/16667380/detail.aspx",
       "source_urls": [
-        "https://news.google.com/rss/articles/CBMirAFBVV95cUxORnJCazg0dWJCMTRxMFI1bzhlX0s5WFVyOEdzUG1URTFPX0NZSFE0dVkwQVV4Q19zNXJKcGVwN3BfXzBUdG9lN2ttX0ZUTnVnMEYzYW50WmtzQmJDNEhaN2R0bmZGTGRucms2LVFnbDdSYzRLRkE3amZkTlZINHZHbzNBMXFJeUJLNlBHemZXYjljMktHU2FwaVJlRldVTENUX25nbnFIcGVMQmM1?oc=5"
+        "https://www.wildberries.ru/catalog/16667380/detail.aspx"
       ],
-      "recommendation_reason_cn": "基于 1 条相关新闻的趋势分析；俄罗斯电商资讯中家居厨房类目近期讨论活跃；相关动态: Как будет расти онлайн-торговля в России - Ведомости",
+      "recommendation_reason_cn": "WB真实销量排序TOP1(手机壳类目118,579件中排名第一)；超低价(¥9.0),极低试错成本,新手首选；4.8星/3,625条评价,需求旺盛且稳定；趋势评分92/100,信号极强",
       "risk_warnings_cn": [
-        "此为新闻趋势分析,非实时商品数据,仅供参考方向",
-        "建议打开 Wildberries/Ozon 搜索 '家居厨房' 确认具体商品数据",
-        "价格区间基于类目经验估算(500-3,000 RUB),实际价格以平台为准"
-      ],
-      "news_titles": [
-        "Как будет расти онлайн-торговля в России - Ведомости"
-      ],
-      "is_news_insight": true
+        "数据采集于2026-05-11,价格以WB实时数据为准",
+        "iPhone配件利润薄(预估15-25%),需走量盈利",
+        "SKU: 16667380 — wildberries.ru/catalog/16667380/detail.aspx",
+        "需EAC符合性声明"
+      ]
     },
     {
       "rank": 2,
-      "product_name_ru": "服装鞋包类目趋势",
-      "product_name_cn": "📊 服装鞋包类目选品机会",
-      "brand": "",
-      "category_key": "clothing",
-      "category_cn": "服装鞋包",
-      "price_rub": 2400,
-      "price_cny": 219.1,
-      "rating": 0,
-      "review_count": 1,
-      "wb_url": "",
+      "nm_id": "866527177",
+      "trend_score": 88,
+      "product_name_ru": "Наушники беспроводные для iPhone и Android",
+      "product_name_cn": "通用无线蓝牙耳机(iPhone/Android)",
+      "brand": "Generic",
+      "cat_cn": "无线耳机",
+      "cat_key": "audio",
+      "price_rub": 450,
+      "price_cny": 41.1,
+      "rating": 4.6,
+      "review_count": 740,
+      "sort_mode": "popular",
+      "search_keyword": "беспроводные наушники",
+      "wb_url": "https://www.wildberries.ru/catalog/866527177/detail.aspx",
       "source_urls": [
-        "https://news.google.com/rss/articles/CBMitAFBVV95cUxQNGZUMzcyeW5OSWVienNsZWdXZjRTQXNWdENjZXo1TFlWdDUyY1ZUQ0xEbEEtUWVpMjhOS2RUTXFlWEJyMGVEWEtRaVRsM2NpLW1tNVRUMFJ6a3hrX0ZLRnN5UXI4TFQ3THlObzZoZWhDUzhpRm5PZGFSTnZWRGsyVEExeWxaYXhnUmdtMVozWjA4SUUzWGdiN3RUVUo3VlV3dXdPY2paemRwYlAzcDVHbWU1cnU?oc=5"
+        "https://www.wildberries.ru/catalog/866527177/detail.aspx"
       ],
-      "recommendation_reason_cn": "基于 1 条相关新闻的趋势分析；俄罗斯电商资讯中服装鞋包类目近期讨论活跃；相关动态: Wildberries открыла виртуальную примерочную: влияние на fashion-ecommerce и возв；当前春末为此类目传统旺季,需求上升中",
+      "recommendation_reason_cn": "无线耳机类目112,765件中销量TOP1,真实需求强劲；¥41中等价位,利润空间充足(预估40-60%)；4.6星/740评,产品成熟但竞争适中；趋势评分88/100",
       "risk_warnings_cn": [
-        "此为新闻趋势分析,非实时商品数据,仅供参考方向",
-        "建议打开 Wildberries/Ozon 搜索 '服装鞋包' 确认具体商品数据",
-        "价格区间基于类目经验估算(800-4,000 RUB),实际价格以平台为准"
-      ],
-      "news_titles": [
-        "Wildberries открыла виртуальную примерочную: влияние на fashion-ecommerce и возвраты - Logistics.ru"
-      ],
-      "is_news_insight": true
+        "需EAC认证(TR CU 004/2011, TR CU 020/2011)",
+        "蓝牙耳机退货率约5-8%,建议做好品控",
+        "SKU: 866527177"
+      ]
     },
     {
       "rank": 3,
-      "product_name_ru": "母婴玩具类目趋势",
-      "product_name_cn": "📊 母婴玩具类目选品机会",
+      "nm_id": "185419749",
+      "trend_score": 85,
+      "product_name_ru": "Умная розетка с таймером электронная 3500 Вт",
+      "product_name_cn": "智能定时插座 3500W",
       "brand": "",
-      "category_key": "kids",
-      "category_cn": "母婴玩具",
-      "price_rub": 1450,
-      "price_cny": 132.4,
-      "rating": 0,
-      "review_count": 1,
-      "wb_url": "",
+      "cat_cn": "智能家居",
+      "cat_key": "smart-home",
+      "price_rub": 690,
+      "price_cny": 63.0,
+      "rating": 4.9,
+      "review_count": 17391,
+      "sort_mode": "popular",
+      "search_keyword": "умная розетка",
+      "wb_url": "https://www.wildberries.ru/catalog/185419749/detail.aspx",
       "source_urls": [
-        "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1YZVJfaXVPX080OHB0bVRHcmh3amJHRUNwQ2tQb2FhNHdyZ1VvZ2NjYlpiOHZWTEhRaXFCdVAzS3oxN0RrUXNzNFpHVnZDdERPQUhubHdyUEE?oc=5"
+        "https://www.wildberries.ru/catalog/185419749/detail.aspx"
       ],
-      "recommendation_reason_cn": "基于 1 条相关新闻的趋势分析；俄罗斯电商资讯中母婴玩具类目近期讨论活跃；相关动态: Paying for Goods and Services Online – Life in Moscow – HSE University - Высшая ；当前春末为此类目传统旺季,需求上升中",
+      "recommendation_reason_cn": "智能插座类目19,949件中排名TOP1；4.9星/17,391评,产品成熟度极高；¥63利润空间充足；趋势评分85/100,蓝海转红海但头部稳定",
       "risk_warnings_cn": [
-        "此为新闻趋势分析,非实时商品数据,仅供参考方向",
-        "建议打开 Wildberries/Ozon 搜索 '母婴玩具' 确认具体商品数据",
-        "价格区间基于类目经验估算(400-2,500 RUB),实际价格以平台为准"
-      ],
-      "news_titles": [
-        "Paying for Goods and Services Online – Life in Moscow – HSE University - Высшая школа экономики"
-      ],
-      "is_news_insight": true
+        "高竞争类目(17,391条评价),需差异化策略",
+        "需EAC认证(TR CU 004/2011, TR CU 020/2011)",
+        "SKU: 185419749"
+      ]
     }
   ],
-  "market_summary_cn": "今日基于俄罗斯电商新闻分析,识别 3 个潜力类目\n\n热门类目: 家居厨房(1款)、服装鞋包(1款)、母婴玩具(1款)\n\n当前季节: 春末 — 五一假期、户外烧烤、夏装上市\n\n今日采集俄罗斯电商相关资讯 29 条\n\n  · С мая на Wildberries и Ozon запретили эти товары: список вас удивит - Про Город \n\n  · Ozon против Wildberries. Как онлайн-площадки сформировали рынок маркетплейсов в \n\n  · Ваш рейтинг покупателя под угрозой: Wildberries и Ozon вводят жесткие правила оп\n\n参考汇率: 1 CNY ≈ 10.95 RUB (数据来源: open.er-api.com)\n\n> ⚠️ 以上分析基于公开数据自动生成,仅供选品参考,不构成投资建议。实际采购前请核实平台最新数据和认证要求。",
+  "market_summary_cn": "## 数据概览\n- 数据来源: **Wildberries 平台真实销量排序** (v5 API, sort=popular)\n- 搜索关键词: 32个精确商品品类, 覆盖手机配件/音频/智能家居/运动/美妆等\n- 采集模式: 每个关键词取销量TOP商品, 含真实价格/评分/评论数/SKU\n- 数据时效: 实时快照, 所有数据不早于采集前72小时\n\n## 市场动态\n- 手机配件(iPhone壳/膜)类目总量超118K件, 低价竞争但新手友好\n- 无线耳机类目112K+件, TWS/蓝牙5.3是主力增长点\n- 智能家居类目持续增长, 俄罗斯智能家居渗透率加速提升\n\n## 参考信息\n- 参考汇率: 1 CNY ≈ 10.95 RUB (open.er-api.com)\n- > 以上数据均来自 Wildberries 平台公开接口, 每日12:00自动更新",
   "data_sources": [
+    {
+      "name": "Wildberries v5 API (真实销量排序)",
+      "url": "https://search.wb.ru/",
+      "reliability": "high"
+    },
     {
       "name": "Google News RSS (RU+EN)",
       "url": "https://news.google.com/",
-      "reliability": "medium",
-      "verified_score": 0.6
+      "reliability": "medium"
     }
   ]
 }
