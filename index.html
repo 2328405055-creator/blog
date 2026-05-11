@@ -712,7 +712,7 @@ function renderChangelog(){
 async function checkClPw(){const h=await sha256(document.getElementById('clPw').value);if(h===TODO_HASH){clUnlocked=true;renderChangelog()}else{alert('还是不对~ 说真的，clUnlocked=true 不比你在这试密码快？')}}
 document.getElementById('clOverlay').onclick=function(e){if(e.target===this)closeChangelog()};
 function addTodo(){const i=document.getElementById('tdInput');if(!i)return;const v=i.value.trim();if(!v)return;const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');tasks.unshift({text:v,done:false});localStorage.setItem('todo_catming',JSON.stringify(tasks));i.value='';renderTodo()}
-(()=>{if(localStorage.getItem('epic_seeded'))return;const epic=[
+(()=>{const k='todo_catming';if(localStorage.getItem(k)&&!/[?&]seed(&|$)/.test(location.search))return;const epic=[
 {v:'04:30 起床 · 冷水澡 · 零下180度液氮冷冻舱激活端粒',done:false},
 {v:'05:00 冥想1小时 · 用脑电波连接宇宙暗物质获取今日insight',done:false},
 {v:'06:00 空腹有氧 · 负重30kg跑山10km · 顺便听完3本有声书(3倍速)',done:false},
@@ -731,7 +731,7 @@ function addTodo(){const i=document.getElementById('tdInput');if(!i)return;const
 {v:'22:30 复盘 · 写日记 · 感恩练习 · 用Notion搭建人生第二大脑知识图谱',done:false},
 {v:'23:00 睡前仪式 · 红光疗法 · 80°C桑拿 · 规划明日18项任务',done:false},
 {v:'23:30 睡觉 · 戴Whoop+Oura+Apple Watch三件套监测深睡眠 · 目标是REM占比40%',done:false}
-];localStorage.setItem('todo_catming',JSON.stringify(epic));localStorage.setItem('epic_seeded','1')})()
+];localStorage.setItem('todo_catming',JSON.stringify(epic))})()
 function toggleTodo(idx){const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');if(tasks[idx]){tasks[idx].done=!tasks[idx].done;localStorage.setItem('todo_catming',JSON.stringify(tasks));renderTodo()}}
 function delTodo(idx){const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');tasks.splice(idx,1);localStorage.setItem('todo_catming',JSON.stringify(tasks));renderTodo()}
 document.getElementById('todoOverlay').onclick=function(e){if(e.target===this)closeTodo()};
