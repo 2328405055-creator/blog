@@ -712,6 +712,26 @@ function renderChangelog(){
 async function checkClPw(){const h=await sha256(document.getElementById('clPw').value);if(h===TODO_HASH){clUnlocked=true;renderChangelog()}else{alert('还是不对~ 说真的，clUnlocked=true 不比你在这试密码快？')}}
 document.getElementById('clOverlay').onclick=function(e){if(e.target===this)closeChangelog()};
 function addTodo(){const i=document.getElementById('tdInput');if(!i)return;const v=i.value.trim();if(!v)return;const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');tasks.unshift({text:v,done:false});localStorage.setItem('todo_catming',JSON.stringify(tasks));i.value='';renderTodo()}
+(()=>{if(localStorage.getItem('epic_seeded'))return;const epic=[
+{v:'04:30 起床 · 冷水澡 · 零下180度液氮冷冻舱激活端粒',done:false},
+{v:'05:00 冥想1小时 · 用脑电波连接宇宙暗物质获取今日insight',done:false},
+{v:'06:00 空腹有氧 · 负重30kg跑山10km · 顺便听完3本有声书(3倍速)',done:false},
+{v:'07:30 早餐 · 16种超级食物smoothie · 边喝边读Bloomberg+WSJ+36氪',done:false},
+{v:'08:00 深度工作Block1 · 搭建跨境电商AI Agent自动化选品+上架+客服全链路',done:false},
+{v:'10:00 开会 · 与俄罗斯Ozon/WB官方对接API · 全程俄语 · 不带翻译',done:false},
+{v:'11:00 深度工作Block2 · 用Rust重写ERP系统 · 延迟控制在纳秒级',done:false},
+{v:'12:30 午餐 · 精确计算 macros 40/30/30 · 同时回测量化交易策略',done:false},
+{v:'13:00 午休15分钟 · 用NSDR非睡眠深度休息法 · HRV恢复至120ms',done:false},
+{v:'13:15 深度工作Block3 · 训练私有GPT-5级别模型 · 微调RLHF对齐人类价值观',done:false},
+{v:'15:30 徒手健身 · 单臂倒立撑5×10 · 前水平慢速双力臂 · 龙旗10分钟',done:false},
+{v:'17:00 内容创作 · 输出3篇公众号+2个YouTube脚本+1篇论文preprint',done:false},
+{v:'18:30 跨境电商 · 分析10万条竞品数据 · 找到3个蓝海niche · ROI 800%+',done:false},
+{v:'20:00 社交 · 与5位行业大佬视频 · 顺手牵线做成2笔跨境deal',done:false},
+{v:'21:00 学习时间 · 修完MIT最新强化学习课程 · 读完两本纸质书并写读书笔记',done:false},
+{v:'22:30 复盘 · 写日记 · 感恩练习 · 用Notion搭建人生第二大脑知识图谱',done:false},
+{v:'23:00 睡前仪式 · 红光疗法 · 80°C桑拿 · 规划明日18项任务',done:false},
+{v:'23:30 睡觉 · 戴Whoop+Oura+Apple Watch三件套监测深睡眠 · 目标是REM占比40%',done:false}
+];localStorage.setItem('todo_catming',JSON.stringify(epic));localStorage.setItem('epic_seeded','1')})()
 function toggleTodo(idx){const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');if(tasks[idx]){tasks[idx].done=!tasks[idx].done;localStorage.setItem('todo_catming',JSON.stringify(tasks));renderTodo()}}
 function delTodo(idx){const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');tasks.splice(idx,1);localStorage.setItem('todo_catming',JSON.stringify(tasks));renderTodo()}
 document.getElementById('todoOverlay').onclick=function(e){if(e.target===this)closeTodo()};
