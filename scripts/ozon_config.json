@@ -1,25 +1,58 @@
 {
   "enabled": true,
-  "verification_required": false,
   "scrape_sources": {
     "wildberries": {
       "enabled": true,
-      "base_url": "https://search.wb.ru/exactmatch/ru/common/v5/search",
-      "api_version": "v5",
+      "base_url": "https://search.wb.ru/exactmatch/ru/common/v18/search",
+      "api_version": "v18",
       "dest": "-1257786",
-      "categories": ["electronics", "home", "clothing", "kids", "beauty", "sports"],
-      "search_keywords": {
-        "electronics": "электроника смартфон наушники",
-        "home": "дом кухня товары для дома",
-        "clothing": "одежда обувь сумки",
-        "kids": "детские игрушки товары для детей",
-        "beauty": "косметика уход парфюмерия",
-        "sports": "спорт outdoor фитнес"
-      },
-      "request_delay_seconds": 6,
-      "max_pages_per_category": 1,
+      "request_delay_seconds": 8,
+      "max_pages_per_query": 1,
+      "products_per_page": 60,
       "min_rating": 4.0,
-      "min_reviews": 50
+      "min_reviews": 30,
+      "queries": [
+        {"keyword": "беспроводные наушники", "cat_cn": "无线耳机", "cat_key": "audio"},
+        {"keyword": "умная розетка", "cat_cn": "智能插座", "cat_key": "smart-home"},
+        {"keyword": "фитнес-браслет", "cat_cn": "智能手环", "cat_key": "wearables"},
+        {"keyword": "смарт-часы", "cat_cn": "智能手表", "cat_key": "wearables"},
+        {"keyword": "портативная колонка", "cat_cn": "便携蓝牙音箱", "cat_key": "audio"},
+        {"keyword": "power bank внешний аккумулятор", "cat_cn": "充电宝", "cat_key": "accessories"},
+        {"keyword": "кабель зарядный type-c", "cat_cn": "Type-C数据线", "cat_key": "accessories"},
+        {"keyword": "стекло защитное iphone", "cat_cn": "iPhone钢化膜", "cat_key": "accessories"},
+        {"keyword": "чехол iphone", "cat_cn": "iPhone手机壳", "cat_key": "accessories"},
+        {"keyword": "держатель телефон автомобиль", "cat_cn": "车载手机支架", "cat_key": "auto"},
+        {"keyword": "коврик для йоги", "cat_cn": "瑜伽垫", "cat_key": "sports"},
+        {"keyword": "гантели разборные", "cat_cn": "可调节哑铃", "cat_key": "sports"},
+        {"keyword": "эспандер фитнес резинка", "cat_cn": "弹力带/健身带", "cat_key": "sports"},
+        {"keyword": "скакалка спортивная", "cat_cn": "跳绳", "cat_key": "sports"},
+        {"keyword": "бутылка для воды спортивная", "cat_cn": "运动水杯", "cat_key": "sports"},
+        {"keyword": "термос кружка", "cat_cn": "保温杯", "cat_key": "home"},
+        {"keyword": "контейнер для еды ланч-бокс", "cat_cn": "便当盒/饭盒", "cat_key": "home"},
+        {"keyword": "органайзер косметика", "cat_cn": "化妆品收纳盒", "cat_key": "beauty"},
+        {"keyword": "массажер для лица", "cat_cn": "面部按摩仪", "cat_key": "beauty"},
+        {"keyword": "щетка электрическая зубная", "cat_cn": "电动牙刷", "cat_key": "beauty"},
+        {"keyword": "фен для волос", "cat_cn": "电吹风", "cat_key": "beauty"},
+        {"keyword": "подушка для сна", "cat_cn": "睡眠枕头", "cat_key": "home"},
+        {"keyword": "светильник светодиодный", "cat_cn": "LED台灯/夜灯", "cat_key": "home"},
+        {"keyword": "носки кроссовки спортивные", "cat_cn": "运动袜", "cat_key": "clothing"},
+        {"keyword": "шапка зима мужская", "cat_cn": "男款冬帽", "cat_key": "clothing"},
+        {"keyword": "рюкзак городской", "cat_cn": "城市双肩包", "cat_key": "clothing"},
+        {"keyword": "игрушка развивающая дети", "cat_cn": "儿童益智玩具", "cat_key": "kids"},
+        {"keyword": "конструктор магнитный", "cat_cn": "磁力积木", "cat_key": "kids"},
+        {"keyword": "пазл 1000", "cat_cn": "拼图1000片", "cat_key": "kids"},
+        {"keyword": "мыло ручной работы", "cat_cn": "手工皂", "cat_key": "beauty"},
+        {"keyword": "ароматизатор дом", "cat_cn": "家用香薰", "cat_key": "home"},
+        {"keyword": "нож кухонный набор", "cat_cn": "厨房刀具套装", "cat_key": "home"},
+        {"keyword": "ремень мужской кожаный", "cat_cn": "男士皮带", "cat_key": "clothing"}
+      ]
+    },
+    "yandex_wordstat": {
+      "enabled": false,
+      "_comment": "需 Yandex Direct OAuth token. 获取方式: https://oauth.yandex.ru/ 注册应用 → direct.yandex.ru 申请 API 访问",
+      "oauth_token": "",
+      "client_login": "",
+      "use_sandbox": true
     },
     "russian_news_rss": {
       "enabled": true,
@@ -38,8 +71,8 @@
   },
   "verification": {
     "auto_verify": false,
-    "min_source_count": 2,
-    "max_data_age_hours": 24,
+    "min_source_count": 1,
+    "max_data_age_hours": 72,
     "required_fields": ["product_name_ru", "price_rub", "source_urls", "category_cn"],
     "report_path": "data/ozon_raw/verification_report.json"
   }
