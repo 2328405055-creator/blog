@@ -4,7 +4,8 @@
   "scrape_sources": {
     "wildberries": {
       "enabled": true,
-      "base_url": "https://search.wb.ru/exactmatch/ru/common/v9/search",
+      "base_url": "https://search.wb.ru/exactmatch/ru/common/v5/search",
+      "api_version": "v5",
       "dest": "-1257786",
       "categories": ["electronics", "home", "clothing", "kids", "beauty", "sports"],
       "search_keywords": {
@@ -15,8 +16,8 @@
         "beauty": "косметика уход парфюмерия",
         "sports": "спорт outdoor фитнес"
       },
-      "request_delay_seconds": 3,
-      "max_pages_per_category": 2,
+      "request_delay_seconds": 6,
+      "max_pages_per_category": 1,
       "min_rating": 4.0,
       "min_reviews": 50
     },

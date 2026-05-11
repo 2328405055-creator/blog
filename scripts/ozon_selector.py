@@ -14,6 +14,7 @@ import sys
 import re
 import time
 import hashlib
+import random
 import urllib.parse
 from datetime import datetime, timedelta
 from collections import defaultdict
@@ -187,17 +188,14 @@ def fetch_wildberries(category_key, keyword, config, max_pages=2):
 
     for page in range(1, max_pages + 1):
         params = {
-            "ab_testing": "false",
             "appType": "1",
             "curr": "rub",
             "dest": dest,
-            "lang": "ru",
             "page": str(page),
             "query": keyword,
             "resultset": "catalog",
             "sort": "popular",
             "spp": "30",
-            "suppressSpellcheck": "false",
         }
         url = base_url + "?" + urllib.parse.urlencode(params)
 
@@ -213,7 +211,10 @@ def fetch_wildberries(category_key, keyword, config, max_pages=2):
                     print(f"    [{resp.status_code}] {url[:90]}...")
                 if resp.status_code == 200:
                     data = resp.json()
-                    products = data.get("data", {}).get("products", [])
+                    # v5 API: products at top level; v9 API: products in data.products
+                    products = data.get("products", [])
+                    if not products:
+                        products = data.get("data", {}).get("products", [])
                     if not products:
                         break
                     for p in products:
@@ -251,7 +252,7 @@ def fetch_wildberries(category_key, keyword, config, max_pages=2):
                     time.sleep((2 ** attempt) * 2)
                 else:
                     print(f"  [WARN] WB API 请求失败({category_key} p{page}): {e}")
-        time.sleep(delay)
+        time.sleep(delay + random.random() * 3)
 
     # 去重(按 nm_id)
     seen = set()
