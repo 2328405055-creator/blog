@@ -347,7 +347,6 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
   </div>
 </nav>
 
-<div class="search-wrap" style="max-width:1200px;margin:0 auto 0;padding:0 28px"><input id="searchInput" placeholder="🔍 搜索文章..." oninput="onSearch(this.value)" autocomplete="off" aria-label="搜索"></div>
 <div class="page-wrap" id="pageWrap"><!-- JS fills --></div>
 <footer class="footer" id="footer" role="contentinfo"></footer>
 
@@ -427,6 +426,9 @@ function render(){
   // MAIN COLUMN
   html+=`<div class="main-col">`;
 
+  // Search
+  html+=`<div class="search-wrap"><input id="searchInput" placeholder="🔍 搜索文章..." value="${currentSearch.replace(/"/g,'&quot;')}" oninput="onSearch(this.value)" autocomplete="off" aria-label="搜索"></div>`;
+
   // Quote (home only)
   if(isHome){
     html+=`<div class="quote-card"><span class="qm" aria-hidden="true">"</span><p>${QUOTE}</p><div class="q-act"><button onclick="copyQuote()" aria-label="复制引言">📋 复制</button></div></div>`;
@@ -500,8 +502,6 @@ function render(){
 
   html+=`</aside>`; // end side-col
 
-  // Show search box for list views
-  document.getElementById('searchInput').style.display='';
   // Save focus before rebuilding DOM
   const ae=document.activeElement;const aid=ae?ae.id:null;const apos=ae&&ae.selectionStart!=null?ae.selectionStart:null;
   wrap.innerHTML=html;
@@ -520,7 +520,6 @@ function render(){
 
 // ====== ARTICLE VIEW ======
 async function showArticle(slug,cat){
-  document.getElementById('searchInput').style.display='none';
   const wrap=document.getElementById('pageWrap');
   wrap.innerHTML=`<div class="article-full"><div class="skeleton" style="grid-template-columns:1fr">${Array(4).fill('<div class="skel-card"><div class="s-line"></div><div class="s-line"></div><div class="s-line"></div></div>').join('')}</div></div>`;
   window.scrollTo(0,0);
@@ -546,10 +545,9 @@ marked.use({renderer:{heading(t){const id=t.text.replace(/[^\w一-鿿]/g,'-').to
 function copyQuote(){navigator.clipboard.writeText(QUOTE).then(()=>{const b=document.querySelector('.q-act button');b.textContent='✓ 已复制';b.classList.add('done');setTimeout(()=>{b.textContent='📋 复制';b.classList.remove('done')},2000)}).catch(()=>{})}
 function revealXHY(){if(todayXHY.show){pickXHY();render()}else{todayXHY.show=true;render()}}
 function checkRiddle(){const i=document.getElementById('riddleInput'),f=document.getElementById('riddleFeedback');if(!i||!f)return;const v=i.value.trim();if(!v)return;if(v===riddleAnswer){f.textContent='✅ 答对了！';f.className='sc-fb ok';setTimeout(()=>{pickZM();render()},1500)}else{f.textContent='❌ 不对，再试试';f.className='sc-fb no'}}
-function switchTab(t){if(t==='pets'){currentTab='pets';renderPets();window.scrollTo(0,0);closeMenu();return}currentTab=t;currentSub='all';currentSearch='';currentPage=1;syncSearchBox();render();window.scrollTo(0,0);closeMenu()}
+function switchTab(t){if(t==='pets'){currentTab='pets';renderPets();window.scrollTo(0,0);closeMenu();return}currentTab=t;currentSub='all';currentSearch='';currentPage=1;render();window.scrollTo(0,0);closeMenu()}
 function switchSub(s){currentSub=s;currentPage=1;render()}
 function onSearch(v){currentSearch=v;currentPage=1;render()}
-function syncSearchBox(){document.getElementById('searchInput').value=currentSearch}
 function goPage(n){currentPage=Math.max(1,n);render();document.getElementById('articleList').scrollIntoView({behavior:'smooth'})}
 function goHome(){switchTab('all')}
 function toggleMenu(){const m=document.getElementById('navMenu');m.classList.toggle('open');document.getElementById('hamBtn').setAttribute('aria-expanded',m.classList.contains('open'))}
@@ -781,7 +779,6 @@ async function loadPets(){
 }
 function renderPets(){
   const wrap=document.getElementById('pageWrap');
-  document.getElementById('searchInput').style.display='none';
   let h=`<div style="grid-column:1/-1">`;
   h+=`<div class="pet-hero">`;
   h+=`<img class="pet-avatar" src="pets/avatar.jpg" onerror="this.style.display='none'" alt="十一">`;
