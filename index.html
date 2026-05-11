@@ -652,7 +652,7 @@ function closeMenu(){document.getElementById('navMenu').classList.remove('open')
 
 // ====== TODO ======
 const TODO_HASH='704e68a96114c18bbcf93378f64d46b9744f15fb7a4d213f3b84faa3faacd416';
-async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('')}
+async function sha256(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return null}}
 function openTodo(){document.getElementById('todoOverlay').classList.add('on');renderTodo()}
 function closeTodo(){document.getElementById('todoOverlay').classList.remove('on')}
 function renderTodo(){
@@ -664,7 +664,7 @@ function renderTodo(){
     h+='<ul class="td-list">';tasks.forEach((t,i)=>{h+=`<li class="${t.done?'done':''}"><span class="td-toggle" onclick="toggleTodo(${i})" role="checkbox" aria-checked="${t.done}" tabindex="0"></span><span class="td-text">${t.text.replace(/</g,'&lt;')}</span><button class="td-del" onclick="delTodo(${i})" aria-label="删除">✕</button></li>`});h+='</ul>';
     const done=tasks.filter(t=>t.done).length;h+=`<p style="font-size:11px;color:var(--muted);margin-top:8px">${tasks.length} 任务，${done} 已完成</p>`}
   h+='<button class="td-close" onclick="closeTodo()">关闭</button>';panel.innerHTML=h;setTimeout(()=>{const i=document.getElementById('tdInput');if(i)i.focus()},100)}
-async function checkPw(){const h=await sha256(document.getElementById('tdPw').value);if(h===TODO_HASH){todoUnlocked=true;renderTodo()}else{alert('不对哦~ 不过说真的，你 F12 改一下 todoUnlocked 不香吗？')}}
+async function checkPw(){const h=await sha256(document.getElementById('tdPw').value);if(h===null){alert('crypto API 不可用（浏览器限制），聪明的你不如直接 F12 控制台输入: todoUnlocked=true;renderTodo()');return}if(h===TODO_HASH){todoUnlocked=true;renderTodo()}else{alert('不对哦~ 不过说真的，你 F12 改一下 todoUnlocked 不香吗？')}}
 // Changelog
 let clUnlocked=false;
 const CHANGELOG_HTML=`<div style="color:var(--title);font-size:14px;line-height:2;padding:10px 0">
@@ -709,7 +709,7 @@ function renderChangelog(){
   if(!clUnlocked){panel.innerHTML=`<h2>📝 想偷看更新日志？</h2><p style="font-size:13px;color:var(--muted);line-height:2;padding:10px 0">一个 changelog 有什么好看的？<br>真想知道改了啥，直接上 GitHub 看 commit 不就行了？<br>commit 消息写得比这日志详细多了。<br>实在不行你看 <code>clUnlocked=true</code> 也行啊，<br>搁这猜密码累不累 🤷</p><div class="td-pw-row"><input type="password" id="clPw" placeholder="还试？行吧..." onkeydown="if(event.key==='Enter')checkClPw()"><button onclick="checkClPw()">碰碰运气</button></div><button class="td-close" onclick="closeChangelog()">不看了，再见</button>`;setTimeout(()=>{const i=document.getElementById('clPw');if(i)i.focus()},100);return}
   panel.innerHTML=CHANGELOG_HTML+'<button class="td-close" onclick="closeChangelog()">关闭</button>';
 }
-async function checkClPw(){const h=await sha256(document.getElementById('clPw').value);if(h===TODO_HASH){clUnlocked=true;renderChangelog()}else{alert('还是不对~ 说真的，clUnlocked=true 不比你在这试密码快？')}}
+async function checkClPw(){const h=await sha256(document.getElementById('clPw').value);if(h===null){alert('crypto API 不可用（浏览器限制），你能看到这个弹窗说明你已经赢了，clUnlocked=true 直接走起');return}if(h===TODO_HASH){clUnlocked=true;renderChangelog()}else{alert('还是不对~ 说真的，clUnlocked=true 不比你在这试密码快？')}}
 document.getElementById('clOverlay').onclick=function(e){if(e.target===this)closeChangelog()};
 function addTodo(){const i=document.getElementById('tdInput');if(!i)return;const v=i.value.trim();if(!v)return;const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');tasks.unshift({text:v,done:false});localStorage.setItem('todo_catming',JSON.stringify(tasks));i.value='';renderTodo()}
 (()=>{const k='todo_catming';if(localStorage.getItem(k)&&!/[?&]seed(&|$)/.test(location.search))return;const epic=[
