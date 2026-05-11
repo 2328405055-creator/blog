@@ -27,26 +27,26 @@ TRACKER_PATH = os.path.join(BASE_DIR, "scripts", "tracker.json")
 
 RSS_SOURCES = {
     "cross-border": [
-        # Google News — 跨境电商 + Ozon
-        "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+Ozon+%E4%BF%84%E7%BD%97%E6%96%AF+%E9%80%89%E5%93%81&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-        # Google News — Ozon 卖家 运营
-        "https://news.google.com/rss/search?q=Ozon+%E5%8D%96%E5%AE%B6+%E8%BF%90%E8%90%A5+%E4%BF%84%E7%BD%97%E6%96%AF+%E7%94%B5%E5%95%86&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-        # Google News — 跨境电商 俄罗斯 市场
-        "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+%E4%BF%84%E7%BD%97%E6%96%AF+%E5%B8%82%E5%9C%BA+%E6%94%BF%E7%AD%96&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-        # Google News — 跨境物流 俄罗斯
-        "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%89%A9%E6%B5%81+%E4%BF%84%E7%BD%97%E6%96%AF+Ozon+FBO&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-        # Google News — Yandex Market 电商
-        "https://news.google.com/rss/search?q=Yandex+Market+%E4%BF%84%E7%BD%97%E6%96%AF+%E7%94%B5%E5%95%86+%E5%8D%96%E5%AE%B6&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # 跨境电商 Ozon 教程 入门 实操
+        "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+Ozon+%E6%95%99%E7%A8%8B+%E5%85%A5%E9%97%A8+%E5%AE%9E%E6%93%8D&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # Ozon 运营技巧 指南
+        "https://news.google.com/rss/search?q=Ozon+%E8%BF%90%E8%90%A5+%E6%8A%80%E5%B7%A7+%E6%8C%87%E5%8D%97+%E9%80%89%E5%93%81+%E6%95%99%E7%A8%8B&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # 跨境电商 俄罗斯 选品 教程 经验
+        "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+%E4%BF%84%E7%BD%97%E6%96%AF+%E9%80%89%E5%93%81+%E6%95%99%E7%A8%8B+%E7%BB%8F%E9%AA%8C&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # 跨境物流 俄罗斯 实操 方法
+        "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83+%E7%89%A9%E6%B5%81+%E4%BF%84%E7%BD%97%E6%96%AF+%E5%AE%9E%E6%93%8D+%E6%96%B9%E6%B3%95&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # 电商 铺货 教程 技巧
+        "https://news.google.com/rss/search?q=%E7%94%B5%E5%95%86+%E9%93%BA%E8%B4%A7+Ozon+%E6%95%99%E7%A8%8B+%E6%8A%80%E5%B7%A7&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
     ],
     "ai-news": [
-        # Google News — AI人工智能 最新
-        "https://news.google.com/rss/search?q=AI+%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD+%E6%9C%80%E6%96%B0&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-        # Google News — AI工具 应用
-        "https://news.google.com/rss/search?q=AI%E5%B7%A5%E5%85%B7+%E5%BA%94%E7%94%A8+%E6%95%99%E7%A8%8B&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-        # Google News — AI电商 跨境
-        "https://news.google.com/rss/search?q=AI+%E7%94%B5%E5%95%86+%E8%B7%A8%E5%A2%83+%E5%BA%94%E7%94%A8&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-        # Google News — artificial intelligence news
-        "https://news.google.com/rss/search?q=artificial+intelligence+AI+tools+news&hl=en&gl=US&ceid=US:en",
+        # AI 教程 入门 学习
+        "https://news.google.com/rss/search?q=AI+%E6%95%99%E7%A8%8B+%E5%85%A5%E9%97%A8+%E5%AD%A6%E4%B9%A0+%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # AI工具 使用教程 教学 实操
+        "https://news.google.com/rss/search?q=AI%E5%B7%A5%E5%85%B7+%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B+%E6%95%99%E5%AD%A6+%E5%AE%9E%E6%93%8D&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # AI 电商 应用 教程 方法
+        "https://news.google.com/rss/search?q=AI+%E7%94%B5%E5%95%86+%E5%BA%94%E7%94%A8+%E6%95%99%E7%A8%8B+%E6%96%B9%E6%B3%95&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # AI tutorial guide how-to
+        "https://news.google.com/rss/search?q=AI+tutorial+guide+how-to+artificial+intelligence+learning&hl=en&gl=US&ceid=US:en",
     ],
     "fitness": [
         # Google News — 徒手健身 自重训练 教程
@@ -288,19 +288,19 @@ def build_cross_border_post(entry):
 
 ## 来源信息
 
-本文信息来自 **{source_name}** 的真实报道。
+本文信息来自 **{source_name}** 的跨境教程。
 
 {source_href if source_href else domain}
 
 ---
 
-## 对跨境卖家的启示
+## 学习要点
 
-基于这则行业动态，建议关注以下方向：
+阅读这篇教程后，你将会学到：
 
-1. **市场趋势：** 密切跟踪俄罗斯电商市场变化，及时调整选品策略
-2. **平台政策：** Ozon/Yandex 的政策调整直接影响运营成本和利润
-3. **竞争格局：** 关注行业头部动态和竞争变化，找到差异化空间
+1. **实操方法：** 具体的操作步骤和落地技巧
+2. **避坑指南：** 新手常见错误及如何避免
+3. **进阶思路：** 从入门到精通的学习路径
 
 ---
 
@@ -309,7 +309,7 @@ def build_cross_border_post(entry):
 📎 **Google News 入口：** [点击查看原文]({link})
 🔍 **站内搜索：** [在 {source_name} 站内搜索本文]({search_url})
 
-> ⚠️ 本文为行业新闻采集，内容版权归原来源所有。点击上方链接跳转原文阅读完整内容。
+> 📚 本文为跨境教程采集，内容版权归原来源所有。点击上方链接阅读完整教程。
 """, cat
 
 
@@ -387,18 +387,17 @@ def build_ai_post(entry):
 
 ## 来源信息
 
-本文信息来自 **{source_name}** 的真实 AI 行业报道。
+本文信息来自 **{source_name}** 的 AI 学习教程。
 
 ---
 
-## AI 与跨境电商的交汇
+## 学习要点
 
-无论这则 AI 新闻的具体内容是什么，对跨境电商卖家来说，AI 正在改变：
+阅读这篇 AI 教程后，你将会学到：
 
-- 🔹 **选品智能化：** AI 工具正在帮助卖家分析市场趋势和消费者偏好
-- 🔹 **内容生成：** 产品描述、广告文案的 AI 自动化处理
-- 🔹 **客服优化：** AI 翻译和智能客服降低跨境沟通成本
-- 🔹 **数据驱动：** 从经验决策转向 AI 辅助的数据决策
+- 🔹 **工具实操：** 具体 AI 工具的使用方法和配置步骤
+- 🔹 **场景应用：** AI 在跨境电商中的实际落地场景
+- 🔹 **效率提升：** 如何用 AI 替代重复劳动，提高工作效率
 
 ---
 
@@ -407,7 +406,7 @@ def build_ai_post(entry):
 📎 **原文链接：** [点击查看原文]({link})
 🔍 **站内搜索：** [在 {source_name} 站内搜索]({search_url})
 
-> ⚠️ 本文为 AI 行业新闻采集，版权归原来源所有。完整内容请点击原文链接阅读。
+> 📚 本文为 AI 学习教程采集，版权归原来源所有。完整内容请点击原文链接阅读。
 """, cat
 
 

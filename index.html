@@ -331,9 +331,9 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
     <div class="nav-right" id="navMenu">
       <div class="nav-tabs" role="tablist" aria-label="栏目切换">
         <button role="tab" aria-selected="true" data-tab="all" onclick="switchTab('all')">全部</button>
-        <button role="tab" aria-selected="false" data-tab="cross-border" onclick="switchTab('cross-border')">跨境电商</button>
+        <button role="tab" aria-selected="false" data-tab="cross-border" onclick="switchTab('cross-border')">跨境教程</button>
         <button role="tab" aria-selected="false" data-tab="fitness" onclick="switchTab('fitness')">每日健身</button>
-        <button role="tab" aria-selected="false" data-tab="ai-news" onclick="switchTab('ai-news')">AI新闻</button>
+        <button role="tab" aria-selected="false" data-tab="ai-news" onclick="switchTab('ai-news')">AI学习</button>
         <button role="tab" aria-selected="false" data-tab="pets" onclick="switchTab('pets')">🐕 萌宠</button>
       </div>
       <a class="spotify" href="https://open.spotify.com" target="_blank" rel="noopener" aria-label="Spotify">
@@ -396,7 +396,7 @@ function pickZM(){const z=ZIMI[Math.floor(Math.random()*ZIMI.length)];todayZM={q
 
 // ====== LOAD ======
 async function fetchRate(){const now=Date.now();if(rubRate&&(now-rateCacheTime)<3600000)return;try{const r=await fetch('https://open.er-api.com/v6/latest/CNY');rubRate=(await r.json()).rates?.RUB||null;rateCacheTime=now}catch(e){}}
-function catName(c){const m={'cross-border':'跨境电商','fitness':'每日健身','ai-news':'AI新闻'};return m[c]||c}
+function catName(c){const m={'cross-border':'跨境教程','fitness':'每日健身','ai-news':'AI学习'};return m[c]||c}
 function readTime(t){return Math.max(1,Math.ceil((t||'').length/8))+' 分钟阅读'}
 async function loadData(retry=true){try{const r=await fetch('posts/posts.json?v='+Date.now());if(!r.ok)throw Error('HTTP '+r.status);posts=await r.json();posts.sort((a,b)=>b.date.localeCompare(a.date));return true}catch(e){console.error(e);if(retry){await new Promise(r=>setTimeout(r,2000));return loadData(false)}return false}}
 
@@ -422,7 +422,7 @@ function render(){
   let html='';
 
   // Hero (full width)
-  html+=`<section class="hero" aria-label="网站标题" style="grid-column:1/-1"><h1 class="site-name">猫明之主小站</h1><p class="site-desc">跨境电商 & 健身 & AI · 安静学习，温柔生长</p></section>`;
+  html+=`<section class="hero" aria-label="网站标题" style="grid-column:1/-1"><h1 class="site-name">猫明之主小站</h1><p class="site-desc">跨境教程 & 健身 & AI学习 · 每天进步一点点</p></section>`;
 
   // MAIN COLUMN
   html+=`<div class="main-col">`;
@@ -485,7 +485,7 @@ function render(){
   </div></div>`;
 
   // Quick links
-  html+=`<div class="side-card"><div class="sc-title">🔗 快捷入口</div><div class="side-links"><a href="javascript:switchTab('cross-border')">🚀 跨境电商</a><a href="javascript:switchTab('fitness')">💪 每日健身</a><a href="javascript:switchTab('ai-news')">🤖 AI新闻</a><a href="javascript:openTodo()">📋 待办清单</a><a href="javascript:openChangelog()">📝 更新日志</a><a href="javascript:startBreath()">🧘 呼吸放松</a></div></div>`;
+  html+=`<div class="side-card"><div class="sc-title">🔗 快捷入口</div><div class="side-links"><a href="javascript:switchTab('cross-border')">🚀 跨境教程</a><a href="javascript:switchTab('fitness')">💪 每日健身</a><a href="javascript:switchTab('ai-news')">🤖 AI学习</a><a href="javascript:switchTab('pets')">🐕 萌宠十一</a><a href="javascript:openTodo()">📋 待办清单</a><a href="javascript:openChangelog()">📝 更新日志</a><a href="javascript:startBreath()">🧘 呼吸放松</a></div></div>`;
 
   html+=`</aside>`; // end side-col
 
