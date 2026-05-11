@@ -415,7 +415,7 @@ def build_ai_post(entry):
 # 主逻辑
 # ============================================================
 
-def generate_posts(limit_cb=5, limit_fit=2, limit_ai=3):
+def generate_posts(limit_cb=8, limit_fit=5, limit_ai=7):
     tracker = load_json(TRACKER_PATH)
     all_posts = load_json(JSON_PATH)
     existing_slugs = set(p["slug"] for p in all_posts)
