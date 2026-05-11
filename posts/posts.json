@@ -1,5 +1,17 @@
 [
   {
+    "slug": "ozon-daily-pick-2026-05-11",
+    "title": "🏆 Ozon每日选品推荐 — 2026-05-11",
+    "date": "2026-05-11",
+    "excerpt": "今日基于俄罗斯电商新闻分析,识别 3 个潜力类目\n\n热门类目: 家居厨房(1款)、服装鞋包(1款)、母婴玩具(1款)\n\n当前季节: 春末 — 五一假期、户外烧烤、夏装上市\n\n今日采集俄罗斯电商相关资讯 29 条\n\n  · С мая на Wildberries и Ozon запретили э",
+    "cat": "ozon-pick",
+    "sub": "daily-select",
+    "featured": true,
+    "verified": true,
+    "source": "Wildberries API + Google News RSS",
+    "source_name": "Ozon选品机器人"
+  },
+  {
     "slug": "the-no-gym-full-body-calisthenics-circuit-mens-health-2026-05-11",
     "title": "The no-gym full-body calisthenics circuit - Men's Health",
     "date": "2026-05-11",
@@ -598,12 +610,28 @@
     "sub": "selection"
   },
   {
+    "slug": "bodyweight-beginner-male",
+    "title": "男性徒手入门：零基础30天自重训练计划",
+    "date": "2026-05-09",
+    "excerpt": "不需要任何器械，只用一张瑜伽垫，30天从零建立训练习惯。包含胸、背、腿、核心的全面计划。",
+    "cat": "fitness",
+    "sub": "male"
+  },
+  {
     "slug": "russia-consumer-insight",
     "title": "俄罗斯消费者画像：收入结构、购物偏好与支付习惯",
     "date": "2026-05-08",
     "excerpt": "了解俄罗斯消费者的真实面貌：平均收入、网购偏好、支付方式和物流期望，为选品打下基础。",
     "cat": "cross-border",
     "sub": "russia-market"
+  },
+  {
+    "slug": "bodyweight-beginner-female",
+    "title": "女性徒手塑形：瑜伽垫上的全身燃脂方案",
+    "date": "2026-05-08",
+    "excerpt": "专为女性设计的自重训练方案，强调核心激活、臀腿塑形和上肢线条，只需瑜伽垫。",
+    "cat": "fitness",
+    "sub": "female"
   },
   {
     "slug": "ozon-account-setup",
@@ -614,6 +642,14 @@
     "sub": "ozon"
   },
   {
+    "slug": "yoga-mat-fullbody",
+    "title": "一张瑜伽垫练全身：10个黄金自重动作详解",
+    "date": "2026-05-07",
+    "excerpt": "精选10个最高效的自重动作，覆盖全身大肌群，从动作要领到常见错误全面讲解。",
+    "cat": "fitness",
+    "sub": "yoga-mat"
+  },
+  {
     "slug": "yandex-market-entry",
     "title": "Yandex Market入驻指南：与Ozon的差异化运营",
     "date": "2026-05-06",
@@ -622,12 +658,28 @@
     "sub": "yandex"
   },
   {
+    "slug": "weekly-workout-plan",
+    "title": "每周徒手训练计划：胸背腿循环安排",
+    "date": "2026-05-06",
+    "excerpt": "推-拉-腿三分化训练计划，每周6练+1休的完整安排，适合已有基础的训练者。",
+    "cat": "fitness",
+    "sub": "plan"
+  },
+  {
     "slug": "bulk-listing-strategy",
     "title": "铺货模式实战：如何在Ozon高效上架1000个SKU",
     "date": "2026-05-05",
     "excerpt": "铺货不是乱铺，从选品、ERP管理、图片处理到上架审核的完整流程。",
     "cat": "cross-border",
     "sub": "selection"
+  },
+  {
+    "slug": "fitness-diet-basics",
+    "title": "徒手健身怎么吃：增肌减脂的基础饮食原则",
+    "date": "2026-05-05",
+    "excerpt": "不需要复杂的饮食计划，掌握蛋白质摄入、碳水循环和水分补充的核心原则。",
+    "cat": "fitness",
+    "sub": "diet"
   },
   {
     "slug": "russia-logistics-guide",
@@ -652,45 +704,5 @@
     "excerpt": "Ozon站内推广渠道全解析，从积分设置到参与平台大促的实操指南。",
     "cat": "cross-border",
     "sub": "ozon"
-  },
-  {
-    "slug": "bodyweight-beginner-male",
-    "title": "男性徒手入门：零基础30天自重训练计划",
-    "date": "2026-05-09",
-    "excerpt": "不需要任何器械，只用一张瑜伽垫，30天从零建立训练习惯。包含胸、背、腿、核心的全面计划。",
-    "cat": "fitness",
-    "sub": "male"
-  },
-  {
-    "slug": "bodyweight-beginner-female",
-    "title": "女性徒手塑形：瑜伽垫上的全身燃脂方案",
-    "date": "2026-05-08",
-    "excerpt": "专为女性设计的自重训练方案，强调核心激活、臀腿塑形和上肢线条，只需瑜伽垫。",
-    "cat": "fitness",
-    "sub": "female"
-  },
-  {
-    "slug": "yoga-mat-fullbody",
-    "title": "一张瑜伽垫练全身：10个黄金自重动作详解",
-    "date": "2026-05-07",
-    "excerpt": "精选10个最高效的自重动作，覆盖全身大肌群，从动作要领到常见错误全面讲解。",
-    "cat": "fitness",
-    "sub": "yoga-mat"
-  },
-  {
-    "slug": "weekly-workout-plan",
-    "title": "每周徒手训练计划：胸背腿循环安排",
-    "date": "2026-05-06",
-    "excerpt": "推-拉-腿三分化训练计划，每周6练+1休的完整安排，适合已有基础的训练者。",
-    "cat": "fitness",
-    "sub": "plan"
-  },
-  {
-    "slug": "fitness-diet-basics",
-    "title": "徒手健身怎么吃：增肌减脂的基础饮食原则",
-    "date": "2026-05-05",
-    "excerpt": "不需要复杂的饮食计划，掌握蛋白质摄入、碳水循环和水分补充的核心原则。",
-    "cat": "fitness",
-    "sub": "diet"
   }
 ]

@@ -1,0 +1,45 @@
+{
+  "enabled": true,
+  "verification_required": false,
+  "scrape_sources": {
+    "wildberries": {
+      "enabled": true,
+      "base_url": "https://search.wb.ru/exactmatch/ru/common/v9/search",
+      "dest": "-1257786",
+      "categories": ["electronics", "home", "clothing", "kids", "beauty", "sports"],
+      "search_keywords": {
+        "electronics": "электроника смартфон наушники",
+        "home": "дом кухня товары для дома",
+        "clothing": "одежда обувь сумки",
+        "kids": "детские игрушки товары для детей",
+        "beauty": "косметика уход парфюмерия",
+        "sports": "спорт outdoor фитнес"
+      },
+      "request_delay_seconds": 3,
+      "max_pages_per_category": 2,
+      "min_rating": 4.0,
+      "min_reviews": 50
+    },
+    "russian_news_rss": {
+      "enabled": true,
+      "feeds": [
+        "https://news.google.com/rss/search?q=%D0%9E%D0%B7%D0%BE%D0%BD+Wildberries+%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B+%D1%80%D0%B5%D0%B9%D1%82%D0%B8%D0%BD%D0%B3&hl=ru&gl=RU&ceid=RU:ru",
+        "https://news.google.com/rss/search?q=%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D0%B0%D1%8F+%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D1%80%D1%86%D0%B8%D1%8F+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F+%D1%82%D1%80%D0%B5%D0%BD%D0%B4&hl=ru&gl=RU&ceid=RU:ru",
+        "https://news.google.com/rss/search?q=Ozon+Wildberries+Yandex+Market+Russia+ecommerce&hl=en&gl=US&ceid=US:en"
+      ]
+    }
+  },
+  "output": {
+    "featured_post_path": "posts/featured_ozon_pick.json",
+    "data_dump_dir": "data/ozon_raw",
+    "max_products": 10,
+    "keep_raw_days": 7
+  },
+  "verification": {
+    "auto_verify": false,
+    "min_source_count": 2,
+    "max_data_age_hours": 24,
+    "required_fields": ["product_name_ru", "price_rub", "source_urls", "category_cn"],
+    "report_path": "data/ozon_raw/verification_report.json"
+  }
+}
