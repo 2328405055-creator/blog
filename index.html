@@ -651,7 +651,8 @@ function toggleMenu(){const m=document.getElementById('navMenu');m.classList.tog
 function closeMenu(){document.getElementById('navMenu').classList.remove('open');document.getElementById('hamBtn').setAttribute('aria-expanded','false')}
 
 // ====== TODO ======
-const TODO_PW='catming';
+const TODO_HASH='704e68a96114c18bbcf93378f64d46b9744f15fb7a4d213f3b84faa3faacd416';
+async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('')}
 function openTodo(){document.getElementById('todoOverlay').classList.add('on');renderTodo()}
 function closeTodo(){document.getElementById('todoOverlay').classList.remove('on')}
 function renderTodo(){
@@ -663,7 +664,7 @@ function renderTodo(){
     h+='<ul class="td-list">';tasks.forEach((t,i)=>{h+=`<li class="${t.done?'done':''}"><span class="td-toggle" onclick="toggleTodo(${i})" role="checkbox" aria-checked="${t.done}" tabindex="0"></span><span class="td-text">${t.text.replace(/</g,'&lt;')}</span><button class="td-del" onclick="delTodo(${i})" aria-label="删除">✕</button></li>`});h+='</ul>';
     const done=tasks.filter(t=>t.done).length;h+=`<p style="font-size:11px;color:var(--muted);margin-top:8px">${tasks.length} 任务，${done} 已完成</p>`}
   h+='<button class="td-close" onclick="closeTodo()">关闭</button>';panel.innerHTML=h;setTimeout(()=>{const i=document.getElementById('tdInput');if(i)i.focus()},100)}
-function checkPw(){if(document.getElementById('tdPw').value===TODO_PW){todoUnlocked=true;renderTodo()}else{alert('密码错误')}}
+async function checkPw(){const h=await sha256(document.getElementById('tdPw').value);if(h===TODO_HASH){todoUnlocked=true;renderTodo()}else{alert('密码错误')}}
 // Changelog
 let clUnlocked=false;
 const CHANGELOG_HTML=`<div style="color:var(--title);font-size:14px;line-height:2;padding:10px 0">
@@ -690,7 +691,7 @@ const CHANGELOG_HTML=`<div style="color:var(--title);font-size:14px;line-height:
 <p style="font-size:13px;color:var(--text)">AI工具/行业动态/AI与电商/AI教程 4子分类 · 每日生成调整为5跨境+2健身+3AI</p>
 
 <h3 style="color:var(--cyan);font-size:14px">2026-05-09 TODO待办</h3>
-<p style="font-size:13px;color:var(--text)">导航栏待办按钮 · 密码catming · localStorage本地存储 · 添加/完成/删除</p>
+<p style="font-size:13px;color:var(--text)">导航栏待办按钮 · SHA-256哈希验证 · localStorage本地存储 · 添加/完成/删除</p>
 
 <h3 style="color:var(--cyan);font-size:14px">2026-05-09 双栏布局</h3>
 <p style="font-size:13px;color:var(--text)">1200px宽屏 · 主内容+侧边栏双栏 · 2列文章网格 · 工具常驻侧边栏 · 侧边栏悬浮固定 · 移动端汉堡菜单 · 起始日期2025-09-05（246天）</p>
@@ -705,7 +706,7 @@ function renderChangelog(){
   if(!clUnlocked){panel.innerHTML=`<h2>🔐 更新日志</h2><div class="td-pw-row"><input type="password" id="clPw" placeholder="输入密码..." onkeydown="if(event.key==='Enter')checkClPw()"><button onclick="checkClPw()">解锁</button></div><button class="td-close" onclick="closeChangelog()">关闭</button>`;setTimeout(()=>{const i=document.getElementById('clPw');if(i)i.focus()},100);return}
   panel.innerHTML=CHANGELOG_HTML+'<button class="td-close" onclick="closeChangelog()">关闭</button>';
 }
-function checkClPw(){if(document.getElementById('clPw').value===TODO_PW){clUnlocked=true;renderChangelog()}else{alert('密码错误')}}
+async function checkClPw(){const h=await sha256(document.getElementById('clPw').value);if(h===TODO_HASH){clUnlocked=true;renderChangelog()}else{alert('密码错误')}}
 document.getElementById('clOverlay').onclick=function(e){if(e.target===this)closeChangelog()};
 function addTodo(){const i=document.getElementById('tdInput');if(!i)return;const v=i.value.trim();if(!v)return;const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');tasks.unshift({text:v,done:false});localStorage.setItem('todo_catming',JSON.stringify(tasks));i.value='';renderTodo()}
 function toggleTodo(idx){const tasks=JSON.parse(localStorage.getItem('todo_catming')||'[]');if(tasks[idx]){tasks[idx].done=!tasks[idx].done;localStorage.setItem('todo_catming',JSON.stringify(tasks));renderTodo()}}

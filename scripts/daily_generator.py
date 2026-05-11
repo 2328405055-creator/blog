@@ -19,7 +19,6 @@ import requests
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 POSTS_DIR = os.path.join(BASE_DIR, "posts")
 JSON_PATH = os.path.join(POSTS_DIR, "posts.json")
-TRACKER_PATH = os.path.join(BASE_DIR, "scripts", "tracker.json")
 
 # ============================================================
 # 信息源配置
@@ -415,7 +414,6 @@ def build_ai_post(entry):
 # ============================================================
 
 def generate_posts(limit_cb=8, limit_fit=5, limit_ai=7):
-    tracker = load_json(TRACKER_PATH)
     all_posts = load_json(JSON_PATH)
     existing_slugs = set(p["slug"] for p in all_posts)
     posted_titles = set()
@@ -470,7 +468,6 @@ def generate_posts(limit_cb=8, limit_fit=5, limit_ai=7):
                 new_posts.append(build_and_save(entry, "ai-news", date_str, existing_slugs))
                 ai_total += 1
 
-    save_json(TRACKER_PATH, tracker)
     current_total = len(load_json(JSON_PATH))
 
     cb_count = sum(1 for p in new_posts if p["cat"] == "cross-border")
