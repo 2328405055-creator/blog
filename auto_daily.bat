@@ -18,17 +18,17 @@ if %errorlevel% neq 0 (
 )
 
 echo.
-echo [2/3] Quick WB API connectivity check...
-curl -s --connect-timeout 10 -o NUL "https://catalog.wb.ru/catalog" 2>&1
+echo [2/3] Check WB API + run ozon_selector (may take ~15min)...
+echo [%date% %time%] [2/3] ozon_selector >> %LOG%
+curl -s --connect-timeout 10 "https://search.wb.ru/exactmatch/ru/common/v5/search?ab_testing=false&appType=1&curr=rub&dest=-1257786&page=1&query=test&resultset=catalog&sort=popular&spp=1&suppressSpellcheck=False" >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [WARN] WB API unreachable (VPN?), skipping ozon_selector
+    echo [WARN] WB API unreachable (VPN/network issue), skipping ozon_selector
     echo [WARN] WB API unreachable, skipping ozon_selector >> %LOG%
 ) else (
-    echo [OK] WB API reachable, running ozon_selector (timeout 10min)...
-    echo [%date% %time%] [2/3] ozon_selector >> %LOG%
-    timeout /t 600 /nobreak >nul 2>&1 & python scripts\ozon_selector.py --push >> %LOG% 2>&1
+    echo [OK] WB API reachable, starting ozon_selector...
+    python scripts\ozon_selector.py --push >> %LOG% 2>&1
     if %errorlevel% neq 0 (
-        echo [WARN] ozon_selector failed or timed out
+        echo [WARN] ozon_selector failed
         echo [WARN] ozon_selector failed >> %LOG%
     ) else (
         echo [OK] ozon_selector completed

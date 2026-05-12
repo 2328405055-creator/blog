@@ -511,7 +511,10 @@ def build_and_save(entry, section, date_str, existing_slugs):
     save_json(JSON_PATH, all_posts)
 
     label = "CB" if section == "cross-border" else "Fit"
-    print(f"  [{label}/{cat}] {title[:50]}... ← {entry['source_name']}")
+    try:
+        print(f"  [{label}/{cat}] {title[:50]}... <- {entry['source_name']}")
+    except UnicodeEncodeError:
+        print(f"  [{label}/{cat}] {title[:30]}...")
 
     return {"title": title, "cat": section}
 

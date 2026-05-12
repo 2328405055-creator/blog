@@ -41,6 +41,15 @@ FEATURED_JSON_PATH = os.path.join(POSTS_DIR, "featured_ozon_pick.json")
 JSON_PATH = os.path.join(POSTS_DIR, "posts.json")
 
 
+# 无代理 Session（WB API 必须直连，走代理会被阻断）
+_NO_PROXY_SESSION = None
+def _get_no_proxy_session():
+    global _NO_PROXY_SESSION
+    if _NO_PROXY_SESSION is None:
+        _NO_PROXY_SESSION = requests.Session()
+        _NO_PROXY_SESSION.trust_env = False
+    return _NO_PROXY_SESSION
+
 def ensure_dir(path):
     os.makedirs(path, exist_ok=True)
 
@@ -184,7 +193,7 @@ def fetch_wildberries_products(config):
                         "Origin": "https://www.wildberries.ru",
                         "Referer": "https://www.wildberries.ru/",
                     }
-                    resp = requests.get(url, headers=headers, timeout=25)
+                    resp = _get_no_proxy_session().get(url, headers=headers, timeout=25)
                     if resp.status_code == 200:
                         data = resp.json()
                         # v5: products 在顶层; v18: 在 data.products
