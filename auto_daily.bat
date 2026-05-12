@@ -6,8 +6,8 @@ set LOG="D:\games\blog\auto_daily.log"
 echo [%date% %time%] ====== Blog Daily Auto Pipeline ====== >> %LOG%
 
 echo.
-echo [1/3] Running daily_generator.py...
-echo [%date% %time%] [1/3] daily_generator >> %LOG%
+echo [1/2] Running daily_generator.py...
+echo [%date% %time%] [1/2] daily_generator >> %LOG%
 python scripts\daily_generator.py --push >> %LOG% 2>&1
 if %errorlevel% neq 0 (
     echo [ERROR] daily_generator failed with code %errorlevel%
@@ -18,14 +18,12 @@ if %errorlevel% neq 0 (
 )
 
 echo.
-echo [2/3] Check WB API + run ozon_selector (may take ~15min)...
-echo [%date% %time%] [2/3] ozon_selector >> %LOG%
-curl -s --connect-timeout 10 "https://search.wb.ru/exactmatch/ru/common/v5/search?ab_testing=false&appType=1&curr=rub&dest=-1257786&page=1&query=test&resultset=catalog&sort=popular&spp=1&suppressSpellcheck=False" >nul 2>&1
-if %errorlevel% neq 0 (
-    echo [WARN] WB API unreachable (VPN/network issue), skipping ozon_selector
-    echo [WARN] WB API unreachable, skipping ozon_selector >> %LOG%
-) else (
-    echo [OK] WB API reachable, starting ozon_selector...
+:: Ozon selector: every 3 days (days 3,6,9,12,15,18,21,24,27,30)
+set /a DAY_MOD=0
+for /f "tokens=2 delims=/" %%a in ("%date%") do set /a DAY_MOD=1%%a %% 3
+if %DAY_MOD% equ 0 (
+    echo [2/2] Today is 3-day cycle day, running ozon_selector (~10min)...
+    echo [%date% %time%] [2/2] ozon_selector >> %LOG%
     python scripts\ozon_selector.py --push >> %LOG% 2>&1
     if %errorlevel% neq 0 (
         echo [WARN] ozon_selector failed
@@ -34,8 +32,11 @@ if %errorlevel% neq 0 (
         echo [OK] ozon_selector completed
         echo [OK] ozon_selector completed >> %LOG%
     )
+) else (
+    echo [2/2] Skipping ozon_selector (next run on 3-day cycle)
+    echo [%date% %time%] Skipping ozon_selector (not 3-day cycle) >> %LOG%
 )
 
 echo.
-echo [3/3] Pipeline finished. %date% %time%
+echo Pipeline finished. %date% %time%
 echo [%date% %time%] Pipeline done >> %LOG%

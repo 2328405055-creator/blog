@@ -247,8 +247,11 @@ def fetch_wildberries_products(config):
                             })
                             break
                     elif resp.status_code == 429:
-                        wait = (2 ** attempt) * delay + random.random() * 5
-                        time.sleep(wait)
+                        if attempt < 2:
+                            time.sleep(delay * 2 + random.random() * 8)
+                        else:
+                            print(f"  [SKIP] {keyword} ({sort_mode}): 429 限流, 已跳过")
+                            break
                     else:
                         time.sleep(2)
                 except Exception as e:
