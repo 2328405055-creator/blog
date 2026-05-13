@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-猫明之主小站 — 个人学习仪表盘网站，三大栏目：跨境电商（Ozon/Yandex/俄罗斯铺货选品）+ 每日健身（徒手自重/瑜伽垫/男女教程）+ AI新闻。静态站点，GitHub Pages 托管。
+猫明之主 — 个人学习仪表盘网站，三大栏目：跨境电商（Ozon/Yandex/俄罗斯铺货选品）+ 每日健身（徒手自重/瑜伽垫/男女教程）+ AI新闻。静态站点，GitHub Pages 托管。
 
 - 域名: `20020426.top`，DNS 在 Cloudflare（4条A记录 + www CNAME）
 - GitHub: `2328405055-creator/blog`，分支 `master`

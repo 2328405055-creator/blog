@@ -688,7 +688,7 @@ def build_featured_md(featured_data):
 
 ---
 
-*本文章由 Ozon选品机器人 v2 自动生成 · [猫明之主小站](https://20020426.top) · {date_str}*
+*本文章由 Ozon选品机器人 v2 自动生成 · [猫明之主](https://20020426.top) · {date_str}*
 """
 
     return md
