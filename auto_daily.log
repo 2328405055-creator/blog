@@ -4,3 +4,58 @@ The system cannot execute the specified program.
 [ERROR] daily_generator failed 
 [鍛ㄤ笁 2026/05/13  9:47:02.72] ====== Blog Daily Auto Pipeline ====== 
 [鍛ㄤ笁 2026/05/13  9:47:02.73] [1/2] daily_generator 
+Exception in thread Thread-3 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\subprocess.py", line 1614, in _readerthread
+    buffer.append(fh.read())
+                  ~~~~~~~^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0x94 in position 43: illegal multibyte sequence
+========================================================
+  每日内容生成器 v3 — 真实来源 · 有据可查
+========================================================
+[INFO] 抓取跨境电商新闻...
+  获取 5 条，0 条可用
+[INFO] 抓取健身内容...
+  获取 96 条，70 条可用
+  [Fit/male] This 5-Day No-Equipment Workout Plan Is the Perfec... <- Popsugar
+  [Fit/male] These are the 28 best bodyweight workouts on YouTu... <- Women's Health
+  [Fit/yoga-mat] The Best Workout Apps of 2026: For Any Fitness Goa... <- Fortune
+  [Fit/yoga-mat] Trying to Get Fit? Trainers Say These Are the 10 W... <- Good Housekeeping
+  [Fit/male] Watch This Guy Attempt Mike Tyson's Intense, Full-... <- Men's Health
+[INFO] 抓取 AI 新闻...
+  获取 151 条，142 条可用
+  [Fit/ai-industry] AI Ethics for the Everyday User – Why Should You C... <- towardsdatascience.com
+  [Fit/ai-industry] 36氪官方AI专属社群，正式开放招募！ - 36kr.com... <- 36kr.com
+  [Fit/ai-industry] 继小红书后，抖音也开始专项治理“AI起号” - 36kr.com... <- 36kr.com
+  [Fit/ai-industry] 如何让AI为你打工？ - lifeweek.com.cn... <- lifeweek.com.cn
+  [Fit/ai-tutorial] How to Create a Fake News Detection System? - Simp... <- Simplilearn.com
+  [Fit/ai-tutorial] How to Become a Data Scientist | Become a Data Sci... <- Simplilearn.com
+  [Fit/ai-industry] 2025年AI探学营活动成果 - 央广网... <- 央广网
+[INFO] 补充搜索 (缺CB:8 Fit:0 AI:0)...
+  [CB/russia-market] 俄罗斯电商平台Ozon向中国卖家降门槛 - 北京商报... <- 北京商报
+  [CB/selection] 墨西哥“淘金热”：中国跨境大军涌入，中场战事升级 - 36kr.com... <- 36kr.com
+  [CB/logistics] 特写｜中国卖家入局俄罗斯电商：卖断货的家电与回款挑战 - 21财经... <- 21财经
+  [CB/selection] 2个月40家店铺 亚欧商品（霍尔果斯）集散中心跑出跨境电商“加速度” - 新华网新疆... <- 新华网新疆
+  [CB/logistics] 海外仓，让外国消费者更快收到“中国造” - 新华丝路... <- 新华丝路
+  [CB/russia-market] “海联会客厅——开放共享，引领中俄贸易新突破”暨“2025中国企业出海俄罗斯市场”对接交流会成功举办... <- 福建省商务厅
+  [CB/yandex] Yandex Market华东首场卖家峰会圆满落幕 与杭州完成“产业+平台”的双向奔赴！ - 中华网... <- 中华网
+  [CB/russia-market] 俄罗斯电商平台，挤满中国人 - 36kr.com... <- 36kr.com
+
+[DONE] 2026-05-13 — 跨境电商 8 + 健身 5 + AI新闻 7 = 20 篇
+  线上共 142 篇文章 → http://20020426.top
+[INFO] sitemap.xml 已更新 (142 篇文章)
+
+[INFO] 推送至 GitHub...
+  git add . → OK
+  git commit -m 每日更新 2026-05-13 — 来源采集 → OK
+  git push → OK
+  推送完成
+
+当前线上 142 篇文章 → http://20020426.top
+[OK] daily_generator completed 
