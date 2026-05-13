@@ -6,17 +6,12 @@
       "base_url": "https://search.wb.ru/exactmatch/ru/common/v5/search",
       "api_version": "v5",
       "dest": "-1257786",
-      "request_delay_seconds": 15,
+      "request_delay_seconds": 30,
       "max_pages_per_query": 1,
       "products_per_page": 60,
       "min_rating": 4.0,
       "min_reviews": 30,
       "queries": [
-        {
-          "keyword": "беспроводные наушники",
-          "cat_cn": "无线耳机",
-          "cat_key": "audio"
-        },
         {
           "keyword": "фитнес-браслет",
           "cat_cn": "智能手环",
@@ -28,24 +23,9 @@
           "cat_key": "accessories"
         },
         {
-          "keyword": "кабель зарядный type-c",
-          "cat_cn": "Type-C数据线",
-          "cat_key": "accessories"
-        },
-        {
           "keyword": "коврик для йоги",
           "cat_cn": "瑜伽垫",
           "cat_key": "sports"
-        },
-        {
-          "keyword": "эспандер фитнес резинка",
-          "cat_cn": "弹力带/健身带",
-          "cat_key": "sports"
-        },
-        {
-          "keyword": "щетка электрическая зубная",
-          "cat_cn": "电动牙刷",
-          "cat_key": "beauty"
         },
         {
           "keyword": "светильник светодиодный",
