@@ -1,24 +1,50 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-每日内容生成器 v3 — 真实来源驱动
-- 从 Google News RSS 抓取跨境电商业内新闻
-- 每篇文章标注来源、日期、可用搜索直连
-- 健身内容优先嵌入 YouTube 教程视频
-- 所有内容有据可查，来源可追溯
-用法：python daily_generator.py [--push]
+"""每日内容生成器 v4 - Firecrawl抓取 + AI总结
+Google News RSS -> Firecrawl 抓取原文 -> 千问/DeepSeek 总结
+用法: python daily_generator.py [--push]
 """
 
-import json, os, sys, re, hashlib, urllib.parse
+import json, os, sys, re, hashlib, urllib.parse, time
 from datetime import datetime, timedelta
 from html import unescape
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import feedparser
 import requests
+from firecrawl import V1FirecrawlApp
+from openai import OpenAI
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 POSTS_DIR = os.path.join(BASE_DIR, "posts")
 JSON_PATH = os.path.join(POSTS_DIR, "posts.json")
+SCRIPTS_DIR = os.path.join(BASE_DIR, "scripts")
+CONFIG_PATH = os.path.join(SCRIPTS_DIR, "config.json")
+
+def load_config():
+    config = {
+        "firecrawl_api_key": "", "primary_api_key": "", "primary_api_base": "",
+        "primary_model": "qwen-plus", "backup_api_key": "", "backup_api_base": "",
+        "backup_model": "deepseek-chat", "enrich_enabled": False,
+        "target_words": 700, "scrape_timeout": 30,
+    }
+    if os.path.exists(CONFIG_PATH):
+        with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+            config.update(json.load(f))
+    for key in config:
+        env_val = os.environ.get(f"BLOG_{key.upper()}")
+        if env_val is not None:
+            if key in ("target_words", "scrape_timeout"):
+                config[key] = int(env_val)
+            elif key == "enrich_enabled":
+                config[key] = env_val.lower() in ("1", "true", "yes")
+            else:
+                config[key] = env_val
+    return config
+
+CONFIG = load_config()
+FC_KEY = CONFIG["firecrawl_api_key"]
+ENRICH = bool(CONFIG["enrich_enabled"] and FC_KEY and CONFIG["primary_api_key"])
 
 # ============================================================
 # 信息源配置
@@ -131,6 +157,165 @@ BLACKLIST_FITNESS = [
     "celeb", "hollywood", "surgery", "weight loss drug",
     "insurance", "stock", "finance", "bankrupt",
 ]
+
+
+# Firecrawl 抓取 + AI 总结 模块
+
+def scrape_article_content(url):
+    """用 Firecrawl 抓取完整文章，返回 clean markdown。失败返回 None"""
+    if not FC_KEY:
+        return None
+    try:
+        app = V1FirecrawlApp(api_key=FC_KEY)
+        result = app.scrape_url(url, formats=["markdown"],
+                                timeout=CONFIG["scrape_timeout"] * 1000)
+        md = getattr(result, "markdown", "") or ""
+        if not md or len(md) < 100:
+            return None
+        max_chars = CONFIG["target_words"] * 8
+        if len(md) > max_chars:
+            md = md[:max_chars] + "\n\n...(内容已截断)"
+        return md
+    except Exception as e:
+        print(f"  [SCRAPE FAIL] {url[:60]}: {e}")
+        return None
+
+
+def _get_ai_client(use_backup=False):
+    """获取 AI 客户端（主: 千问, 备: DeepSeek）"""
+    if use_backup:
+        return OpenAI(
+            api_key=CONFIG["backup_api_key"],
+            base_url=CONFIG["backup_api_base"],
+        ), CONFIG["backup_model"]
+    return OpenAI(
+        api_key=CONFIG["primary_api_key"],
+        base_url=CONFIG["primary_api_base"],
+    ), CONFIG["primary_model"]
+
+
+def summarize_article(title, source_name, content_md, section):
+    """用 AI 总结文章为高质量学习内容"""
+    if not content_md or len(content_md) < 100:
+        return None
+
+    prompts = {
+        "cross-border": (
+            "你是一位跨境电商实战教练，帮助中国卖家在Ozon/Yandex平台卖货到俄罗斯。"
+            "把下面的文章总结为一篇600-900字的中文教程。要求：\n"
+            "1. 用 ## 分节，每节有实质性内容\n"
+            "2. 包含具体操作步骤、工具名称、数据指标\n"
+            "3. 指出新手常见的3个错误及如何避免\n"
+            "4. 结尾给一个「今日行动建议」\n"
+            "只输出教程正文，不要写「根据原文」之类的元描述。"
+        ),
+        "fitness": (
+            "你是一位徒手健身教练，帮助读者在家用瑜伽垫训练。"
+            "把下面的文章总结为一篇600-900字的中文健身教程。要求：\n"
+            "1. 用 ## 分节，每节有实质性内容\n"
+            "2. 包含具体动作名称、组数次数、动作要领\n"
+            "3. 指出常见的动作错误及纠正方法\n"
+            "4. 结尾给一个「今日训练计划」\n"
+            "只输出教程正文，不要写「根据原文」之类的元描述。"
+        ),
+        "ai-news": (
+            "你是一位AI学习教练，帮助读者掌握AI工具和技能。"
+            "把下面的文章总结为一篇600-900字的中文学习教程。要求：\n"
+            "1. 用 ## 分节，每节有实质性内容\n"
+            "2. 包含具体工具名称、使用步骤、参数设置\n"
+            "3. 指出实际应用场景和效率提升点\n"
+            "4. 结尾给一个「今日动手实践」任务\n"
+            "只输出教程正文，不要写「根据原文」之类的元描述。"
+        ),
+    }
+
+    system_prompt = prompts.get(section, prompts["cross-border"])
+    user_msg = f"标题：{title}\n来源：{source_name}\n\n原文内容：\n{content_md[:6000]}"
+
+    # 先试主 API，失败试备用
+    for attempt, use_backup in enumerate([False, True]):
+        try:
+            client, model = _get_ai_client(use_backup)
+            label = "DeepSeek" if use_backup else "Qianwen"
+            resp = client.chat.completions.create(
+                model=model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_msg},
+                ],
+                max_tokens=2000,
+                temperature=0.7,
+            )
+            body = resp.choices[0].message.content.strip()
+            # 提取 key points（取 ## 标题作为要点）
+            key_points = re.findall(r'^##\s+(.+)', body, re.MULTILINE)[:5]
+            if not key_points:
+                key_points = re.findall(r'^\d+\.\s+(.+)', body, re.MULTILINE)[:5]
+            return {
+                "content": body,
+                "key_points": key_points if key_points else ["详见正文"],
+                "word_count": len(body),
+                "model": label,
+            }
+        except Exception as e:
+            print(f"  [AI FAIL {label}] {e}")
+            if not use_backup and CONFIG["backup_api_key"]:
+                print(f"  [AI FALLBACK] 切换到 DeepSeek...")
+                time.sleep(1)
+                continue
+    return None
+
+
+def enrich_batch(entries):
+    """批量抓取+总结。3 线程并行抓取，串行总结"""
+    if not ENRICH:
+        return entries
+
+    total = len(entries)
+    print(f"[INFO] 内容富化: {total} 篇（Firecrawl + 千问）...")
+
+    # Phase 1: 并发抓取
+    results = {}
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        futures = {}
+        for i, entry in enumerate(entries):
+            f = pool.submit(scrape_article_content, entry["link"])
+            futures[f] = i
+            time.sleep(0.5)
+
+        for f in as_completed(futures):
+            i = futures[f]
+            try:
+                md = f.result()
+            except Exception:
+                md = None
+            results[i] = md
+            status = "OK" if md else "FAIL"
+            try: print(f"  [SCRAPE {status}] ({i+1}/{total}) {entries[i]['title'][:40]}...")
+            except UnicodeEncodeError: print(f"  [SCRAPE {status}] ({i+1}/{total})")
+
+    # Phase 2: 串行总结 + 附加到 entry
+    for i, entry in enumerate(entries):
+        content_md = results.get(i)
+        if content_md:
+            enriched = summarize_article(
+                entry["title"], entry["source_name"], content_md, entry["section"]
+            )
+            entry["enriched"] = enriched
+            if enriched:
+                try:
+                    print(f"  [SUMMARIZE OK] ({i+1}/{total}) {enriched.get('word_count',0)}字 via {enriched.get('model','?')}")
+                except UnicodeEncodeError:
+                    print(f"  [SUMMARIZE OK] ({i+1}/{total})")
+            else:
+                print(f"  [SUMMARIZE FAIL] ({i+1}/{total})")
+            time.sleep(1)
+        else:
+            entry["enriched"] = None
+
+    ok = sum(1 for e in entries if e.get("enriched"))
+    print(f"[INFO] 富化完成: {ok}/{total} 篇成功")
+    return entries
 
 
 def fetch_all_feeds(section, limit_per_feed=8):
@@ -265,6 +450,10 @@ CAT_NAMES_FIT = {
     "male": "男性训练", "female": "女性训练", "yoga-mat": "瑜伽垫动作",
     "plan": "每日计划", "diet": "饮食建议",
 }
+AI_CAT_NAMES = {
+    "ai-tools": "AI工具", "ai-industry": "行业动态",
+    "ai-ecommerce": "AI与电商", "ai-tutorial": "AI教程",
+}
 
 
 def build_cross_border_post(entry):
@@ -276,42 +465,43 @@ def build_cross_border_post(entry):
     cat = classify_cross_border(title)
     cat_name = CAT_NAMES_CB.get(cat, "跨境电商")
     search_url = build_search_link(title, domain)
+    enriched = entry.get("enriched")
 
-    return f"""# {title}
-
-> 📂 分类：{cat_name}
-> 📅 采集日期：{datetime.now().strftime('%Y-%m-%d')}
-> 📰 来源：**{source_name}**（{domain}）
-
----
-
-## 来源信息
-
-本文信息来自 **{source_name}** 的跨境教程。
-
-{source_href if source_href else domain}
-
----
-
-## 学习要点
+    body = ""
+    if enriched and enriched.get("content"):
+        body = enriched["content"]
+        kp = enriched.get("key_points", [])
+        if kp:
+            body += "\n\n## 核心要点\n\n" + "\n".join(f"- {p}" for p in kp)
+    else:
+        body = """## 学习要点
 
 阅读这篇教程后，你将会学到：
 
-1. **实操方法：** 具体的操作步骤和落地技巧
-2. **避坑指南：** 新手常见错误及如何避免
-3. **进阶思路：** 从入门到精通的学习路径
+1. **实操方法:** 具体的操作步骤和落地技巧
+2. **避坑指南:** 新手常见错误及如何避免
+3. **进阶思路:** 从入门到精通的学习路径
+"""
+
+    return f"""# {title}
+
+> 📂 分类: {cat_name}
+> 📅 采集日期: {datetime.now().strftime('%Y-%m-%d')}
+> 📰 来源: **{source_name}**（{domain}）
+
+---
+
+{body}
 
 ---
 
 ## 查看原文
 
-📎 **Google News 入口：** [点击查看原文]({link})
-🔍 **站内搜索：** [在 {source_name} 站内搜索本文]({search_url})
+📎 **原文链接:** [点击查看原文]({link})
+🔍 **站内搜索:** [在 {source_name} 站内搜索本文]({search_url})
 
-> 📚 本文为跨境教程采集，内容版权归原来源所有。点击上方链接阅读完整教程。
+> 📚 本文内容来自 **{source_name}**，版权归原来源所有。
 """, cat
-
-
 def build_fitness_post(entry):
     title = entry["title"]
     source_name = entry["source_name"]
@@ -320,53 +510,45 @@ def build_fitness_post(entry):
     cat = classify_fitness(title)
     cat_name = CAT_NAMES_FIT.get(cat, "健身")
     search_url = build_search_link(title, domain)
-
-    # 尝试构建 YouTube 搜索链接
+    enriched = entry.get("enriched")
     yt_query = urllib.parse.quote(title[:50])
     yt_link = f"https://www.youtube.com/results?search_query={yt_query}"
 
+    body = ""
+    if enriched and enriched.get("content"):
+        body = enriched["content"]
+    else:
+        body = """## 训练建议
+
+无论文章中提到哪种训练方法，请牢记:
+
+- 🔹 **动作标准优先:** 宁可少做几个，也不牺牲动作质量
+- 🔹 **循序渐进:** 每周比上周多做1-2个就是进步
+- 🔹 **充分休息:** 肌肉在休息时生长，每周至少休息1天
+- 🔹 **配合饮食:** 徒手训练配合合理饮食才能看到线条变化
+- 🔹 **只需瑜伽垫:** 本文推荐的所有训练只需一张瑜伽垫即可
+"""
+
     return f"""# {title}
 
-> 💪 分类：{cat_name}
-> 📅 采集日期：{datetime.now().strftime('%Y-%m-%d')}
-> 📰 来源：**{source_name}**
+> 💪 分类: {cat_name}
+> 📅 采集日期: {datetime.now().strftime('%Y-%m-%d')}
+> 📰 来源: **{source_name}**
 
 ---
 
-## 来源信息
-
-本文信息来自 **{source_name}** 的真实健身内容。
-
----
-
-## 训练建议
-
-无论文章中提到哪种训练方法，请牢记：
-
-- 🔹 **动作标准优先：** 宁可少做几个，也不牺牲动作质量
-- 🔹 **循序渐进：** 每周比上周多做1-2个就是进步
-- 🔹 **充分休息：** 肌肉在休息时生长，每周至少休息1天
-- 🔹 **配合饮食：** 徒手训练配合合理饮食才能看到线条变化
-- 🔹 **只需瑜伽垫：** 本文推荐的所有训练只需一张瑜伽垫即可
+{body}
 
 ---
 
 ## 查看原文与视频教程
 
-📎 **原文链接：** [点击查看原文]({link})
-🔍 **搜索原文：** [在 {source_name} 站内搜索]({search_url})
-🎬 **YouTube 视频教程：** [搜索相关训练视频]({yt_link})
+📎 **原文链接:** [点击查看原文]({link})
+🔍 **搜索原文:** [在 {source_name} 站内搜索]({search_url})
+🎬 **YouTube 视频教程:** [搜索相关训练视频]({yt_link})
 
-> ⚠️ 本文为健身内容采集，版权归原来源所有。训练前请评估自身状况，量力而行。
+> ⚠️ 训练前请评估自身状况，量力而行。
 """, cat
-
-
-AI_CAT_NAMES = {
-    "ai-tools": "AI工具", "ai-industry": "行业动态",
-    "ai-ecommerce": "AI与电商", "ai-tutorial": "AI教程",
-}
-
-
 def build_ai_post(entry):
     title = entry["title"]
     source_name = entry["source_name"]
@@ -375,44 +557,41 @@ def build_ai_post(entry):
     cat = classify_ai(title)
     cat_name = AI_CAT_NAMES.get(cat, "AI新闻")
     search_url = build_search_link(title, domain)
+    enriched = entry.get("enriched")
+
+    body = ""
+    if enriched and enriched.get("content"):
+        body = enriched["content"]
+    else:
+        body = """## AI 与跨境电商的交汇
+
+无论这则 AI 新闻的具体内容是什么，对跨境电商卖家来说，AI 正在改变:
+
+- 🔹 **选品智能化:** AI 工具正在帮助卖家分析市场趋势和消费者偏好
+- 🔹 **内容生成:** 产品描述、广告文案的 AI 自动化处理
+- 🔹 **客服优化:** AI 翻译和智能客服降低跨境沟通成本
+- 🔹 **数据驱动:** 从经验决策转向 AI 辅助的数据决策
+"""
 
     return f"""# {title}
 
-> 🤖 分类：{cat_name}
-> 📅 采集日期：{datetime.now().strftime('%Y-%m-%d')}
-> 📰 来源：**{source_name}**
+> 🤖 分类: {cat_name}
+> 📅 采集日期: {datetime.now().strftime('%Y-%m-%d')}
+> 📰 来源: **{source_name}**
 
 ---
 
-## 来源信息
-
-本文信息来自 **{source_name}** 的 AI 学习教程。
-
----
-
-## 学习要点
-
-阅读这篇 AI 教程后，你将会学到：
-
-- 🔹 **工具实操：** 具体 AI 工具的使用方法和配置步骤
-- 🔹 **场景应用：** AI 在跨境电商中的实际落地场景
-- 🔹 **效率提升：** 如何用 AI 替代重复劳动，提高工作效率
+{body}
 
 ---
 
 ## 查看原文
 
-📎 **原文链接：** [点击查看原文]({link})
-🔍 **站内搜索：** [在 {source_name} 站内搜索]({search_url})
+📎 **原文链接:** [点击查看原文]({link})
+🔍 **站内搜索:** [在 {source_name} 站内搜索]({search_url})
 
-> 📚 本文为 AI 学习教程采集，版权归原来源所有。完整内容请点击原文链接阅读。
+> 📚 本文内容来自 **{source_name}**，版权归原来源所有。
 """, cat
-
-
-# ============================================================
-# 主逻辑
-# ============================================================
-
 def generate_posts(limit_cb=8, limit_fit=5, limit_ai=7):
     all_posts = load_json(JSON_PATH)
     existing_slugs = set(p["slug"] for p in all_posts)
@@ -427,25 +606,32 @@ def generate_posts(limit_cb=8, limit_fit=5, limit_ai=7):
     # ---- 跨境电商 ----
     print("[INFO] 抓取跨境电商新闻...")
     cb_entries = fetch_all_feeds("cross-border", limit_per_feed=6)
-    cb_fresh = [e for e in cb_entries if str_hash(e["title"]) not in posted_titles]
+    cb_fresh = [e for e in cb_entries if str_hash(e["title"]) not in posted_titles][:limit_cb]
     print(f"  获取 {len(cb_entries)} 条，{len(cb_fresh)} 条可用")
-    for entry in cb_fresh[:limit_cb]:
-        new_posts.append(build_and_save(entry, "cross-border", date_str, existing_slugs))
 
     # ---- 健身 ----
     print("[INFO] 抓取健身内容...")
     fit_entries = fetch_all_feeds("fitness", limit_per_feed=4)
-    fit_fresh = [e for e in fit_entries if str_hash(e["title"]) not in posted_titles]
+    fit_fresh = [e for e in fit_entries if str_hash(e["title"]) not in posted_titles][:limit_fit]
     print(f"  获取 {len(fit_entries)} 条，{len(fit_fresh)} 条可用")
-    for entry in fit_fresh[:limit_fit]:
-        new_posts.append(build_and_save(entry, "fitness", date_str, existing_slugs))
 
     # ---- AI新闻 ----
     print("[INFO] 抓取 AI 新闻...")
     ai_entries = fetch_all_feeds("ai-news", limit_per_feed=5)
-    ai_fresh = [e for e in ai_entries if str_hash(e["title"]) not in posted_titles]
+    ai_fresh = [e for e in ai_entries if str_hash(e["title"]) not in posted_titles][:limit_ai]
     print(f"  获取 {len(ai_entries)} 条，{len(ai_fresh)} 条可用")
-    for entry in ai_fresh[:limit_ai]:
+
+    # ---- 内容富化（Firecrawl + AI总结） ----
+    all_fresh = cb_fresh + fit_fresh + ai_fresh
+    if all_fresh:
+        enrich_batch(all_fresh)
+
+    # ---- 生成文章 ----
+    for entry in cb_fresh:
+        new_posts.append(build_and_save(entry, "cross-border", date_str, existing_slugs))
+    for entry in fit_fresh:
+        new_posts.append(build_and_save(entry, "fitness", date_str, existing_slugs))
+    for entry in ai_fresh:
         new_posts.append(build_and_save(entry, "ai-news", date_str, existing_slugs))
 
     # ---- 补充 ----
@@ -501,20 +687,23 @@ def build_and_save(entry, section, date_str, existing_slugs):
         f.write(md_content)
 
     excerpt = title[:150]
+    enriched = entry.get("enriched") or {}
     all_posts = load_json(JSON_PATH)
     all_posts.insert(0, {
         "slug": slug, "title": title, "date": date_str, "excerpt": excerpt,
         "cat": section, "sub": cat,
         "source": entry["link"],
         "source_name": f"{entry['source_name']} ({entry['domain']})",
+        "has_content": bool(enriched and enriched.get("content")),
+        "word_count": enriched.get("word_count", 0),
     })
     save_json(JSON_PATH, all_posts)
 
     label = "CB" if section == "cross-border" else "Fit"
     try:
         print(f"  [{label}/{cat}] {title[:50]}... <- {entry['source_name']}")
-    except UnicodeEncodeError:
-        print(f"  [{label}/{cat}] {title[:30]}...")
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        print(f"  [{label}/{cat}] (article saved)")
 
     return {"title": title, "cat": section}
 

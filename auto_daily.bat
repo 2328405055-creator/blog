@@ -6,6 +6,10 @@ set LOG="D:\games\blog\auto_daily.log"
 echo [%date% %time%] ====== Blog Daily Auto Pipeline ====== >> %LOG%
 
 echo.
+echo [0/2] Installing dependencies...
+pip install -r requirements.txt --quiet >> %LOG% 2>&1
+
+echo.
 echo [1/2] Running daily_generator.py...
 echo [%date% %time%] [1/2] daily_generator >> %LOG%
 python scripts\daily_generator.py --push >> %LOG% 2>&1

@@ -5,3 +5,4 @@ __pycache__/
 Thumbs.db
 *.tmp
 update_log.txt
+scripts/config.json
