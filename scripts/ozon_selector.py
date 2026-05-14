@@ -688,7 +688,7 @@ def build_featured_md(featured_data):
 
 ---
 
-*本文章由 Ozon选品机器人 v2 自动生成 · [猫明之主](https://20020426.top) · {date_str}*
+*[猫明之主](https://20020426.top) · {date_str}*
 """
 
     return md
@@ -718,7 +718,7 @@ def save_featured_post(featured_data, md_content):
         "featured": True,
         "verified": featured_data.get("verified", False),
         "source": "Wildberries v18 API",
-        "source_name": "Ozon选品机器人 v2",
+        "source_name": "猫明之主",
     }
 
     new_posts = []
