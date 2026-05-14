@@ -1,4 +1,4 @@
-# Chris Hemsworth demonstrates his 10-minute bodyweight workout that anyone can do at home - Business Insider
+# 克里斯·海姆斯沃斯示范10分钟自重居家训练
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-12

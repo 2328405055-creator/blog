@@ -202,7 +202,7 @@ def summarize_article(title, source_name, content_md, section):
     prompts = {
         "cross-border": (
             "你是一位跨境电商实战教练，帮助中国卖家在Ozon/Yandex平台卖货到俄罗斯。"
-            "把下面的文章总结为一篇600-900字的中文教程。要求：\n"
+            "把下面的文章总结为一篇600-900字的纯中文教程。要求：\n"
             "1. 用 ## 分节，每节有实质性内容\n"
             "2. 包含具体操作步骤、工具名称、数据指标\n"
             "3. 指出新手常见的3个错误及如何避免\n"
@@ -211,7 +211,7 @@ def summarize_article(title, source_name, content_md, section):
         ),
         "fitness": (
             "你是一位徒手健身教练，帮助读者在家用瑜伽垫训练。"
-            "把下面的文章总结为一篇600-900字的中文健身教程。要求：\n"
+            "把下面的文章总结为一篇600-900字的纯中文健身教程。要求：\n"
             "1. 用 ## 分节，每节有实质性内容\n"
             "2. 包含具体动作名称、组数次数、动作要领\n"
             "3. 指出常见的动作错误及纠正方法\n"
@@ -220,7 +220,7 @@ def summarize_article(title, source_name, content_md, section):
         ),
         "ai-news": (
             "你是一位AI学习教练，帮助读者掌握AI工具和技能。"
-            "把下面的文章总结为一篇600-900字的中文学习教程。要求：\n"
+            "把下面的文章总结为一篇600-900字的纯中文学习教程。要求：\n"
             "1. 用 ## 分节，每节有实质性内容\n"
             "2. 包含具体工具名称、使用步骤、参数设置\n"
             "3. 指出实际应用场景和效率提升点\n"
@@ -264,6 +264,28 @@ def summarize_article(title, source_name, content_md, section):
                 time.sleep(1)
                 continue
     return None
+
+
+def translate_title(title):
+    """如果标题主要是英文，翻译为中文"""
+    import unicodedata
+    en_chars = len(re.findall(r'[a-zA-Z]', title))
+    cn_chars = len(re.findall(r'[一-鿿]', title))
+    if en_chars <= cn_chars or en_chars < 15:
+        return title  # 中文或短英文标题不用翻译
+    try:
+        client, model = _get_ai_client(False)
+        resp = client.chat.completions.create(
+            model=model,
+            messages=[{"role": "user", "content": f"把这句话翻译成简洁的中文标题（不要加任何前缀或编号）: {title}"}],
+            max_tokens=80, temperature=0.3,
+        )
+        cn = resp.choices[0].message.content.strip()
+        if cn and len(cn) >= 3 and not cn.startswith("1."):
+            return cn
+    except Exception:
+        pass
+    return title
 
 
 def enrich_batch(entries):
@@ -667,6 +689,11 @@ def generate_posts(limit_cb=8, limit_fit=5, limit_ai=7):
 
 def build_and_save(entry, section, date_str, existing_slugs):
     title = entry["title"]
+    # 自动翻译英文标题
+    title = translate_title(title)
+    if title != entry["title"]:
+        print(f"  [TL] {entry['title'][:30]}... -> {title[:30]}...")
+        entry["title"] = title
     if section == "cross-border":
         md_content, cat = build_cross_border_post(entry)
     elif section == "fitness":

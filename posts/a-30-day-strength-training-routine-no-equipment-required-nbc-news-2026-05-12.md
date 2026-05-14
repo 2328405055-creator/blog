@@ -1,4 +1,4 @@
-# A 30-day strength training routine — no equipment required - NBC News
+# 30天徒手力量训练计划
 
 > 💪 分类：男性训练
 > 📅 采集日期：2026-05-12

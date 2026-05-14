@@ -1,4 +1,4 @@
-# CrossFitters Everywhere Will Be Doing This Super-Intense Workout For Memorial Day Weekend - Women's Health
+# 纪念日周末全美CrossFit爱好者都在做的高强度训练
 
 > 💪 分类：男性训练
 > 📅 采集日期：2026-05-12

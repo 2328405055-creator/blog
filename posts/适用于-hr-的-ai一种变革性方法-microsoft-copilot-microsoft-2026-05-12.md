@@ -1,4 +1,4 @@
-# 适用于 HR 的 AI:一种变革性方法 | Microsoft Copilot - Microsoft
+# 面向HR的AI：变革性新方法 | Microsoft Copilot
 
 > 🤖 分类：行业动态
 > 📅 采集日期：2026-05-12

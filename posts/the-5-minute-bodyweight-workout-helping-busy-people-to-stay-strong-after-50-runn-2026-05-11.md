@@ -1,4 +1,4 @@
-# The 5-minute bodyweight workout helping busy people to stay strong after 50 - Runner's World
+# 5分钟自重训练：助忙碌人群50岁后保持强健体魄——《跑者世界》
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-11

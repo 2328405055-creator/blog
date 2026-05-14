@@ -1,4 +1,4 @@
-# The best at-home bodyweight workouts for beginners on YouTube - Luxury London
+# YouTube上最适合初学者的家庭自重训练精选
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-11

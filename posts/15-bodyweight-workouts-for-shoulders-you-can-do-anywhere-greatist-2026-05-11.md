@@ -1,4 +1,4 @@
-# 15 Bodyweight Workouts for Shoulders You Can Do Anywhere - Greatist
+# 15个随时随地可练的肩部自重训练——Greatist
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-11

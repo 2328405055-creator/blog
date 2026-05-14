@@ -1,4 +1,4 @@
-# Try this low-impact winter workout for busy people - The Washington Post
+# 忙碌人群的冬季低冲击力健身方案
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-12

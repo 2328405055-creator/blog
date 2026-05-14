@@ -1,4 +1,4 @@
-# 5 Best No-Equipment Workouts To Rebuild Your Strength as You Age - Eat This Not That
+# 5个最佳无器械抗衰力量训练
 
 > 💪 分类：男性训练
 > 📅 采集日期：2026-05-13

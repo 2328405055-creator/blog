@@ -1,4 +1,4 @@
-# 如何使用Google Search Console管理网站 - Shopify
+# Google Search Console网站管理指南
 
 > 🤖 分类：行业动态
 > 📅 采集日期：2026-05-12

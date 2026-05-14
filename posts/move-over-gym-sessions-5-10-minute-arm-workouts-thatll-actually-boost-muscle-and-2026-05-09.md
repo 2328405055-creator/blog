@@ -1,4 +1,4 @@
-# Move Over, Gym Sessions: 5 10-Minute Arm Workouts That'll Actually Boost Muscle and Tone Your Arms from Home - Marie Claire UK
+# 居家10分钟塑臂训练：5个高效增肌紧致方案
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-09

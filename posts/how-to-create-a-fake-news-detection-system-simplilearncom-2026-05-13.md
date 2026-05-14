@@ -1,4 +1,4 @@
-# How to Create a Fake News Detection System? - Simplilearn.com
+# 如何构建假新闻检测系统？
 
 > 🤖 分类：AI教程
 > 📅 采集日期：2026-05-13

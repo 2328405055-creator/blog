@@ -1,4 +1,4 @@
-# You Can Do This 10-Minute Workout at Home With No Equipment (Published 2023) - The New York Times
+# 10分钟居家无器械训练（2023年发布）
 
 > 💪 分类：男性训练
 > 📅 采集日期：2026-05-12

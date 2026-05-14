@@ -1,4 +1,4 @@
-# Google AI Studio Tutorial for Beginners - HackerNoon
+# Google AI Studio 新手入门教程
 
 > 🤖 分类：AI教程
 > 📅 采集日期：2026-05-13

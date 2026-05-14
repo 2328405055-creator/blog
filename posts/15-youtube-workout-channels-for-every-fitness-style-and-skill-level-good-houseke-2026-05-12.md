@@ -1,4 +1,4 @@
-# 15 YouTube Workout Channels for Every Fitness Style and Skill Level - Good Housekeeping
+# 15个适配各健身风格与水平的YouTube健身频道
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-12

@@ -1,4 +1,4 @@
-# One-Month Push-Up Workout Plan for More Push-Ups - BarBend
+# 一个月俯卧撑训练计划：助你轻松提升俯卧撑数量——BarBend
 
 > 💪 分类：每日计划
 > 📅 采集日期：2026-05-11

@@ -1,4 +1,4 @@
-# Explainable medical imaging AI needs human-centered design: guidelines and evidence from a systematic review - Nature
+# 可解释医学影像AI需以人为本的设计：系统性综述的指南与实证
 
 > 🤖 分类：AI教程
 > 📅 采集日期：2026-05-12

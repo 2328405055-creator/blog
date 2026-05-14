@@ -1,4 +1,4 @@
-# Artificial intelligence implementation: 8 steps for success - IBM
+# 人工智能落地实施的八大成功步骤
 
 > 🤖 分类：行业动态
 > 📅 采集日期：2026-05-12

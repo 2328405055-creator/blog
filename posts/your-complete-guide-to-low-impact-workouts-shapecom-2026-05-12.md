@@ -1,4 +1,4 @@
-# Your Complete Guide to Low-Impact Workouts - shape.com
+# 低冲击力运动完整指南
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-12

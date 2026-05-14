@@ -1,4 +1,4 @@
-# These 13 YouTube Pilates Workouts Are Perfect For Beginners - Popsugar
+# 13个适合初学者的YouTube普拉提训练视频
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-12

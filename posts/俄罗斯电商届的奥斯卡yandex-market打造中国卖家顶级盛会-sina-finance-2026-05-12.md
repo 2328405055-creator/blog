@@ -1,4 +1,4 @@
-# 俄罗斯电商届的“奥斯卡”，Yandex Market打造中国卖家顶级盛会！ - Sina finance
+# 俄罗斯电商“奥斯卡”：Yandex Market中国卖家峰会
 
 > 📂 分类：Yandex运营
 > 📅 采集日期：2026-05-12

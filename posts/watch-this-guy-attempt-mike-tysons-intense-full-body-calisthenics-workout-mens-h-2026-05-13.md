@@ -1,4 +1,4 @@
-# Watch This Guy Attempt Mike Tyson's Intense, Full-Body Calisthenics Workout - Men's Health
+# 迈克·泰森高强度全身自重训练挑战
 
 > 💪 分类：男性训练
 > 📅 采集日期：2026-05-13

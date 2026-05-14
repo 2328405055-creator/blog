@@ -1,4 +1,4 @@
-# Coast Guard updates policy on using Generative AI tools - United States Coast Guard (.mil)
+# 美国海岸警卫队更新生成式AI工具使用政策
 
 > 🤖 分类：AI工具
 > 📅 采集日期：2026-05-11

@@ -1,4 +1,4 @@
-# How to Become a Data Scientist | Become a Data Scientist in 2026 - Simplilearn.com
+# 2026年数据科学家进阶指南
 
 > 🤖 分类：AI教程
 > 📅 采集日期：2026-05-13

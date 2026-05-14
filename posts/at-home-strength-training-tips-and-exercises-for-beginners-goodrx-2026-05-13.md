@@ -1,4 +1,4 @@
-# At-Home Strength Training Tips and Exercises for Beginners - GoodRx
+# 新手居家力量训练指南与动作详解
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-13

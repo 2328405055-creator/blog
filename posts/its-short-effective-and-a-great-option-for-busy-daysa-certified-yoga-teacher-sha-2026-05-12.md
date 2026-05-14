@@ -1,4 +1,4 @@
-# “It’s short, effective and a great option for busy days”—a certified yoga teacher shares the five-minute core routine she relies on when time is tight - Fit&Well
+# “时间紧时的理想选择”——认证瑜伽教练分享5分钟核心训练法
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-12

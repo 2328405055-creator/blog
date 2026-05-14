@@ -1,4 +1,4 @@
-# A week's worth of no-equipment workouts for getting stronger from home - CBC
+# 一周居家无器械增力训练计划
 
 > 💪 分类：男性训练
 > 📅 采集日期：2026-05-11

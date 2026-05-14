@@ -1,4 +1,4 @@
-# The no-gym full-body calisthenics circuit - Men's Health
+# 无需器械的全身自重循环训练
 
 > 💪 分类：男性训练
 > 📅 采集日期：2026-05-11

@@ -1,4 +1,4 @@
-# Artificial Intelligence Tools Make Education Materials More Patient Friendly - NYU Langone Health
+# 人工智能工具助力教育材料更贴近患者——纽约大学朗格尼健康中心
 
 > 🤖 分类：AI工具
 > 📅 采集日期：2026-05-11

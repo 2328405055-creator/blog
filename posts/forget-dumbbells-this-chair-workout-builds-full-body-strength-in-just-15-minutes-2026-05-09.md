@@ -1,4 +1,4 @@
-# Forget dumbbells — this chair workout builds full-body strength in just 15 minutes - Tom's Guide
+# 15分钟椅子全身力量训练，无需哑铃
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-09

@@ -1,4 +1,4 @@
-# A Legit Starting Point: Best Workout App for Beginners (2026) - Garage Gym Reviews
+# 新手入门首选：2026年最佳健身应用推荐——Garage Gym Reviews
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-10

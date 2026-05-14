@@ -1,4 +1,4 @@
-# AI Ethics for the Everyday User – Why Should You Care? - Towards Data Science
+# AI伦理与普通人：为何你该关注？
 
 > 🤖 分类：行业动态
 > 📅 采集日期：2026-05-12

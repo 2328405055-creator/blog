@@ -1,4 +1,4 @@
-# Muscle Monster Workout Planner: The Ultimate Fitness App in 2024 - Issuewire
+# 肌肉巨兽训练规划器：2024年终极健身应用——Issuewire
 
 > 💪 分类：每日计划
 > 📅 采集日期：2026-05-11

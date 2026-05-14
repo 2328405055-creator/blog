@@ -1,4 +1,4 @@
-# The 12 Best At-Home Workouts You Can Do Without Any Equipment - SELF Magazine
+# 12款最佳居家无器械训练方案——《SELF》杂志
 
 > 💪 分类：男性训练
 > 📅 采集日期：2026-05-11

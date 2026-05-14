@@ -1,4 +1,4 @@
-# 7-Day Bodyweight Training Plan for Beginners, Created by Certified Trainers - EatingWell
+# 7天初学者自重训练计划（认证教练设计）
 
 > 💪 分类：每日计划
 > 📅 采集日期：2026-05-12

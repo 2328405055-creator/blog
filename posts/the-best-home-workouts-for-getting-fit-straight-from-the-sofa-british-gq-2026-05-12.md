@@ -1,4 +1,4 @@
-# The best home workouts for getting fit straight from the sofa - British GQ
+# 沙发健身指南：居家高效锻炼法
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-12

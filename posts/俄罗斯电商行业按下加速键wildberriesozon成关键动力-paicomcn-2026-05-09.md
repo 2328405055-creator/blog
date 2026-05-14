@@ -1,4 +1,4 @@
-# 俄罗斯电商行业按下加速键，Wildberries、Ozon成关键动力 - pai.com.cn
+# 俄罗斯电商加速发展，Wildberries与Ozon成关键引擎
 
 > 📂 分类：俄罗斯市场
 > 📅 采集日期：2026-05-09

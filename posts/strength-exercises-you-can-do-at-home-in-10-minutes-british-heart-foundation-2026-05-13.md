@@ -1,4 +1,4 @@
-# Strength exercises you can do at home in 10 minutes - British Heart Foundation
+# 10分钟居家力量训练动作
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-13

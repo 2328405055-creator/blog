@@ -1,4 +1,4 @@
-# Chris Heria — Full Profile, Biography, Workout & Diet Guide - Generation Iron
+# 克里斯·赫里亚：全面档案、训练与饮食指南
 
 > 💪 分类：饮食建议
 > 📅 采集日期：2026-05-12

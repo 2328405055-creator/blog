@@ -1,4 +1,4 @@
-# No equipment? No problem - these are officially the best bodyweight strength training exercises to do from home - Marie Claire UK
+# 无需器械？这些居家自重力量训练动作公认最佳——英国《玛丽克莱尔》
 
 > 💪 分类：男性训练
 > 📅 采集日期：2026-05-10

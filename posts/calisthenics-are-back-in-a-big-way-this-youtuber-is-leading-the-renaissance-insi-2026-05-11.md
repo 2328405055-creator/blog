@@ -1,4 +1,4 @@
-# Calisthenics Are Back in a Big Way. This YouTuber Is Leading the Renaissance. - InsideHook
+# 自重训练复兴：这位YouTuber正引领潮流
 
 > 💪 分类：瑜伽垫动作
 > 📅 采集日期：2026-05-11
