@@ -76,16 +76,26 @@ ENRICH = bool(CONFIG["enrich_enabled"] and FC_KEY and CONFIG["primary_api_key"])
 
 RSS_SOURCES = {
     "cross-border": [
-        # 跨境电商 Ozon 教程 入门 实操
+        # Ozon 教程 入门 实操
         "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+Ozon+%E6%95%99%E7%A8%8B+%E5%85%A5%E9%97%A8+%E5%AE%9E%E6%93%8D&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
         # Ozon 运营技巧 指南
         "https://news.google.com/rss/search?q=Ozon+%E8%BF%90%E8%90%A5+%E6%8A%80%E5%B7%A7+%E6%8C%87%E5%8D%97+%E9%80%89%E5%93%81+%E6%95%99%E7%A8%8B&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-        # 跨境电商 俄罗斯 选品 教程 经验
+        # 跨境电商 俄罗斯 选品 经验
         "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+%E4%BF%84%E7%BD%97%E6%96%AF+%E9%80%89%E5%93%81+%E6%95%99%E7%A8%8B+%E7%BB%8F%E9%AA%8C&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
         # 跨境物流 俄罗斯 实操 方法
         "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83+%E7%89%A9%E6%B5%81+%E4%BF%84%E7%BD%97%E6%96%AF+%E5%AE%9E%E6%93%8D+%E6%96%B9%E6%B3%95&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
         # 电商 铺货 教程 技巧
         "https://news.google.com/rss/search?q=%E7%94%B5%E5%95%86+%E9%93%BA%E8%B4%A7+Ozon+%E6%95%99%E7%A8%8B+%E6%8A%80%E5%B7%A7&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # NEW: 俄罗斯电商 平台规则
+        "https://news.google.com/rss/search?q=%E4%BF%84%E7%BD%97%E6%96%AF+%E7%94%B5%E5%95%86+%E5%B9%B3%E5%8F%B0+%E8%A7%84%E5%88%99+%E6%94%BF%E7%AD%96+%E5%85%A5%E9%A9%BB&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # NEW: Wildberries 野莓 卖家
+        "https://news.google.com/rss/search?q=Wildberries+%E9%87%8E%E8%8E%93+%E4%BF%84%E7%BD%97%E6%96%AF+%E5%8D%96%E5%AE%B6+%E5%85%A5%E9%A9%BB&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # NEW: 俄罗斯 收款 回款 汇率
+        "https://news.google.com/rss/search?q=%E4%BF%84%E7%BD%97%E6%96%AF+%E6%94%B6%E6%AC%BE+%E5%9B%9E%E6%AC%BE+%E5%8D%A2%E5%B8%83+%E6%B1%87%E7%8E%87+%E8%B7%A8%E5%A2%83&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # NEW: Ozon FBO FBS 海外仓
+        "https://news.google.com/rss/search?q=Ozon+FBO+FBS+%E6%B5%B7%E5%A4%96%E4%BB%93+%E5%8F%91%E8%B4%A7+%E6%95%99%E7%A8%8B&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # NEW: 跨境电商 选品 数据 分析
+        "https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+%E9%80%89%E5%93%81+%E6%95%B0%E6%8D%AE+%E5%88%86%E6%9E%90+%E5%B7%A5%E5%85%B7&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
     ],
     "ai-news": [
         # AI 教程 入门 学习
@@ -96,16 +106,32 @@ RSS_SOURCES = {
         "https://news.google.com/rss/search?q=AI+%E7%94%B5%E5%95%86+%E5%BA%94%E7%94%A8+%E6%95%99%E7%A8%8B+%E6%96%B9%E6%B3%95&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
         # AI tutorial guide how-to
         "https://news.google.com/rss/search?q=AI+tutorial+guide+how-to+artificial+intelligence+learning&hl=en&gl=US&ceid=US:en",
+        # NEW: AI 编程 开发 copilot
+        "https://news.google.com/rss/search?q=AI+%E7%BC%96%E7%A8%8B+%E5%BC%80%E5%8F%91+copilot+cursor+%E6%95%99%E7%A8%8B&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # NEW: AI 设计 绘画 midjourney
+        "https://news.google.com/rss/search?q=AI+%E8%AE%BE%E8%AE%A1+%E7%BB%98%E7%94%BB+midjourney+stable+diffusion+%E6%95%99%E7%A8%8B&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # NEW: machine learning deep learning tutorial
+        "https://news.google.com/rss/search?q=machine+learning+deep+learning+tutorial+beginner+guide&hl=en&gl=US&ceid=US:en",
+        # NEW: AI automation workflow productivity
+        "https://news.google.com/rss/search?q=AI+automation+workflow+productivity+tools+tutorial&hl=en&gl=US&ceid=US:en",
     ],
     "fitness": [
-        # Google News — 徒手健身 自重训练 教程
+        # 徒手健身 自重训练 教程
         "https://news.google.com/rss/search?q=%E5%BE%92%E6%89%8B%E5%81%A5%E8%BA%AB+%E8%87%AA%E9%87%8D%E8%AE%AD%E7%BB%83+%E6%95%99%E7%A8%8B+%E4%BF%AF%E5%8D%A7%E6%92%91+%E6%B7%B1%E8%B9%B2&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-        # Google News — 核心训练 瑜伽 腹部
+        # 核心训练 瑜伽 腹部
         "https://news.google.com/rss/search?q=%E6%A0%B8%E5%BF%83%E8%AE%AD%E7%BB%83+%E7%91%9C%E4%BC%BD%E5%9E%AB+%E8%85%B9%E8%82%8C+%E5%81%A5%E8%BA%AB&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-        # Google News — bodyweight workout plan home
+        # bodyweight workout plan home
         "https://news.google.com/rss/search?q=bodyweight+workout+home+routine+beginner+no+equipment&hl=en&gl=US&ceid=US:en",
-        # Google News — calisthenics tutorial exercises
+        # calisthenics tutorial exercises
         "https://news.google.com/rss/search?q=calisthenics+bodyweight+exercise+tutorial+plan&hl=en&gl=US&ceid=US:en",
+        # NEW: HIIT workout home no equipment
+        "https://news.google.com/rss/search?q=HIIT+workout+home+no+equipment+bodyweight+fat+burn&hl=en&gl=US&ceid=US:en",
+        # NEW: yoga stretch flexibility beginner
+        "https://news.google.com/rss/search?q=yoga+stretch+flexibility+beginner+routine+home+mat&hl=en&gl=US&ceid=US:en",
+        # NEW: 健身 饮食 营养 减脂
+        "https://news.google.com/rss/search?q=%E5%81%A5%E8%BA%AB+%E9%A5%AE%E9%A3%9F+%E8%90%A5%E5%85%BB+%E5%87%8F%E8%84%82+%E5%BE%92%E6%89%8B&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+        # NEW: resistance band workout tutorial
+        "https://news.google.com/rss/search?q=resistance+band+workout+tutorial+home+full+body&hl=en&gl=US&ceid=US:en",
     ],
 }
 
@@ -186,23 +212,156 @@ BLACKLIST_FITNESS = [
 # Firecrawl 抓取 + AI 总结 模块
 
 def scrape_article_content(url):
-    """用 Firecrawl 抓取完整文章，返回 clean markdown。失败返回 None"""
+    """用 Firecrawl 抓取完整文章，返回 {markdown, images}。失败返回 None"""
     if not FC_KEY:
         return None
     try:
         app = V1FirecrawlApp(api_key=FC_KEY)
-        result = app.scrape_url(url, formats=["markdown"],
+        result = app.scrape_url(url, formats=["markdown", "html"],
                                 timeout=CONFIG["scrape_timeout"] * 1000)
         md = getattr(result, "markdown", "") or ""
         if not md or len(md) < 100:
             return None
+        # 提取图片 URL
+        images = []
+        html = getattr(result, "html", "") or ""
+        if html:
+            img_urls = re.findall(r'<img[^>]+src=["\']([^"\']+)["\']', html)
+            images = [u for u in img_urls if not u.endswith(('.gif','.svg')) and len(u) > 20][:5]
+        # 截断
         max_chars = CONFIG["target_words"] * 8
         if len(md) > max_chars:
             md = md[:max_chars] + "\n\n...(内容已截断)"
-        return md
+        return {"markdown": md, "images": images, "url": url}
     except Exception as e:
         print(f"  [SCRAPE FAIL] {url[:60]}: {e}")
         return None
+
+
+def cluster_articles(entries):
+    """按主题相似度将文章分组为 clusters"""
+    if len(entries) <= 3:
+        return [[e] for e in entries]  # 太少不做聚类
+
+    # 提取关键词特征
+    def keywords(title):
+        words = re.findall(r'[\w一-鿿]{2,}', title.lower())
+        stop = {'the','and','for','you','can','how','to','in','with','your','this','that','from','are','get','fit','best','new','out','its','all','not','one','use','will','what','more','have','been','some','into','just','like','about','make','need','does','work','good','well','also','very','each','than','over','take','know','much','our','day','way','see','back','come','has','two','top','try','say','any','set','put','big','own','may','had'}
+        return [w for w in words if w not in stop]
+
+    # 计算 Jaccard 相似度
+    clusters = []
+    used = set()
+    for i, e1 in enumerate(entries):
+        if i in used:
+            continue
+        k1 = set(keywords(e1["title"]))
+        cluster = [e1]
+        used.add(i)
+        for j, e2 in enumerate(entries):
+            if j in used or e1["section"] != e2["section"]:
+                continue
+            k2 = set(keywords(e2["title"]))
+            if not k1 or not k2:
+                continue
+            overlap = len(k1 & k2)
+            if overlap >= 2:  # 至少2个共同关键词
+                cluster.append(e2)
+                used.add(j)
+        clusters.append(cluster)
+
+    # 限制每簇最多3篇
+    return [c[:3] for c in clusters]
+
+
+def synthesize_cluster(cluster, section):
+    """多源交叉合成：抓取簇内多篇文章 + AI 交叉印证总结"""
+    if len(cluster) == 1:
+        # 单篇文章：用原有逻辑
+        entry = cluster[0]
+        scraped = scrape_article_content(entry["link"])
+        if scraped:
+            summary = summarize_article(entry["title"], entry["source_name"],
+                                        scraped["markdown"], section)
+            entry["enriched"] = summary
+            entry["_images"] = scraped.get("images", [])
+        return
+
+    # 多篇文章：交叉合成
+    sources = []
+    all_content = []
+    all_images = []
+    for entry in cluster:
+        scraped = scrape_article_content(entry["link"])
+        if scraped:
+            sources.append(f"**{entry['title']}** (来源: {entry['source_name']})")
+            all_content.append(scraped["markdown"])
+            all_images.extend(scraped.get("images", [])[:2])
+        time.sleep(0.5)
+
+    if len(sources) < 2:
+        # 降级：只有一篇抓成功
+        if sources and cluster:
+            entry = cluster[0]
+            entry["enriched"] = summarize_article(
+                entry["title"], entry["source_name"],
+                all_content[0] if all_content else "", section)
+            entry["_images"] = all_images
+        return
+
+    # 构建交叉合成提示词
+    combined = "\n\n---\n\n".join(
+        f"### 来源 {i+1}: {s}\n{c[:4000]}"
+        for i, (s, c) in enumerate(zip(sources, all_content))
+    )
+
+    system_prompt = (
+        "你是一位专业的内容编辑。下面有{0}篇关于同一主题的文章。请交叉印证、对比分析，"
+        "整合成一篇600-1000字的纯中文综合教程。要求:\n"
+        "1. 优先采用{0}篇文章共同提到的观点和方法\n"
+        "2. 如果文章之间有矛盾，指出分歧并给出建议\n"
+        "3. 补充各文章独有的有价值的细节\n"
+        "4. 用 ## 分节，有实质性内容\n"
+        "5. 结尾给一个「综合建议」\n"
+        "只输出教程正文。"
+    ).format(len(sources))
+
+    # AI 合成
+    try:
+        client, model = _get_ai_client(False)
+        label = "Qianwen"
+        resp = client.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": f"请整合以下{len(sources)}篇文章:\n\n{combined[:12000]}"},
+            ],
+            max_tokens=2500, temperature=0.7,
+        )
+        body = resp.choices[0].message.content.strip()
+        key_points = re.findall(r'^##\s+(.+)', body, re.MULTILINE)[:5]
+        enriched = {
+            "content": body,
+            "key_points": key_points if key_points else ["详见正文"],
+            "word_count": len(body),
+            "model": label,
+            "source_count": len(sources),
+        }
+        # 赋给簇中第一篇文章
+        cluster[0]["enriched"] = enriched
+        cluster[0]["_images"] = all_images[:5]
+        cluster[0]["_sources"] = sources
+        for e in cluster[1:]:
+            e["enriched"] = False  # 标记为簇中非主篇，跳过 build
+        print(f"  [SYNTHESIS] {len(sources)}篇交叉合成 -> {len(body)}字")
+    except Exception as e:
+        print(f"  [SYNTHESIS FAIL] {e}")
+        # 降级：用第一篇单独总结
+        if all_content and cluster:
+            entry = cluster[0]
+            entry["enriched"] = summarize_article(
+                entry["title"], entry["source_name"], all_content[0], section)
+            entry["_images"] = all_images
 
 
 def _get_ai_client(use_backup=False):
@@ -313,54 +472,31 @@ def translate_title(title):
 
 
 def enrich_batch(entries):
-    """批量抓取+总结。3 线程并行抓取，串行总结"""
+    """批量富化：先聚类 -> 每簇交叉合成或单篇总结"""
     if not ENRICH:
         return entries
 
     total = len(entries)
-    print(f"[INFO] 内容富化: {total} 篇（Firecrawl + 千问）...")
+    print(f"[INFO] 内容富化: {total} 篇 -> {len(cluster_articles(entries))} 个主题簇...")
 
-    # Phase 1: 并发抓取
-    results = {}
-    with ThreadPoolExecutor(max_workers=3) as pool:
-        futures = {}
-        for i, entry in enumerate(entries):
-            f = pool.submit(scrape_article_content, entry["link"])
-            futures[f] = i
-            time.sleep(0.5)
+    # 聚类
+    clusters = cluster_articles(entries)
+    multi = sum(1 for c in clusters if len(c) > 1)
+    if multi:
+        print(f"[INFO] 发现 {multi} 个多源主题簇（可交叉印证）")
 
-        for f in as_completed(futures):
-            i = futures[f]
-            try:
-                md = f.result()
-            except Exception:
-                md = None
-            results[i] = md
-            status = "OK" if md else "FAIL"
-            try: print(f"  [SCRAPE {status}] ({i+1}/{total}) {entries[i]['title'][:40]}...")
-            except UnicodeEncodeError: print(f"  [SCRAPE {status}] ({i+1}/{total})")
-
-    # Phase 2: 串行总结 + 附加到 entry
-    for i, entry in enumerate(entries):
-        content_md = results.get(i)
-        if content_md:
-            enriched = summarize_article(
-                entry["title"], entry["source_name"], content_md, entry["section"]
-            )
-            entry["enriched"] = enriched
-            if enriched:
-                try:
-                    print(f"  [SUMMARIZE OK] ({i+1}/{total}) {enriched.get('word_count',0)}字 via {enriched.get('model','?')}")
-                except UnicodeEncodeError:
-                    print(f"  [SUMMARIZE OK] ({i+1}/{total})")
-            else:
-                print(f"  [SUMMARIZE FAIL] ({i+1}/{total})")
-            time.sleep(1)
+    # 逐簇处理
+    for ci, cluster in enumerate(clusters):
+        section = cluster[0]["section"]
+        if len(cluster) > 1:
+            print(f"  [CLUSTER {ci+1}/{len(clusters)}] {len(cluster)}篇 -> 交叉合成...")
+            synthesize_cluster(cluster, section)
         else:
-            entry["enriched"] = None
+            print(f"  [CLUSTER {ci+1}/{len(clusters)}] 单篇 -> 总结...")
+            synthesize_cluster(cluster, section)
 
     ok = sum(1 for e in entries if e.get("enriched"))
-    print(f"[INFO] 富化完成: {ok}/{total} 篇成功")
+    print(f"[INFO] 富化完成: {ok}/{total} 篇成功 ({multi} 个交叉合成)")
     return entries
 
 
@@ -560,9 +696,15 @@ def build_fitness_post(entry):
     yt_query = urllib.parse.quote(title[:50])
     yt_link = f"https://www.youtube.com/results?search_query={yt_query}"
 
+    images = entry.get("_images", [])
+    sources_info = entry.get("_sources", [])
     body = ""
     if enriched and enriched.get("content"):
         body = enriched["content"]
+        if sources_info:
+            body += "\n\n## 参考来源\n\n" + "\n".join(f"- {s}" for s in sources_info)
+        if images:
+            body += "\n\n## 配图\n\n" + "\n".join(f"![]({img})" for img in images[:3])
     else:
         body = """## 训练建议
 
@@ -605,9 +747,15 @@ def build_ai_post(entry):
     search_url = build_search_link(title, domain)
     enriched = entry.get("enriched")
 
+    images = entry.get("_images", [])
+    sources_info = entry.get("_sources", [])
     body = ""
     if enriched and enriched.get("content"):
         body = enriched["content"]
+        if sources_info:
+            body += "\n\n## 参考来源\n\n" + "\n".join(f"- {s}" for s in sources_info)
+        if images:
+            body += "\n\n## 配图\n\n" + "\n".join(f"![]({img})" for img in images[:3])
     else:
         body = """## AI 与跨境电商的交汇
 
@@ -674,11 +822,14 @@ def generate_posts(limit_cb=8, limit_fit=5, limit_ai=7):
 
     # ---- 生成文章 ----
     for entry in cb_fresh:
-        new_posts.append(build_and_save(entry, "cross-border", date_str, existing_slugs))
+        if entry.get("enriched") is not False:  # None=未处理, dict=有数据, False=簇中非主篇
+            new_posts.append(build_and_save(entry, "cross-border", date_str, existing_slugs))
     for entry in fit_fresh:
-        new_posts.append(build_and_save(entry, "fitness", date_str, existing_slugs))
+        if entry.get("enriched") is not False:
+            new_posts.append(build_and_save(entry, "fitness", date_str, existing_slugs))
     for entry in ai_fresh:
-        new_posts.append(build_and_save(entry, "ai-news", date_str, existing_slugs))
+        if entry.get("enriched") is not False:
+            new_posts.append(build_and_save(entry, "ai-news", date_str, existing_slugs))
 
     # ---- 补充 ----
     cb_total = sum(1 for p in new_posts if p["cat"] == "cross-border")
