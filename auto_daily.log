@@ -59,3 +59,13 @@ UnicodeDecodeError: 'gbk' codec can't decode byte 0x94 in position 43: illegal m
 
 当前线上 142 篇文章 → http://20020426.top
 [OK] daily_generator completed 
+[鍛ㄥ洓 2026/05/14  0:28:23.49] ====== Blog Daily Auto Pipeline ====== 
+[鍛ㄥ洓 2026/05/14  0:28:23.76] [1/2] daily_generator 
+The system cannot execute the specified program.
+[ERROR] daily_generator failed 
+[鍛ㄥ洓 2026/05/14 10:43:10.40] ====== Blog Daily Auto Pipeline ====== 
+[鍛ㄥ洓 2026/05/14 10:43:11.02] [1/2] daily_generator 
+The system cannot execute the specified program.
+[ERROR] daily_generator failed 
+[鍛ㄥ洓 2026/05/14 10:51:10.24] ====== Blog Daily Auto Pipeline ====== 
+[鍛ㄥ洓 2026/05/14 10:51:10.25] [1/2] daily_generator 

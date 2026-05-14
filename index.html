@@ -24,13 +24,29 @@
 :root{
   --bg:#080c14;--card:#0f1420;--card-hover:#161d2e;--border:#1c2438;
   --text:#bcc5d6;--title:#e2e8f4;--muted:#5e6d87;--blue:#4b8cf7;
-  --cyan:#22c9d0;--purple:#9b72f2;--pink:#f07baa;--gold:#f0b85a;
+  --cyan:#22c9d0;--purple:#9b72f2;--pink:#f07baa;--gold:#d4a63c;
   --green:#34c97d;--red:#f04b6e;--r:14px;--rs:8px;
 }
+[data-theme="light"]{
+  --bg:#f5f5f7;--card:#ffffff;--card-hover:#fafafa;--border:#e5e5ea;
+  --text:#3a3a3c;--title:#1c1c1e;--muted:#8e8e93;--blue:#3b82f6;
+  --cyan:#0891b2;--purple:#7c3aed;--pink:#db2777;--gold:#b8860b;
+  --green:#16a34a;--red:#dc2626;
+}
+[data-theme="light"] .nav{background:rgba(245,245,247,0.82)}
+[data-theme="light"] .game-overlay{background:rgba(245,245,247,0.93)}
+[data-theme="light"] .breath-overlay{background:rgba(245,245,247,0.9)}
+[data-theme="light"] .article .content pre{background:#f0f0f2;border-color:#d5d5da}
+[data-theme="light"] .featured-post-card{background:linear-gradient(160deg,rgba(255,251,240,0.95),rgba(252,250,255,0.98),rgba(255,252,242,0.95))}
+[data-theme="light"] .fp-mini{background:rgba(0,0,0,0.02)}
+[data-theme="light"] .sudo-cell{background:var(--card)}
+[data-theme="light"] .sudo-cell.given{color:#0891b2}
+[data-theme="light"] ::-webkit-scrollbar-track{background:var(--bg)}
+[data-theme="light"] ::-webkit-scrollbar-thumb{background:#c5c5ca}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 #progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--purple));z-index:200;transition:width 0.15s}
 #particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background-color 0.35s,color 0.35s}
 a{color:var(--cyan);text-decoration:none}
 a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 .app{position:relative;z-index:1}
@@ -47,6 +63,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 .nav-right a:hover{color:var(--title);background:var(--card);border-color:var(--border)}
 .nav-right a.spotify:hover{color:#1DB954;border-color:#1DB95433;background:#1DB95411}
 .nav-right a.bilibili:hover{color:#fb7299;border-color:#fb729933;background:#fb729911}
+.theme-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--title);cursor:pointer;font-size:16px;transition:all 0.25s;margin-right:4px}
+.theme-btn:hover{border-color:var(--gold);background:rgba(240,184,90,0.08);transform:rotate(15deg)}
 .nav-right svg{width:15px;height:15px}
 .nav-tabs{display:flex;gap:3px;margin-left:6px}
 .nav-tabs button{padding:6px 15px;border-radius:16px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;font-size:13px;transition:all 0.25s;font-weight:500}
@@ -347,7 +365,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
       <a class="spotify" href="https://open.spotify.com/playlist/6Xr9Xc1vYQmgrYyqC4mY18" target="_blank" rel="noopener" aria-label="Spotify">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
       </a>
-      <a class="bilibili" href="https://www.bilibili.com" target="_blank" rel="noopener" aria-label="Bilibili">
+      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="切换亮色/暗色模式" title="切换主题">☀️</button>
+	      <a class="bilibili" href="https://www.bilibili.com" target="_blank" rel="noopener" aria-label="Bilibili">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 01-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 01.16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/></svg>
       </a>
     </div>
@@ -370,11 +389,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 
 <!-- Stars -->
 <script>
-(function(){
+let starColor='rgba(155,180,220,';(function(){
   const c=document.getElementById('particles'),ctx=c.getContext('2d');let stars=[],w,h;
   function R(){w=c.width=window.innerWidth;h=c.height=window.innerHeight}R();window.onresize=R;
   for(let i=0;i<100;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+0.4,o:Math.random(),s:Math.random()*0.004+0.0015});
-  (function D(){ctx.clearRect(0,0,w,h);stars.forEach(s=>{s.o+=s.s;if(s.o>1||s.o<0)s.s*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(155,180,220,${s.o*0.55})`;ctx.fill()});requestAnimationFrame(D)})()
+  (function D(){ctx.clearRect(0,0,w,h);stars.forEach(s=>{s.o+=s.s;if(s.o>1||s.o<0)s.s*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`${starColor}${s.o*0.55})`;ctx.fill()});requestAnimationFrame(D)})()
 })();
 </script>
 
@@ -623,6 +642,13 @@ function switchSub(s){currentSub=s;currentPage=1;render()}
 function onSearch(v){currentSearch=v;currentPage=1;render()}
 function goPage(n){currentPage=Math.max(1,n);render();document.getElementById('articleList').scrollIntoView({behavior:'smooth'})}
 function goHome(){switchTab('all')}
+// ====== THEME ======
+function getTheme(){return document.documentElement.getAttribute('data-theme')||'dark'}
+function setTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('theme',t);updateThemeBtn()}
+function toggleTheme(){setTheme(getTheme()==='dark'?'light':'dark');updateParticlesForTheme()}
+function updateThemeBtn(){const btn=document.getElementById('themeBtn');if(btn)btn.textContent=getTheme()==='dark'?'☀️':'🌙'}
+function updateParticlesForTheme(){starColor=getTheme()==='dark'?'rgba(155,180,220,' : 'rgba(80,100,140,'}
+(function(){const saved=localStorage.getItem('theme');if(saved==='light'){setTheme('light');updateParticlesForTheme()}else updateThemeBtn()})();
 function toggleMenu(){const m=document.getElementById('navMenu');m.classList.toggle('open');document.getElementById('hamBtn').setAttribute('aria-expanded',m.classList.contains('open'))}
 function closeMenu(){document.getElementById('navMenu').classList.remove('open');document.getElementById('hamBtn').setAttribute('aria-expanded','false')}
 
