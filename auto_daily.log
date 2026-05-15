@@ -69,3 +69,59 @@ The system cannot execute the specified program.
 [ERROR] daily_generator failed 
 [鍛ㄥ洓 2026/05/14 10:51:10.24] ====== Blog Daily Auto Pipeline ====== 
 [鍛ㄥ洓 2026/05/14 10:51:10.25] [1/2] daily_generator 
+Exception in thread Thread-3 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\subprocess.py", line 1614, in _readerthread
+    buffer.append(fh.read())
+                  ~~~~~~~^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0x94 in position 43: illegal multibyte sequence
+========================================================
+  每日内容生成器 v3 — 真实来源 · 有据可查
+========================================================
+[INFO] 抓取跨境电商新闻...
+  [WARN] https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%9...: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+Ozon+%E6%95%99%E7%A8%8B+%E5%85%A5%E9%97%A8+%E5%AE%9E%E6%93%8D&hl=zh-CN&gl=CN&ceid=CN:zh-Hans (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b3a5e80>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  [WARN] https://news.google.com/rss/search?q=Ozon+%E8%BF%90%E8%90%A5...: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=Ozon+%E8%BF%90%E8%90%A5+%E6%8A%80%E5%B7%A7+%E6%8C%87%E5%8D%97+%E9%80%89%E5%93%81+%E6%95%99%E7%A8%8B&hl=zh-CN&gl=CN&ceid=CN:zh-Hans (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42df90>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  [WARN] https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83%E7%9...: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+%E4%BF%84%E7%BD%97%E6%96%AF+%E9%80%89%E5%93%81+%E6%95%99%E7%A8%8B+%E7%BB%8F%E9%AA%8C&hl=zh-CN&gl=CN&ceid=CN:zh-Hans (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42d950>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  [WARN] https://news.google.com/rss/search?q=%E8%B7%A8%E5%A2%83+%E7%...: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=%E8%B7%A8%E5%A2%83+%E7%89%A9%E6%B5%81+%E4%BF%84%E7%BD%97%E6%96%AF+%E5%AE%9E%E6%93%8D+%E6%96%B9%E6%B3%95&hl=zh-CN&gl=CN&ceid=CN:zh-Hans (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42df90>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  [WARN] https://news.google.com/rss/search?q=%E7%94%B5%E5%95%86+%E9%...: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=%E7%94%B5%E5%95%86+%E9%93%BA%E8%B4%A7+Ozon+%E6%95%99%E7%A8%8B+%E6%8A%80%E5%B7%A7&hl=zh-CN&gl=CN&ceid=CN:zh-Hans (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42de50>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  获取 0 条，0 条可用
+[INFO] 抓取健身内容...
+  [WARN] https://news.google.com/rss/search?q=%E5%BE%92%E6%89%8B%E5%8...: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=%E5%BE%92%E6%89%8B%E5%81%A5%E8%BA%AB+%E8%87%AA%E9%87%8D%E8%AE%AD%E7%BB%83+%E6%95%99%E7%A8%8B+%E4%BF%AF%E5%8D%A7%E6%92%91+%E6%B7%B1%E8%B9%B2&hl=zh-CN&gl=CN&ceid=CN:zh-Hans (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42d450>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  [WARN] https://news.google.com/rss/search?q=%E6%A0%B8%E5%BF%83%E8%A...: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=%E6%A0%B8%E5%BF%83%E8%AE%AD%E7%BB%83+%E7%91%9C%E4%BC%BD%E5%9E%AB+%E8%85%B9%E8%82%8C+%E5%81%A5%E8%BA%AB&hl=zh-CN&gl=CN&ceid=CN:zh-Hans (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42ce10>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  [WARN] https://news.google.com/rss/search?q=bodyweight+workout+home...: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=bodyweight+workout+home+routine+beginner+no+equipment&hl=en&gl=US&ceid=US:en (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42d310>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  [WARN] https://news.google.com/rss/search?q=calisthenics+bodyweight...: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=calisthenics+bodyweight+exercise+tutorial+plan&hl=en&gl=US&ceid=US:en (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42d090>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  获取 0 条，0 条可用
+[INFO] 抓取 AI 新闻...
+  [WARN] https://news.google.com/rss/search?q=AI+%E6%95%99%E7%A8%8B+%...: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=AI+%E6%95%99%E7%A8%8B+%E5%85%A5%E9%97%A8+%E5%AD%A6%E4%B9%A0+%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD&hl=zh-CN&gl=CN&ceid=CN:zh-Hans (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42c7d0>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  [WARN] https://news.google.com/rss/search?q=AI%E5%B7%A5%E5%85%B7+%E...: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=AI%E5%B7%A5%E5%85%B7+%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B+%E6%95%99%E5%AD%A6+%E5%AE%9E%E6%93%8D&hl=zh-CN&gl=CN&ceid=CN:zh-Hans (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42cb90>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  [WARN] https://news.google.com/rss/search?q=AI+%E7%94%B5%E5%95%86+%...: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=AI+%E7%94%B5%E5%95%86+%E5%BA%94%E7%94%A8+%E6%95%99%E7%A8%8B+%E6%96%B9%E6%B3%95&hl=zh-CN&gl=CN&ceid=CN:zh-Hans (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42e350>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  [WARN] https://news.google.com/rss/search?q=AI+tutorial+guide+how-t...: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=AI+tutorial+guide+how-to+artificial+intelligence+learning&hl=en&gl=US&ceid=US:en (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42e5d0>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  获取 0 条，0 条可用
+[INFO] 补充搜索 (缺CB:8 Fit:5 AI:7)...
+  [WARN] 补充抓取失败: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86+%E4%BF%84%E7%BD%97%E6%96%AF+%E9%80%89%E5%93%81+%E8%BF%90%E8%90%A5+%E7%89%A9%E6%B5%81&hl=zh-CN&gl=CN&ceid=CN:zh-Hans (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42c690>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  [WARN] 补充抓取失败: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=%E5%BE%92%E6%89%8B+%E8%87%AA%E9%87%8D+%E8%AE%AD%E7%BB%83+%E6%95%99%E7%A8%8B+%E4%BF%AF%E5%8D%A7%E6%92%91+%E6%B7%B1%E8%B9%B2+%E7%91%9C%E4%BC%BD+%E5%81%A5%E8%BA%AB&hl=zh-CN&gl=CN&ceid=CN:zh-Hans (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42e990>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+  [WARN] 补充抓取失败: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=AI+%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD+%E5%B7%A5%E5%85%B7+%E6%95%99%E7%A8%8B+%E5%BA%94%E7%94%A8&hl=zh-CN&gl=CN&ceid=CN:zh-Hans (Caused by ConnectTimeoutError(<HTTPSConnection(host='news.google.com', port=443) at 0x2ea4b42ec10>, 'Connection to news.google.com timed out. (connect timeout=15)'))
+
+[DONE] 2026-05-14 — 跨境电商 0 + 健身 0 + AI新闻 0 = 0 篇
+  线上共 162 篇文章 → http://20020426.top
+[INFO] sitemap.xml 已更新 (162 篇文章)
+
+[INFO] 推送至 GitHub...
+  git add . → OK
+  git commit -m 每日更新 2026-05-14 — 来源采集 → OK
+  git push → OK
+  推送完成
+
+当前线上 162 篇文章 → http://20020426.top
+[OK] daily_generator completed 
+[鍛ㄤ簲 2026/05/15  9:30:49.10] ====== Blog Daily Auto Pipeline ====== 
+
+[notice] A new release of pip is available: 26.0.1 -> 26.1.1
+[notice] To update, run: C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\python.exe -m pip install --upgrade pip
+[鍛ㄤ簲 2026/05/15  9:31:27.44] [1/2] daily_generator 
