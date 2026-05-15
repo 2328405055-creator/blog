@@ -1,67 +1,67 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Project guide for Claude Code. Keep context small and avoid reading unrelated generated content.
 
-## 项目概述
+## Project
 
-猫明之主 — 个人学习仪表盘网站，三大栏目：跨境电商（Ozon/Yandex/俄罗斯铺货选品）+ 每日健身（徒手自重/瑜伽垫/男女教程）+ AI新闻。静态站点，GitHub Pages 托管。
+- Site: `20020426.top`
+- Repo: `2328405055-creator/blog`
+- Hosting: GitHub Pages static site
+- Stack: plain HTML/CSS/JS plus Python generation scripts
+- Topics: cross-border ecommerce, Ozon/Yandex/Wildberries, home fitness, AI learning
 
-- 域名: `20020426.top`，DNS 在 Cloudflare（4条A记录 + www CNAME）
-- GitHub: `2328405055-creator/blog`，分支 `master`
-- GitHub Pages 自定义域名已配置，**需手动开启 Enforce HTTPS**
+## Key Files
 
-## 常用命令
+- `index.html`: main page
+- `assets/css/main.css`: global styles
+- `assets/js/*.js`: frontend modules
+- `posts/posts.json`: article index and list data source
+- `posts/*.md`: article bodies
+- `scripts/daily_generator.py`: daily article generator
+- `scripts/ozon_selector.py`: Ozon product selection generator
+- `sitemap.xml`: generated sitemap
+- `.env.example`: env template; never read or commit `.env`
+
+## Commands
 
 ```bash
-cd D:\games\blog
-
-# 每日生成10篇文章（5跨境+2健身+3AI）+ 更新sitemap + 推送
-python scripts/daily_generator.py --push
-
-# 只生成不推送
 python scripts/daily_generator.py
-
-# 手动推送
-git add . && git commit -m "更新" && git push
+python scripts/daily_generator.py --push
+python scripts/ozon_selector.py --dry-run
+python scripts/ozon_selector.py --push
+python -m http.server 8080
+git status --short
+git diff --stat
 ```
 
-## 文件架构
+## Token Rules
 
-```
-D:\games\blog\
-├── index.html           # 单页应用（Apple风格，毛玻璃导航，星空背景）
-├── 404.html             # 自定义404页面
-├── CNAME                # 20020426.top
-├── robots.txt           # SEO爬虫规则
-├── sitemap.xml          # 自动生成，包含所有文章URL
-├── CLAUDE.md
-├── posts/
-│   ├── posts.json       # 文章索引 [{slug,title,date,excerpt,cat,sub,source?,source_name?}]
-│   └── *.md             # 每篇文章一个.md
-└── scripts/
-    ├── daily_generator.py  # v3 来源驱动生成器 + sitemap生成
-    └── tracker.json        # 已发文章追踪
-```
+- Search first with `rg`; read only the files needed for the task.
+- For frontend issues, inspect `index.html`, `assets/css/main.css`, and relevant `assets/js/` files.
+- For content generation issues, inspect only relevant files in `scripts/`.
+- Do not bulk-read `posts/*.md`. Use `posts/posts.json` unless the task names a specific article.
+- Do not read `.env`, logs, caches, or generated history unless the user explicitly asks.
+- For changes touching 3 or more files, give a short 3-5 step plan before editing.
+- Suggest `/compact` after exploration, after a milestone, and before switching topics.
 
-**cat 值:** `"cross-border"` | `"fitness"` | `"ai-news"`
+## Current Handoff
 
-## 网站功能
+- Keep the current optimization direction; do not roll back the frontend or Python split unless the user asks.
+- Frontend modules in `assets/js/` passed `node --check`.
+- Python validation is blocked until real Python is installed or enabled; Windows Store stubs are currently first on PATH.
+- `auto_daily.log` is tracked but now ignored for future changes; avoid committing log churn.
+- Before any `--push`, run Python dry-runs first once Python works.
 
-- 首页工具：日期卡片、歇后语（点看答案）、猜字谜（交互输入）
-- TODO待办：导航栏📋按钮，密码 `catming`，localStorage存储
-- 呼吸放松：右下角🧘按钮
-- 卢布汇率：实时显示1 CNY ≈ X RUB（1小时缓存）
-- 分页：每页10篇
-- SEO：JSON-LD结构化数据 + meta标签 + sitemap + ARIA无障碍
-- 复制引言、文章分享
+## Development Rules
 
-## 内容来源
+- Keep the static-site structure. Do not add a build tool unless requested.
+- Reuse existing CSS variables and component patterns.
+- Preserve article index fields: `slug`, `title`, `date`, `excerpt`, `cat`, `sub`, `source`, `source_name`, `lastmod`.
+- Generated content must keep real source links and media names.
+- Never expose real API keys, tokens, cookies, or account data.
 
-Google News RSS（跨境电商中文 + 健身英文 + AI中英文），每篇标注来源媒体和链接。tracker.json防止重复推送。
+## Verify
 
-## 用户偏好
-
-- 所有沟通用中文
-- 跨境电商：Ozon+Yandex平台，俄罗斯市场，铺货选品上架
-- 健身：徒手自重训练+瑜伽垫，男女教程都要
-- 内容必须有真实来源可追溯
+- Frontend: open `index.html` or run `python -m http.server 8080`.
+- Scripts: run without `--push` first.
+- Before release: check `git status --short` and `git diff --stat`.

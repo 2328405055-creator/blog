@@ -1,9 +1,15 @@
 __pycache__/
 *.pyc
 *.pyo
+.pytest_cache/
+.mypy_cache/
 .DS_Store
 Thumbs.db
 *.tmp
+*.log
 update_log.txt
+auto_daily.log
 scripts/config.json
 .env
+.env.*
+!.env.example

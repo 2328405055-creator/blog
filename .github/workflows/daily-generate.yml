@@ -1,0 +1,53 @@
+name: Daily Blog Content Generator
+
+on:
+  schedule:
+    # 每天 UTC 4:00 (北京时间 12:00)
+    - cron: '0 4 * * *'
+  workflow_dispatch:  # 支持手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily generator
+        env:
+          BLOG_FIRECRAWL_API_KEY: ${{ secrets.BLOG_FIRECRAWL_API_KEY }}
+          BLOG_PRIMARY_API_KEY: ${{ secrets.BLOG_PRIMARY_API_KEY }}
+          BLOG_PRIMARY_API_BASE: ${{ secrets.BLOG_PRIMARY_API_BASE }}
+          BLOG_PRIMARY_MODEL: ${{ secrets.BLOG_PRIMARY_MODEL }}
+          BLOG_BACKUP_API_KEY: ${{ secrets.BLOG_BACKUP_API_KEY }}
+          BLOG_BACKUP_API_BASE: ${{ secrets.BLOG_BACKUP_API_BASE }}
+          BLOG_BACKUP_MODEL: ${{ secrets.BLOG_BACKUP_MODEL }}
+          BLOG_ENRICH_ENABLED: ${{ secrets.BLOG_ENRICH_ENABLED }}
+          BLOG_TARGET_WORDS: ${{ secrets.BLOG_TARGET_WORDS }}
+          BLOG_SCRAPE_TIMEOUT: ${{ secrets.BLOG_SCRAPE_TIMEOUT }}
+        run: python scripts/daily_generator.py --push
+
+      - name: Run Ozon selector (every 3 days)
+        run: |
+          DAY=$(python -c "from datetime import datetime; print(datetime.now().day % 3)")
+          if [ "$DAY" = "0" ]; then
+            python scripts/ozon_selector.py --push
+          else
+            echo "Skip ozon_selector (not 3-day cycle, day mod 3 = $DAY)"
+          fi
