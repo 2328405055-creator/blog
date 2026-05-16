@@ -1,53 +1,186 @@
 name: Daily Blog Content Generator
 
+# ============================================================
+# 猫明之主小站 · 每日内容自动生成 + 发布
+# 北京时间每天 8:00 (UTC 0:00) + 手动触发
+# ============================================================
+
 on:
   schedule:
-    # 每天 UTC 4:00 (北京时间 12:00)
-    - cron: '0 4 * * *'
-  workflow_dispatch:  # 支持手动触发
+    # 北京时间 8:00 = UTC 0:00
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      section:
+        description: '生成板块 (all / cb / fit / ai / ozon)'
+        required: false
+        default: 'all'
+        type: choice
+        options: ['all', 'cb', 'fit', 'ai', 'ozon']
+      skip_push:
+        description: '跳过 Git push (仅生成文件)'
+        required: false
+        default: false
+        type: boolean
 
 permissions:
-  contents: write
+  contents: write  # 允许 git push
+
+# 防止并发运行导致冲突
+concurrency:
+  group: daily-generate
+  cancel-in-progress: false
 
 jobs:
   generate:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
 
     steps:
+      # ============================================================
+      # 1. 检出代码
+      # ============================================================
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
-      - name: Setup Python
+      # ============================================================
+      # 2. 设置 Python 环境
+      # ============================================================
+      - name: Setup Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Run daily generator
-        env:
-          BLOG_FIRECRAWL_API_KEY: ${{ secrets.BLOG_FIRECRAWL_API_KEY }}
-          BLOG_PRIMARY_API_KEY: ${{ secrets.BLOG_PRIMARY_API_KEY }}
-          BLOG_PRIMARY_API_BASE: ${{ secrets.BLOG_PRIMARY_API_BASE }}
-          BLOG_PRIMARY_MODEL: ${{ secrets.BLOG_PRIMARY_MODEL }}
-          BLOG_BACKUP_API_KEY: ${{ secrets.BLOG_BACKUP_API_KEY }}
-          BLOG_BACKUP_API_BASE: ${{ secrets.BLOG_BACKUP_API_BASE }}
-          BLOG_BACKUP_MODEL: ${{ secrets.BLOG_BACKUP_MODEL }}
-          BLOG_ENRICH_ENABLED: ${{ secrets.BLOG_ENRICH_ENABLED }}
-          BLOG_TARGET_WORDS: ${{ secrets.BLOG_TARGET_WORDS }}
-          BLOG_SCRAPE_TIMEOUT: ${{ secrets.BLOG_SCRAPE_TIMEOUT }}
-        run: python scripts/daily_generator.py --push
-
-      - name: Run Ozon selector (every 3 days)
+      # ============================================================
+      # 3. 安装依赖
+      # ============================================================
+      - name: Install Python dependencies
         run: |
-          DAY=$(python -c "from datetime import datetime; print(datetime.now().day % 3)")
-          if [ "$DAY" = "0" ]; then
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install trafilatura  # 正文提取
+
+      - name: Install Playwright (可选)
+        run: |
+          pip install playwright
+          python -m playwright install chromium --with-deps 2>/dev/null || echo "Playwright 安装跳过 (无浏览器环境)"
+        continue-on-error: true
+
+      # ============================================================
+      # 4. 设置环境变量 (从 GitHub Secrets)
+      # ============================================================
+      - name: Export secrets as env vars
+        run: |
+          echo "BLOG_FIRECRAWL_API_KEY=${{ secrets.BLOG_FIRECRAWL_API_KEY }}" >> $GITHUB_ENV
+          echo "BLOG_PRIMARY_API_KEY=${{ secrets.BLOG_PRIMARY_API_KEY }}" >> $GITHUB_ENV
+          echo "BLOG_PRIMARY_API_BASE=${{ secrets.BLOG_PRIMARY_API_BASE }}" >> $GITHUB_ENV
+          echo "BLOG_PRIMARY_MODEL=${{ secrets.BLOG_PRIMARY_MODEL }}" >> $GITHUB_ENV
+          echo "BLOG_BACKUP_API_KEY=${{ secrets.BLOG_BACKUP_API_KEY }}" >> $GITHUB_ENV
+          echo "BLOG_BACKUP_API_BASE=${{ secrets.BLOG_BACKUP_API_BASE }}" >> $GITHUB_ENV
+          echo "BLOG_BACKUP_MODEL=${{ secrets.BLOG_BACKUP_MODEL }}" >> $GITHUB_ENV
+          echo "BLOG_ENRICH_ENABLED=${{ secrets.BLOG_ENRICH_ENABLED }}" >> $GITHUB_ENV
+          echo "BLOG_TARGET_WORDS=${{ secrets.BLOG_TARGET_WORDS }}" >> $GITHUB_ENV
+          echo "BLOG_SCRAPE_TIMEOUT=${{ secrets.BLOG_SCRAPE_TIMEOUT }}" >> $GITHUB_ENV
+          echo "BLOG_EMBEDDING_API_BASE=${{ secrets.BLOG_EMBEDDING_API_BASE }}" >> $GITHUB_ENV
+          echo "BLOG_EMBEDDING_MODEL=${{ secrets.BLOG_EMBEDDING_MODEL }}" >> $GITHUB_ENV
+
+      # ============================================================
+      # 5. 运行内容生成
+      # ============================================================
+      - name: Determine section
+        id: section
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "section=${{ inputs.section }}" >> $GITHUB_OUTPUT
+          else
+            echo "section=all" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run daily generator (三板块)
+        run: |
+          echo "=== 每日内容生成 (三板块) ==="
+          python scripts/daily_generator.py --push
+        env:
+          _SECTION: ${{ steps.section.outputs.section }}
+
+      - name: Run Ozon selector (每周一/三/五)
+        run: |
+          DOW=$(date +%u)  # 1=周一, 3=周三, 5=周五
+          if [ "$DOW" = "1" ] || [ "$DOW" = "3" ] || [ "$DOW" = "5" ]; then
+            echo "=== Ozon 每日选品 ==="
             python scripts/ozon_selector.py --push
           else
-            echo "Skip ozon_selector (not 3-day cycle, day mod 3 = $DAY)"
+            echo "跳过 Ozon (仅周一三五运行, 今日 DOW=$DOW)"
           fi
+
+      # ============================================================
+      # 6. RAG 向量索引更新
+      # ============================================================
+      - name: Rebuild RAG index
+        run: |
+          echo "=== RAG 向量索引重建 ==="
+          python -c "
+          from textscripts.rag.indexer import build_index
+          stats = build_index(force=False)
+          print(f'RAG 索引: {stats}')
+          "
+        continue-on-error: true  # RAG 失败不阻塞发布
+
+      # ============================================================
+      # 7. Sitemap 更新
+      # ============================================================
+      - name: Update sitemap
+        run: |
+          echo "=== Sitemap 更新 ==="
+          python -c "
+          from textscripts.utils.sitemap_generator import generate_sitemap
+          generate_sitemap()
+          print('sitemap.xml 已更新')
+          "
+
+      # ============================================================
+      # 8. 提交 & 推送
+      # ============================================================
+      - name: Commit and push changes
+        if: ${{ !inputs.skip_push }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add posts/ data/ sitemap.xml
+
+          if git diff --cached --quiet; then
+            echo "没有新内容需要提交"
+          else
+            DATE_STR=$(date +%Y-%m-%d -d '+8 hours')
+            git commit -m "每日更新 $DATE_STR — 自动内容生成"
+            git push
+            echo "已推送到远程仓库"
+          fi
+
+      # ============================================================
+      # 9. 运行摘要 (可选: 发送通知)
+      # ============================================================
+      - name: Generate run summary
+        if: always()
+        run: |
+          echo "## 运行摘要" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| 项目 | 值 |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|-----|" >> $GITHUB_STEP_SUMMARY
+          echo "| 触发时间 | $(date -u -d '+8 hours' '+%Y-%m-%d %H:%M') CST |" >> $GITHUB_STEP_SUMMARY
+          echo "| 运行板块 | ${{ steps.section.outputs.section }} |" >> $GITHUB_STEP_SUMMARY
+
+          if [ -f posts/posts.json ]; then
+            TOTAL=$(python -c "import json; print(len(json.load(open('posts/posts.json'))))")
+            echo "| 线上文章数 | $TOTAL 篇 |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "| 站点 | [20020426.top](https://20020426.top) |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "GitHub Actions 自动完成 ✅" >> $GITHUB_STEP_SUMMARY

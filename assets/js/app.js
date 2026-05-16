@@ -182,6 +182,8 @@ async function loadData(retry = true) {
     if (!r.ok) throw Error('HTTP ' + r.status);
     window.posts = await r.json();
     window.posts.sort((a, b) => b.date.localeCompare(a.date));
+    // 构建 MiniSearch 索引
+    if (window.buildSearchIndex) window.buildSearchIndex(window.posts);
     return true;
   } catch (e) {
     console.error(e);
@@ -202,12 +204,17 @@ window.render = function () {
   if (window.currentSub !== 'all')
     filtered = filtered.filter((p) => p.sub === window.currentSub);
   if (window.currentSearch) {
-    const q = window.currentSearch.toLowerCase();
-    filtered = filtered.filter(
-      (p) =>
-        p.title.toLowerCase().includes(q) ||
-        p.excerpt.toLowerCase().includes(q)
-    );
+    const result = window.searchPosts ? window.searchPosts(window.currentSearch) : null;
+    if (result) {
+      filtered = result;
+    } else {
+      const q = window.currentSearch.toLowerCase();
+      filtered = filtered.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.excerpt.toLowerCase().includes(q)
+      );
+    }
   }
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / window.PER_PAGE));

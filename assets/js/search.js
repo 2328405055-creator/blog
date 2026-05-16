@@ -1,5 +1,52 @@
 // ====== search.js — Tab 切换 + 搜索 + 分页 + 歇后语/字谜 ======
 
+// MiniSearch 实例 (延迟初始化)
+let _miniSearch = null;
+
+export function getMiniSearch() {
+  return _miniSearch;
+}
+
+export function buildSearchIndex(posts) {
+  if (typeof MiniSearch === 'undefined') {
+    console.warn('MiniSearch 未加载，降级到基础搜索');
+    return;
+  }
+  _miniSearch = new MiniSearch({
+    fields: ['title', 'excerpt', 'catName'],
+    storeFields: ['slug', 'title', 'date', 'cat', 'sub', 'excerpt'],
+    searchOptions: {
+      prefix: true,
+      fuzzy: 0.2,
+      boost: { title: 3, excerpt: 1.5, catName: 1 },
+    },
+  });
+
+  const docs = posts.map((p, i) => ({
+    id: i,
+    slug: p.slug,
+    title: p.title,
+    excerpt: (p.excerpt || '').replace(/<[^>]+>/g, '').replace(/#/g, ''),
+    catName: catName(p.cat),
+    cat: p.cat,
+    sub: p.sub,
+    date: p.date,
+  }));
+  _miniSearch.addAll(docs);
+  console.log(`MiniSearch 索引: ${docs.length} 篇文章`);
+}
+
+export function searchPosts(query) {
+  if (!_miniSearch || !query.trim()) {
+    return null; // 返回 null 表示用原始过滤
+  }
+  const results = _miniSearch.search(query, { prefix: true, fuzzy: 0.2 });
+  const matchIds = new Set(results.map((r) => r.id));
+  const matched = window.posts.filter((_, i) => matchIds.has(i));
+  const unmatched = window.posts.filter((_, i) => !matchIds.has(i));
+  return [...matched, ...unmatched]; // 匹配的在前，其余在后
+}
+
 export function catName(c) {
   const m = {
     'cross-border': '跨境教程',
@@ -114,3 +161,5 @@ window.goPage = goPage;
 window.goHome = goHome;
 window.toggleMenu = toggleMenu;
 window.closeMenu = closeMenu;
+window.buildSearchIndex = buildSearchIndex;
+window.searchPosts = searchPosts;

@@ -4,7 +4,7 @@ import json
 import os
 import sys
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 POSTS_DIR = os.path.join(BASE_DIR, "posts")
 JSON_PATH = os.path.join(POSTS_DIR, "posts.json")
 SCRIPTS_DIR = os.path.join(BASE_DIR, "scripts")
@@ -23,6 +23,8 @@ def load_config():
         "enrich_enabled": False,
         "target_words": 700,
         "scrape_timeout": 30,
+        "embedding_api_base": "",
+        "embedding_model": "text-embedding-v1",
     }
     # 1. 从 .env 文件加载
     env_file = os.path.join(BASE_DIR, ".env")

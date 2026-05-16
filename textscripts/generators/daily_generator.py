@@ -292,7 +292,7 @@ def build_and_save(entry, section, date_str, existing_slugs):
     return {"title": title, "cat": section}
 
 
-def generate_posts(limit_cb=8, limit_fit=5, limit_ai=7):
+def generate_posts(limit_cb=4, limit_fit=3, limit_ai=3):
     all_posts = load_json(JSON_PATH)
     existing_slugs = set(p["slug"] for p in all_posts)
     posted_titles = set()

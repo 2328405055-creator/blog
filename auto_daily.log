@@ -1,9 +1,9 @@
-[鍛ㄤ笁 2026/05/13  9:37:43.51] ====== Blog Daily Auto Pipeline ====== 
-[鍛ㄤ笁 2026/05/13  9:37:43.73] [1/2] daily_generator 
+[鍛ㄤ笁 2026/05/13  9:37:43.51] ====== Blog Daily Auto Pipeline ======
+[鍛ㄤ笁 2026/05/13  9:37:43.73] [1/2] daily_generator
 The system cannot execute the specified program.
-[ERROR] daily_generator failed 
-[鍛ㄤ笁 2026/05/13  9:47:02.72] ====== Blog Daily Auto Pipeline ====== 
-[鍛ㄤ笁 2026/05/13  9:47:02.73] [1/2] daily_generator 
+[ERROR] daily_generator failed
+[鍛ㄤ笁 2026/05/13  9:47:02.72] ====== Blog Daily Auto Pipeline ======
+[鍛ㄤ笁 2026/05/13  9:47:02.73] [1/2] daily_generator
 Exception in thread Thread-3 (_readerthread):
 Traceback (most recent call last):
   File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\threading.py", line 1082, in _bootstrap_inner
@@ -58,17 +58,17 @@ UnicodeDecodeError: 'gbk' codec can't decode byte 0x94 in position 43: illegal m
   推送完成
 
 当前线上 142 篇文章 → http://20020426.top
-[OK] daily_generator completed 
-[鍛ㄥ洓 2026/05/14  0:28:23.49] ====== Blog Daily Auto Pipeline ====== 
-[鍛ㄥ洓 2026/05/14  0:28:23.76] [1/2] daily_generator 
+[OK] daily_generator completed
+[鍛ㄥ洓 2026/05/14  0:28:23.49] ====== Blog Daily Auto Pipeline ======
+[鍛ㄥ洓 2026/05/14  0:28:23.76] [1/2] daily_generator
 The system cannot execute the specified program.
-[ERROR] daily_generator failed 
-[鍛ㄥ洓 2026/05/14 10:43:10.40] ====== Blog Daily Auto Pipeline ====== 
-[鍛ㄥ洓 2026/05/14 10:43:11.02] [1/2] daily_generator 
+[ERROR] daily_generator failed
+[鍛ㄥ洓 2026/05/14 10:43:10.40] ====== Blog Daily Auto Pipeline ======
+[鍛ㄥ洓 2026/05/14 10:43:11.02] [1/2] daily_generator
 The system cannot execute the specified program.
-[ERROR] daily_generator failed 
-[鍛ㄥ洓 2026/05/14 10:51:10.24] ====== Blog Daily Auto Pipeline ====== 
-[鍛ㄥ洓 2026/05/14 10:51:10.25] [1/2] daily_generator 
+[ERROR] daily_generator failed
+[鍛ㄥ洓 2026/05/14 10:51:10.24] ====== Blog Daily Auto Pipeline ======
+[鍛ㄥ洓 2026/05/14 10:51:10.25] [1/2] daily_generator
 Exception in thread Thread-3 (_readerthread):
 Traceback (most recent call last):
   File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\threading.py", line 1082, in _bootstrap_inner
@@ -119,9 +119,99 @@ UnicodeDecodeError: 'gbk' codec can't decode byte 0x94 in position 43: illegal m
   推送完成
 
 当前线上 162 篇文章 → http://20020426.top
-[OK] daily_generator completed 
-[鍛ㄤ簲 2026/05/15  9:30:49.10] ====== Blog Daily Auto Pipeline ====== 
+[OK] daily_generator completed
+[鍛ㄤ簲 2026/05/15  9:30:49.10] ====== Blog Daily Auto Pipeline ======
 
 [notice] A new release of pip is available: 26.0.1 -> 26.1.1
 [notice] To update, run: C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\python.exe -m pip install --upgrade pip
-[鍛ㄤ簲 2026/05/15  9:31:27.44] [1/2] daily_generator 
+[鍛ㄤ簲 2026/05/15  9:31:27.44] [1/2] daily_generator
+Exception in thread Thread-3 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\subprocess.py", line 1614, in _readerthread
+    buffer.append(fh.read())
+                  ~~~~~~~^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0x94 in position 43: illegal multibyte sequence
+========================================================
+  每日内容生成器 v3 — 真实来源 · 有据可查
+========================================================
+[INFO] 抓取跨境电商新闻...
+  获取 61 条，8 条可用
+[INFO] 抓取健身内容...
+  获取 152 条，5 条可用
+[INFO] 抓取 AI 新闻...
+  获取 220 条，7 条可用
+[INFO] 内容富化: 20 篇 -> 17 个主题簇...
+[INFO] 发现 3 个多源主题簇（可交叉印证）
+  [CLUSTER 1/17] 单篇 -> 总结...
+  [CLUSTER 2/17] 单篇 -> 总结...
+  [CLUSTER 3/17] 单篇 -> 总结...
+  [CLUSTER 4/17] 单篇 -> 总结...
+  [CLUSTER 5/17] 单篇 -> 总结...
+  [CLUSTER 6/17] 单篇 -> 总结...
+  [CLUSTER 7/17] 2篇 -> 交叉合成...
+  [CLUSTER 8/17] 单篇 -> 总结...
+  [CLUSTER 9/17] 单篇 -> 总结...
+  [CLUSTER 10/17] 单篇 -> 总结...
+  [CLUSTER 11/17] 单篇 -> 总结...
+  [CLUSTER 12/17] 单篇 -> 总结...
+  [CLUSTER 13/17] 2篇 -> 交叉合成...
+  [CLUSTER 14/17] 单篇 -> 总结...
+  [CLUSTER 15/17] 2篇 -> 交叉合成...
+  [CLUSTER 16/17] 单篇 -> 总结...
+  [CLUSTER 17/17] 单篇 -> 总结...
+[INFO] 富化完成: 7/20 篇成功 (3 个交叉合成)
+  [CB/tools] AI工具一路狂飙,盘点跨境电商必备工具 - Enjoy出海... <- Enjoy出海
+  [CB/selection] 俄乌冲突：加密货币的舞台 - 安全内参... <- 安全内参
+  [CB/russia-market] 跨境电商的“AI暗战”：谁能靠垂直应用改写千亿市场格局？ - 亿邦动力网... <- 亿邦动力网
+  [TL] 新版 Google Analytics 设置教程 | 如何在... -> Shopify 启用 Google Analytics 4 ...
+  [CB/selection] Shopify 启用 Google Analytics 4 教程... <- Shopify
+  [CB/logistics] 俄罗斯本土电商平台野莓Wildberries宣布全面开放中国招商 商家可享每周回款 - 新浪财经... <- 新浪财经
+  [CB/logistics] 战争和制裁持续 为什么卢布保持坚挺 - BBC... <- BBC
+  [CB/selection] AI替代潮之下，跨境电商“卖铲人”还好吗？ - 36kr.com... <- 36kr.com
+  [CB/selection] AI替代潮之下 跨境电商“卖铲人”还好吗？ - 亿邦动力网... <- 亿邦动力网
+  [TL] Five easy Pilates moves to do ... -> 5个居家普拉提动作，延缓背部老化...
+  [Fit/yoga-mat] 5个居家普拉提动作，延缓背部老化... <- Fit&Well
+  [TL] 15 Resistance Band Exercises f... -> 初学者必备的15个弹力带训练动作...
+  [Fit/yoga-mat] 初学者必备的15个弹力带训练动作... <- theSkimm
+  [TL] Tired of the gym? Fitness trai... -> 厌倦健身房？健身教练分享8个高效居家燃脂训练...
+  [Fit/yoga-mat] 厌倦健身房？健身教练分享8个高效居家燃脂训练... <- Moneycontrol.com
+  [TL] Feeling Tight? These Stretches... -> 20分钟拉伸提升柔韧性...
+  [Fit/yoga-mat] 20分钟拉伸提升柔韧性... <- Women's Health
+  [TL] "The world's greatest stretch ... -> 全球最难拉伸动作对初学者太难——认证拉伸治疗师推荐6种更佳替...
+  [Fit/yoga-mat] 全球最难拉伸动作对初学者太难——认证拉伸治疗师推荐6种更佳替代方案... <- Fit&Well
+  [TL] 23 Powerful AI Productivity To... -> 23款高效AI生产力工具，助你养成好习惯...
+  [Fit/ai-tools] 23款高效AI生产力工具，助你养成好习惯... <- Develop Good Habits
+  [TL] Artificial intelligence implem... -> 人工智能落地的八个成功步骤...
+  [Fit/ai-industry] 人工智能落地的八个成功步骤... <- IBM
+  [TL] Cybersecurity Analysis – Begin... -> Python安全日志分析入门指南...
+  [Fit/ai-tutorial] Python安全日志分析入门指南... <- NVIDIA Developer
+  [Fit/ai-ecommerce] 22个有“钱景”的跨境电商商业创意（2025） - Shopify... <- Shopify
+  [Fit/ai-industry] 这是极简单的人工神经网络解说 - 51CTO... <- 51CTO
+  [TL] Best AI Developer Tools for 20... -> 2026年最佳AI开发工具...
+  [Fit/ai-tools] 2026年最佳AI开发工具... <- Simplilearn.com
+  [TL] Beginner’s Guide to GPU Accele... -> Python GPU加速图分析入门指南...
+  [Fit/ai-tutorial] Python GPU加速图分析入门指南... <- NVIDIA Developer
+
+[DONE] 2026-05-15 — 跨境电商 8 + 健身 5 + AI新闻 7 = 20 篇
+  线上共 200 篇文章 → http://20020426.top
+[INFO] sitemap.xml 已更新 (200 篇文章)
+
+[INFO] 推送至 GitHub...
+  git add . → OK
+  git commit -m 每日更新 2026-05-15 — 来源采集 → OK
+  git push → OK
+  推送完成
+
+当前线上 200 篇文章 → http://20020426.top
+[OK] daily_generator completed
+[鍛ㄥ叚 2026/05/16 11:46:45.75] ====== Blog Daily Auto Pipeline ====== 
+
+[notice] A new release of pip is available: 26.0.1 -> 26.1.1
+[notice] To update, run: C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\python.exe -m pip install --upgrade pip
+[鍛ㄥ叚 2026/05/16 11:46:58.07] [1/2] daily_generator 
