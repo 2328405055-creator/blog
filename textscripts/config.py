@@ -55,7 +55,7 @@ def load_config():
     # 3. 系统环境变量覆盖
     for key in config:
         env_val = os.environ.get(f"BLOG_{key.upper()}")
-        if env_val is not None:
+        if env_val:
             if key in ("target_words", "scrape_timeout"):
                 config[key] = int(env_val)
             elif key == "enrich_enabled":
