@@ -257,6 +257,24 @@ input:focus-visible {
   border-color: var(--blue);
   color: #fff;
 }
+.nav-tool {
+  padding: 6px 15px;
+  border-radius: 16px;
+  border: 1px solid var(--gold);
+  background: rgba(201, 168, 76, 0.08);
+  color: var(--gold);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.25s;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-left: 3px;
+}
+.nav-tool:hover {
+  background: var(--gold);
+  color: #fff;
+}
 .ham-btn {
   display: none;
   background: none;
@@ -1720,6 +1738,20 @@ input:focus-visible {
   }
   .nav-right .nav-tabs.open {
     display: flex;
+  }
+  .nav-right .nav-tabs .nav-tool {
+    padding: 8px 15px;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    margin-left: 0;
+    font-size: 14px;
+    border-radius: 12px;
+  }
+  .nav-right .nav-tabs .nav-tool:hover {
+    background: var(--card);
+    color: var(--gold);
   }
   .nav-right a span {
     display: none;

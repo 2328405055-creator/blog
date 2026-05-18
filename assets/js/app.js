@@ -352,7 +352,7 @@ window.render = function () {
   </div></div>`;
 
   // Quick links
-  html += `<div class="side-card"><div class="sc-title">🔗 快捷入口</div><div class="side-links"><a href="javascript:switchTab('cross-border')">🚀 跨境教程</a><a href="javascript:switchTab('fitness')">💪 每日健身</a><a href="javascript:switchTab('ai-news')">🤖 AI学习</a><a href="javascript:switchTab('ozon-pick')">🏆 Ozon选品</a><a href="javascript:startBreath()">🧘 呼吸放松</a></div></div>`;
+  html += `<div class="side-card"><div class="sc-title">🔗 快捷入口</div><div class="side-links"><a href="javascript:switchTab('cross-border')">🚀 跨境教程</a><a href="javascript:switchTab('fitness')">💪 每日健身</a><a href="javascript:switchTab('ai-news')">🤖 AI学习</a><a href="javascript:switchTab('ozon-pick')">🏆 Ozon选品</a><a href="eat.html">🍳 今晚吃什么</a><a href="javascript:startBreath()">🧘 呼吸放松</a></div></div>`;
 
   html += `</aside>`; // end side-col
 
