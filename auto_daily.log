@@ -326,3 +326,114 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 [notice] A new release of pip is available: 26.0.1 -> 26.1.1
 [notice] To update, run: C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\python.exe -m pip install --upgrade pip
 [鍛ㄦ棩 2026/05/17 12:34:25.71] [1/2] daily_generator 
+12:34:37 [INFO] ========================================================
+12:34:37 [INFO]   猫明之主内容生成器 v5 — all
+12:34:37 [INFO] ========================================================
+12:34:37 [INFO] 抓取跨境电商新闻...
+12:34:52 [INFO] 获取 65 条，4 条可用
+12:34:52 [INFO] 抓取健身内容...
+12:35:05 [INFO] 获取 154 条，3 条可用
+12:35:05 [INFO] 抓取 AI 新闻...
+12:35:19 [INFO] 获取 212 条，3 条可用
+12:35:19 [INFO] 内容富化: 10 篇 -> 10 个主题簇...
+12:35:19 [INFO] [Cluster 1/10] 单篇 -> 总结...
+12:35:24 [INFO] [Cluster 2/10] 单篇 -> 总结...
+12:35:29 [INFO] [Cluster 3/10] 单篇 -> 总结...
+12:35:57 [INFO] HTTP Request: POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions "HTTP/1.1 200 OK"
+12:35:57 [INFO] [Cluster 4/10] 单篇 -> 总结...
+12:36:22 [INFO] HTTP Request: POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions "HTTP/1.1 200 OK"
+12:36:22 [INFO] [Cluster 5/10] 单篇 -> 总结...
+12:36:50 [INFO] HTTP Request: POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions "HTTP/1.1 200 OK"
+12:36:50 [INFO] [Cluster 6/10] 单篇 -> 总结...
+12:37:13 [INFO] HTTP Request: POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions "HTTP/1.1 200 OK"
+12:37:13 [INFO] [Cluster 7/10] 单篇 -> 总结...
+12:37:16 [INFO] [Cluster 8/10] 单篇 -> 总结...
+12:37:43 [INFO] HTTP Request: POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions "HTTP/1.1 200 OK"
+12:37:43 [INFO] [Cluster 9/10] 单篇 -> 总结...
+12:37:50 [INFO] [Cluster 10/10] 单篇 -> 总结...
+12:37:53 [INFO] 富化完成: 5/10 篇成功 (0 个交叉合成)
+12:37:53 [INFO] [CB/selection] Amy聊跨境：收藏！中东本土电商平台noon入驻保姆级教程 - 雨果跨境... <- 雨果跨境
+12:37:53 [INFO] [CB/tools] Etsy超核数据分析 2023版 - 雨果跨境... <- 雨果跨境
+12:37:53 [INFO] [CB/russia-market] 跨境电商的“AI暗战”：谁能靠垂直应用改写千亿市场格局？ - 亿邦动力网... <- 亿邦动力网
+12:37:56 [INFO] HTTP Request: POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions "HTTP/1.1 200 OK"
+12:37:56 [INFO] 翻译: 新版 Google Analytics 设置教程 | 如何在... -> Shopify 后台启用 Google Analytics ...
+12:37:56 [INFO] [CB/selection] Shopify 后台启用 Google Analytics 4 教程... <- Shopify
+12:37:59 [INFO] HTTP Request: POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions "HTTP/1.1 200 OK"
+12:37:59 [INFO] 翻译: Five easy Pilates moves to do ... -> 5个居家普拉提动作，延缓背部老化...
+12:37:59 [INFO] [Fit/yoga-mat] 5个居家普拉提动作，延缓背部老化... <- Fit&Well
+12:38:02 [INFO] HTTP Request: POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions "HTTP/1.1 200 OK"
+12:38:02 [INFO] 翻译: 15 Resistance Band Exercises f... -> 初学者必备的15个弹力带训练动作...
+12:38:02 [INFO] [Fit/yoga-mat] 初学者必备的15个弹力带训练动作... <- theSkimm
+12:38:04 [INFO] HTTP Request: POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions "HTTP/1.1 200 OK"
+12:38:04 [INFO] 翻译: Tired of the gym? Fitness trai... -> 厌倦健身房？健身教练分享8个高效居家燃脂训练...
+12:38:04 [INFO] [Fit/yoga-mat] 厌倦健身房？健身教练分享8个高效居家燃脂训练... <- Moneycontrol.com
+12:38:07 [INFO] HTTP Request: POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions "HTTP/1.1 200 OK"
+12:38:07 [INFO] 翻译: 23 Powerful AI Productivity To... -> 23款高效AI生产力工具，助你养成好习惯...
+12:38:07 [INFO] [AI/ai-tools] 23款高效AI生产力工具，助你养成好习惯... <- Develop Good Habits
+12:38:07 [INFO] [AI/ai-industry] 别再盲目报AI 班！ 看CAIE 认证（体系化+ 实战性+ 认可度）就够了|人工智能|AI文本生成|... <- 新浪财经
+12:38:10 [INFO] HTTP Request: POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions "HTTP/1.1 200 OK"
+12:38:10 [INFO] 翻译: AI Ethics for the Everyday Use... -> 普通用户为何要关注AI伦理...
+12:38:10 [INFO] [AI/ai-industry] 普通用户为何要关注AI伦理... <- towardsdatascience.com
+12:38:10 [INFO] [DONE] 2026-05-17 — 跨境 4 + 健身 3 + AI 3 = 10 篇
+12:38:10 [INFO] 线上共 27 篇文章 -> http://20020426.top
+12:38:10 [INFO] ============================================================
+12:38:10 [INFO]   Ozon 俄罗斯站每日选品 v3 — 2026-05-17
+12:38:10 [INFO]   数据源: WB v18 API (真实销量排序)
+12:38:10 [INFO] ============================================================
+12:38:10 [INFO] [1/6] 获取汇率...
+12:38:11 [INFO]   1 CNY ≈ 10.79 RUB
+12:38:11 [INFO] [2/6] Wildberries API 采集...
+12:38:13 [INFO] [popular] фитнес-браслет: 100件 (总计115,760件)
+12:38:41 [ERROR] 抓取失败 фитнес-браслет (newly): RetryError[<Future at 0x1bbc13c3350 state=finished raised HTTPError>]
+12:39:01 [INFO] [newly] power bank внешний аккумулятор: 100件 (总计116,153件)
+12:39:06 [INFO] [popular] коврик для йоги: 100件 (总计26,149件)
+12:39:18 [INFO] [newly] коврик для йоги: 100件 (总计26,149件)
+12:39:25 [INFO] [popular] светильник светодиодный: 100件 (总计115,813件)
+12:39:52 [INFO]   总计采集: 7 款商品
+12:39:52 [INFO] [3/6] 加载昨日数据做趋势对比...
+12:39:52 [INFO]   昨日数据: 4 款商品
+12:39:52 [INFO] [4/6] Yandex Wordstat (可选)...
+12:39:52 [INFO]   [SKIP] Yandex Wordstat 未启用
+12:39:52 [INFO] [5/6] 采集俄罗斯电商新闻...
+12:39:58 [INFO]   获取 30 条新闻
+12:39:58 [INFO] [6/6] 趋势评分 + 生成推荐...
+12:39:59 [INFO]   最终推荐: 7 款商品
+12:39:59 [INFO] 置顶文章已保存: posts/ozon-daily-pick-2026-05-17.md
+12:39:59 [INFO] posts.json 更新: 28 篇文章
+12:39:59 [INFO] 原始数据存档: data/ozon_raw/raw_2026-05-17.json
+12:39:59 [INFO] ============================================================
+12:39:59 [INFO]   完成! 今日推荐 7 款商品
+12:39:59 [INFO] ============================================================
+12:39:59 [INFO] sitemap.xml 已更新 (28 篇文章, 日期: 2026-05-17)
+12:39:59 [INFO] Git 发布: 每日更新 2026-05-17 — 来源采集
+Exception in thread Thread-3 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\subprocess.py", line 1614, in _readerthread
+    buffer.append(fh.read())
+                  ~~~~~~~^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0x94 in position 43: illegal multibyte sequence
+12:40:10 [ERROR] git push 失败: To https://github.com/2328405055-creator/blog.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to p
+12:40:10 [ERROR] 推送失败: push: To https://github.com/2328405055-creator/blog.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/2328405055-creator/blog.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+12:40:10 [INFO] 当前线上 28 篇文章 -> http://20020426.top
+[OK] daily_generator completed 
+[鍛ㄤ竴 2026/05/18  9:01:30.90] ====== Blog Daily Auto Pipeline ====== 
+
+[notice] A new release of pip is available: 26.0.1 -> 26.1.1
+[notice] To update, run: C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\python.exe -m pip install --upgrade pip
+[鍛ㄤ竴 2026/05/18  9:01:42.46] [1/2] daily_generator 
