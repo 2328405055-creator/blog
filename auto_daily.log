@@ -437,3 +437,116 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 [notice] A new release of pip is available: 26.0.1 -> 26.1.1
 [notice] To update, run: C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\python.exe -m pip install --upgrade pip
 [鍛ㄤ竴 2026/05/18  9:01:42.46] [1/2] daily_generator 
+09:02:16 [INFO] ========================================================
+09:02:16 [INFO]   猫明之主内容生成器 v5 — all
+09:02:16 [INFO] ========================================================
+09:02:16 [INFO] 抓取跨境电商新闻...
+09:02:28 [INFO] 获取 63 条，4 条可用
+09:02:28 [INFO] 抓取健身内容...
+09:02:39 [INFO] 获取 153 条，3 条可用
+09:02:39 [INFO] 抓取 AI 新闻...
+09:02:51 [INFO] 获取 216 条，3 条可用
+09:02:51 [INFO] 内容富化: 10 篇 -> 10 个主题簇...
+09:02:51 [INFO] [Cluster 1/10] 单篇 -> 总结...
+09:03:01 [INFO] [Cluster 2/10] 单篇 -> 总结...
+09:03:04 [INFO] [Cluster 3/10] 单篇 -> 总结...
+09:03:04 [WARNING] Firecrawl 抓取失败 https://news.google.com/rss/articles/CBMiYEFVX3lxTE9WdF94MXd: HTTPSConnectionPool(host='api.firecrawl.dev', port=443): Max retries exceeded with url: /v1/scrape (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=7897): Failed to establish a new connection: [WinError 10048] 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。")))
+09:03:04 [INFO] [Cluster 4/10] 单篇 -> 总结...
+09:03:04 [WARNING] Firecrawl 抓取失败 https://news.google.com/rss/articles/CBMiTkFVX3lxTE8ybEFCRGg: HTTPSConnectionPool(host='api.firecrawl.dev', port=443): Max retries exceeded with url: /v1/scrape (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=7897): Failed to establish a new connection: [WinError 10048] 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。")))
+09:03:04 [INFO] [Cluster 5/10] 单篇 -> 总结...
+09:03:04 [WARNING] Firecrawl 抓取失败 https://news.google.com/rss/articles/CBMixAFBVV95cUxPMUQ4Vy1: HTTPSConnectionPool(host='api.firecrawl.dev', port=443): Max retries exceeded with url: /v1/scrape (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=7897): Failed to establish a new connection: [WinError 10048] 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。")))
+09:03:04 [INFO] [Cluster 6/10] 单篇 -> 总结...
+09:03:04 [WARNING] Firecrawl 抓取失败 https://news.google.com/rss/articles/CBMiugFBVV95cUxOZlBTenN: HTTPSConnectionPool(host='api.firecrawl.dev', port=443): Max retries exceeded with url: /v1/scrape (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=7897): Failed to establish a new connection: [WinError 10048] 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。")))
+09:03:04 [INFO] [Cluster 7/10] 单篇 -> 总结...
+09:03:04 [WARNING] Firecrawl 抓取失败 https://news.google.com/rss/articles/CBMi2wFBVV95cUxPbVo1TUV: HTTPSConnectionPool(host='api.firecrawl.dev', port=443): Max retries exceeded with url: /v1/scrape (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=7897): Failed to establish a new connection: [WinError 10048] 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。")))
+09:03:04 [INFO] [Cluster 8/10] 单篇 -> 总结...
+09:03:04 [WARNING] Firecrawl 抓取失败 https://news.google.com/rss/articles/CBMie0FVX3lxTE5IeWVfQXl: HTTPSConnectionPool(host='api.firecrawl.dev', port=443): Max retries exceeded with url: /v1/scrape (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=7897): Failed to establish a new connection: [WinError 10048] 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。")))
+09:03:04 [INFO] [Cluster 9/10] 单篇 -> 总结...
+09:03:04 [WARNING] Firecrawl 抓取失败 https://news.google.com/rss/articles/CBMipAFBVV95cUxPTnZfdGx: HTTPSConnectionPool(host='api.firecrawl.dev', port=443): Max retries exceeded with url: /v1/scrape (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=7897): Failed to establish a new connection: [WinError 10048] 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。")))
+09:03:04 [INFO] [Cluster 10/10] 单篇 -> 总结...
+09:03:04 [WARNING] Firecrawl 抓取失败 https://news.google.com/rss/articles/CBMid0FVX3lxTE1ncENvb0x: HTTPSConnectionPool(host='api.firecrawl.dev', port=443): Max retries exceeded with url: /v1/scrape (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=7897): Failed to establish a new connection: [WinError 10048] 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。")))
+09:03:04 [INFO] 富化完成: 0/10 篇成功 (0 个交叉合成)
+09:03:04 [INFO] [CB/russia-market] 抢占俄罗斯千亿市场！Ozon平台专场培训会圆满落幕，实战干货助力卖家安全出海 - 中华网... <- 中华网
+09:03:04 [INFO] [CB/logistics] 俄罗斯本土电商平台野莓Wildberries宣布全面开放中国招商商家可享每周回款- 跨境电商 - 亿... <- 亿邦动力网
+09:03:04 [INFO] [CB/logistics] 战争和制裁持续 为什么卢布保持坚挺 - BBC... <- BBC
+09:03:04 [INFO] [CB/selection] AI替代潮之下，跨境电商“卖铲人”还好吗？ - 36kr.com... <- 36kr.com
+09:03:11 [INFO] HTTP Request: POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions "HTTP/1.1 200 OK"
+09:03:11 [INFO] 翻译: Five easy Pilates moves to do ... -> 5个居家普拉提动作，延缓背部僵硬...
+09:03:11 [INFO] [Fit/yoga-mat] 5个居家普拉提动作，延缓背部僵硬... <- Fit&Well
+09:03:13 [INFO] Retrying request to /chat/completions in 0.408610 seconds
+09:03:13 [INFO] Retrying request to /chat/completions in 0.807212 seconds
+09:03:14 [WARNING] 翻译失败: Connection error.
+09:03:14 [INFO] [Fit/yoga-mat] 15 Resistance Band Exercises for Beginners That Yo... <- theSkimm
+09:03:16 [INFO] Retrying request to /chat/completions in 0.452772 seconds
+09:03:17 [INFO] Retrying request to /chat/completions in 0.891193 seconds
+09:03:17 [WARNING] 翻译失败: Connection error.
+09:03:17 [INFO] [Fit/yoga-mat] Tired of the gym? Fitness trainer shares 8 great f... <- Moneycontrol.com
+09:03:19 [INFO] Retrying request to /chat/completions in 0.429033 seconds
+09:03:20 [INFO] Retrying request to /chat/completions in 0.755032 seconds
+09:03:21 [WARNING] 翻译失败: Connection error.
+09:03:21 [INFO] [AI/ai-industry] 适用于 HR 的 AI:一种变革性方法 | Microsoft Copilot - Microsof... <- Microsoft
+09:03:23 [INFO] HTTP Request: POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions "HTTP/1.1 200 OK"
+09:03:23 [INFO] 翻译: AI Ethics for the Everyday Use... -> 普通用户为何要关注AI伦理...
+09:03:23 [INFO] [AI/ai-industry] 普通用户为何要关注AI伦理... <- towardsdatascience.com
+09:03:23 [INFO] [AI/ai-tools] 中央网信办部署开展“清朗·整治AI应用乱象”专项行动 - 封面新闻... <- 封面新闻
+09:03:23 [INFO] [DONE] 2026-05-18 — 跨境 4 + 健身 3 + AI 3 = 10 篇
+09:03:23 [INFO] 线上共 38 篇文章 -> http://20020426.top
+09:03:23 [INFO] ============================================================
+09:03:23 [INFO]   Ozon 俄罗斯站每日选品 v3 — 2026-05-18
+09:03:23 [INFO]   数据源: WB v18 API (真实销量排序)
+09:03:23 [INFO] ============================================================
+09:03:23 [INFO] [1/6] 获取汇率...
+09:03:24 [INFO]   1 CNY ≈ 10.79 RUB
+09:03:24 [INFO] [2/6] Wildberries API 采集...
+09:03:28 [INFO] [popular] фитнес-браслет: 100件 (总计115,760件)
+09:04:35 [INFO] [popular] коврик для йоги: 100件 (总计26,149件)
+09:04:54 [INFO] [popular] светильник светодиодный: 100件 (总计115,813件)
+09:04:59 [INFO] [newly] светильник светодиодный: 100件 (总计115,813件)
+09:05:03 [INFO]   总计采集: 8 款商品
+09:05:03 [INFO] [3/6] 加载昨日数据做趋势对比...
+09:05:03 [INFO]   昨日数据: 7 款商品
+09:05:03 [INFO] [4/6] Yandex Wordstat (可选)...
+09:05:03 [INFO]   [SKIP] Yandex Wordstat 未启用
+09:05:03 [INFO] [5/6] 采集俄罗斯电商新闻...
+09:05:07 [INFO]   获取 30 条新闻
+09:05:07 [INFO] [6/6] 趋势评分 + 生成推荐...
+09:05:10 [INFO]   最终推荐: 8 款商品
+09:05:10 [INFO] 置顶文章已保存: posts/ozon-daily-pick-2026-05-18.md
+09:05:10 [INFO] posts.json 更新: 39 篇文章
+09:05:10 [INFO] 原始数据存档: data/ozon_raw/raw_2026-05-18.json
+09:05:10 [INFO] ============================================================
+09:05:10 [INFO]   完成! 今日推荐 8 款商品
+09:05:10 [INFO] ============================================================
+09:05:10 [INFO] sitemap.xml 已更新 (39 篇文章, 日期: 2026-05-18)
+09:05:10 [INFO] Git 发布: 每日更新 2026-05-18 — 来源采集
+Exception in thread Thread-3 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\Lib\subprocess.py", line 1614, in _readerthread
+    buffer.append(fh.read())
+                  ~~~~~~~^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0x94 in position 43: illegal multibyte sequence
+09:05:20 [ERROR] git push 失败: To https://github.com/2328405055-creator/blog.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to p
+09:05:20 [ERROR] 推送失败: push: To https://github.com/2328405055-creator/blog.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/2328405055-creator/blog.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+09:05:20 [INFO] 当前线上 39 篇文章 -> http://20020426.top
+[OK] daily_generator completed 
+[鍛ㄤ簩 2026/05/19  9:21:54.72] ====== Blog Daily Auto Pipeline ====== 
+
+[notice] A new release of pip is available: 26.0.1 -> 26.1.1
+[notice] To update, run: C:\Users\23284\AppData\Local\Python\pythoncore-3.14-64\python.exe -m pip install --upgrade pip
+[鍛ㄤ簩 2026/05/19  9:22:01.69] [1/2] daily_generator 
